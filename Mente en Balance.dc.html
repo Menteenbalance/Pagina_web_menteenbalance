@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mente en Balance — Psicología &amp; Yoga</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Prata&family=Montserrat:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400&display=swap" rel="stylesheet">
+<style>
+  html { scroll-behavior: smooth; }
+  body { margin:0; background:#FBF8F2; color:#2A2430; font-family:'Montserrat',system-ui,sans-serif; font-weight:400; -webkit-font-smoothing:antialiased; }
+  * { box-sizing:border-box; }
+  a { color:#069999; text-decoration:none; }
+  a:hover { color:#852B5B; }
+  :focus-visible { outline:2px solid #069999; outline-offset:3px; }
+  ::selection { background:rgba(6,153,153,.18); }
+  @keyframes rise { from { opacity:0; transform:translateY(14px); } to { opacity:1; transform:none; } }
+  @keyframes breathe { 0%,100% { transform:scale(1); } 50% { transform:scale(1.06); } }
+</style>
+</helmet>
+
+<div style="min-height:100vh;display:flex;flex-direction:column">
+
+<header style="position:sticky;top:0;z-index:50;background:rgba(251,248,242,.88);backdrop-filter:blur(12px);border-bottom:1px solid rgba(42,36,48,.07)">
+  <div style="max-width:1180px;margin:0 auto;padding:14px 28px;display:flex;align-items:center;gap:28px">
+    <a href="#" onClick="{{ goHome }}" style="display:flex;align-items:center;gap:12px;color:#2A2430">
+      <img src="logo.png" alt="Mente en Balance" style="width:34px;height:34px;object-fit:contain" />
+      <span style="display:flex;flex-direction:column;line-height:1.05">
+        <span style="font-family:'Prata',serif;font-size:17px;letter-spacing:.01em">Mente en Balance</span>
+        <span style="font-size:9px;letter-spacing:.28em;text-transform:uppercase;color:#069999;margin-top:3px">Psicología &amp; Yoga</span>
+      </span>
+    </a>
+    <nav style="margin-left:auto;display:flex;align-items:center;gap:26px;flex-wrap:wrap">
+      <sc-for list="{{ nav }}" as="item" hint-placeholder-count="5">
+        <a href="{{ item.href }}" onClick="{{ item.go }}" style="font-size:12px;letter-spacing:.13em;text-transform:uppercase;color:#5B5360" style-hover="color:#852B5B">{{ item.label }}</a>
+      </sc-for>
+      <a href="#contacto" onClick="{{ goContacto }}" style="background:#069999;color:#FBF8F2;padding:12px 22px;border-radius:999px;font-size:12px;letter-spacing:.11em;text-transform:uppercase;font-weight:500" style-hover="background:#852B5B;color:#FBF8F2">Reservar</a>
+    </nav>
+  </div>
+</header>
+
+<main style="flex:1">
+
+<sc-if value="{{ isInicio }}" hint-placeholder-val="{{ true }}">
+<div>
+  <section style="max-width:1180px;margin:0 auto;padding:96px 28px 80px;display:grid;grid-template-columns:repeat(auto-fit,minmax(330px,1fr));gap:64px;align-items:center">
+    <div style="animation:rise .7s ease both">
+      <p style="font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:#852B5B;margin:0 0 26px">Santiago · Presencial y online</p>
+      <h1 style="font-family:'Prata',serif;font-size:clamp(40px,5.2vw,68px);line-height:1.08;font-weight:400;margin:0;letter-spacing:-.015em;text-wrap:balance">Un día<br />a la vez</h1>
+      <p style="font-size:17px;line-height:1.75;color:#5B5360;max-width:42ch;margin:28px 0 0;text-wrap:pretty">Un espacio para generar comunidad y crear bienestar desde el autoconocimiento, compasión y atención plena.</p>
+      <div style="display:flex;gap:14px;flex-wrap:wrap;margin-top:40px">
+        <a href="#contacto" onClick="{{ goContacto }}" style="background:#852B5B;color:#FBF8F2;padding:16px 30px;border-radius:999px;font-size:12px;letter-spacing:.11em;text-transform:uppercase;font-weight:500" style-hover="background:#2A2430">Reservar hora</a>
+        <a href="#agenda" onClick="{{ goAgenda }}" style="border:1px solid rgba(42,36,48,.18);color:#2A2430;padding:16px 30px;border-radius:999px;font-size:12px;letter-spacing:.11em;text-transform:uppercase;font-weight:500" style-hover="border-color:#069999;color:#069999">Ver próximas clases</a>
+      </div>
+    </div>
+    <div style="position:relative;animation:rise .9s ease both">
+      <div style="position:absolute;inset:-6% -8% auto auto;width:62%;aspect-ratio:1;border-radius:999px;background:rgba(249,178,51,.35);animation:breathe 11s ease-in-out infinite"></div>
+      <div style="position:relative;aspect-ratio:4/5;border-radius:999px 999px 24px 24px;overflow:hidden;background:repeating-linear-gradient(135deg,#EFE8DC 0 11px,#F6F1E7 11px 22px);display:flex;align-items:flex-end;justify-content:center;padding:26px">
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#8A8078">foto · práctica de yoga</span>
+      </div>
+    </div>
+  </section>
+
+  <section style="border-top:1px solid rgba(42,36,48,.07);border-bottom:1px solid rgba(42,36,48,.07);background:rgba(6,153,153,.05)">
+    <div style="max-width:1180px;margin:0 auto;padding:22px 28px;display:flex;gap:44px;flex-wrap:wrap;justify-content:center;font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:#5B5360">
+      <span>Psicología</span><span>Terapia individual</span><span>Vinyasa Yoga</span><span>Meditación</span><span>Experiencias</span><span>Comunidad</span>
+    </div>
+  </section>
+
+  <section style="max-width:1180px;margin:0 auto;padding:96px 28px">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(330px,1fr));gap:64px;align-items:center">
+      <div style="position:relative">
+        <div style="aspect-ratio:1;border-radius:999px;overflow:hidden;background:repeating-linear-gradient(135deg,#EDE6DE 0 11px,#F6F1E9 11px 22px);display:flex;align-items:center;justify-content:center">
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#8A8078">retrato · equipo</span>
+        </div>
+        <div style="position:absolute;right:-10px;bottom:8%;width:34%;aspect-ratio:1;border-radius:999px;background:rgba(213,215,0,.4)"></div>
+      </div>
+      <div>
+        <p style="font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:#069999;margin:0 0 22px">Sobre nosotras</p>
+        <h2 style="font-family:'Prata',serif;font-size:clamp(30px,3.6vw,44px);line-height:1.16;font-weight:400;margin:0;letter-spacing:-.01em;text-wrap:balance">Mente, cuerpo y alma en un mismo lugar</h2>
+        <p style="font-size:16px;line-height:1.8;color:#5B5360;margin:26px 0 0;max-width:54ch;text-wrap:pretty">Texto placeholder sobre la historia del proyecto: quiénes somos, cómo nace Mente en Balance y por qué unimos la psicología clínica con la práctica de yoga.</p>
+        <p style="font-size:16px;line-height:1.8;color:#5B5360;margin:18px 0 0;max-width:54ch;text-wrap:pretty">Segundo párrafo placeholder sobre el enfoque: acompañamiento respetuoso, atención plena y trabajo corporal como una sola conversación.</p>
+        <a href="#sobre" onClick="{{ goSobre }}" style="display:inline-block;margin-top:32px;font-size:12px;letter-spacing:.14em;text-transform:uppercase;border-bottom:1px solid rgba(6,153,153,.4);padding-bottom:5px">Conocer el enfoque</a>
+      </div>
+    </div>
+  </section>
+
+  <section style="background:rgba(133,43,91,.045);border-top:1px solid rgba(42,36,48,.06)">
+    <div style="max-width:1180px;margin:0 auto;padding:88px 28px">
+      <p style="font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:#852B5B;margin:0 0 20px">Servicios</p>
+      <h2 style="font-family:'Prata',serif;font-size:clamp(28px,3.4vw,40px);font-weight:400;margin:0 0 52px;letter-spacing:-.01em">Formas de acompañarte</h2>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:22px">
+        <sc-for list="{{ servicios }}" as="s" hint-placeholder-count="6">
+          <div style="background:#FBF8F2;border:1px solid rgba(42,36,48,.08);border-radius:26px;padding:32px 30px 34px;display:flex;flex-direction:column;gap:14px" style-hover="border-color:rgba(6,153,153,.45);transform:translateY(-3px)">
+            <span style="width:34px;height:34px;border-radius:999px;background:{{ s.dot }}"></span>
+            <h3 style="font-family:'Prata',serif;font-size:22px;font-weight:400;margin:6px 0 0">{{ s.title }}</h3>
+            <p style="font-size:14px;line-height:1.75;color:#5B5360;margin:0">{{ s.body }}</p>
+            <span style="margin-top:auto;padding-top:16px;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#069999">{{ s.meta }}</span>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <section id="agenda" style="max-width:1180px;margin:0 auto;padding:96px 28px">
+    <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-bottom:44px">
+      <div>
+        <p style="font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:#069999;margin:0 0 18px">Agenda</p>
+        <h2 style="font-family:'Prata',serif;font-size:clamp(28px,3.4vw,40px);font-weight:400;margin:0;letter-spacing:-.01em">Próximas clases y talleres</h2>
+      </div>
+      <a href="#agenda" onClick="{{ goAgenda }}" style="font-size:12px;letter-spacing:.14em;text-transform:uppercase;border-bottom:1px solid rgba(6,153,153,.4);padding-bottom:5px">Calendario completo</a>
+    </div>
+    <div style="display:flex;flex-direction:column">
+      <sc-for list="{{ agendaCorta }}" as="e" hint-placeholder-count="3">
+        <div style="display:flex;flex-wrap:wrap;gap:20px 28px;align-items:center;padding:26px 6px;border-top:1px solid rgba(42,36,48,.1)" style-hover="background:rgba(249,178,51,.07)">
+          <div>
+            <div style="min-width:96px"><div style="font-family:'Prata',serif;font-size:26px;line-height:1">{{ e.fecha }}</div>
+            <div style="font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#8A8078;margin-top:7px">{{ e.hora }}</div>
+          </div></div>
+          <div style="flex:1 1 300px">
+            <h3 style="font-family:'Prata',serif;font-size:22px;font-weight:400;margin:0">{{ e.titulo }}</h3>
+            <p style="font-size:14px;line-height:1.7;color:#5B5360;margin:8px 0 0;max-width:52ch">{{ e.desc }}</p>
+            <p style="font-size:12px;letter-spacing:.06em;color:#8A8078;margin:10px 0 0">{{ e.lugar }}</p>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:flex-end;gap:14px;margin-left:auto">
+            <span style="font-size:13px;color:#852B5B;letter-spacing:.04em">{{ e.valor }}</span>
+            <a href="#contacto" onClick="{{ goContacto }}" style="border:1px solid rgba(42,36,48,.18);padding:12px 22px;border-radius:999px;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#2A2430;white-space:nowrap" style-hover="background:#069999;border-color:#069999;color:#FBF8F2">Inscribirme</a>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <section style="background:#2A2430;color:#FBF8F2">
+    <div style="max-width:900px;margin:0 auto;padding:110px 28px;text-align:center">
+      <p style="font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:#F9B233;margin:0 0 32px">Recordatorio</p>
+      <p style="font-family:'Prata',serif;font-size:clamp(28px,4vw,46px);line-height:1.3;font-weight:400;margin:0;text-wrap:balance">Frase muy bonita corta con sentido</p>
+    </div>
+  </section>
+
+  <section style="max-width:1180px;margin:0 auto;padding:96px 28px">
+    <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-bottom:44px">
+      <div>
+        <p style="font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:#852B5B;margin:0 0 18px">Diario</p>
+        <h2 style="font-family:'Prata',serif;font-size:clamp(28px,3.4vw,40px);font-weight:400;margin:0;letter-spacing:-.01em">Recursos para la práctica</h2>
+      </div>
+      <a href="#diario" onClick="{{ goDiario }}" style="font-size:12px;letter-spacing:.14em;text-transform:uppercase;border-bottom:1px solid rgba(6,153,153,.4);padding-bottom:5px">Ver todo</a>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:26px">
+      <sc-for list="{{ posts }}" as="p" hint-placeholder-count="3">
+        <a href="#diario" onClick="{{ goDiario }}" style="display:flex;flex-direction:column;gap:18px;color:#2A2430">
+          <div style="aspect-ratio:4/3;border-radius:22px;overflow:hidden;background:repeating-linear-gradient(135deg,#EDE6DE 0 11px,#F6F1E9 11px 22px);display:flex;align-items:center;justify-content:center">
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#8A8078">imagen · artículo</span>
+          </div>
+          <span style="font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:#069999">{{ p.cat }}</span>
+          <h3 style="font-family:'Prata',serif;font-size:21px;font-weight:400;margin:0;line-height:1.35">{{ p.titulo }}</h3>
+          <p style="font-size:14px;line-height:1.7;color:#5B5360;margin:0">{{ p.bajada }}</p>
+        </a>
+      </sc-for>
+    </div>
+  </section>
+</div>
+</sc-if>
+
+<sc-if value="{{ isSobre }}" hint-placeholder-val="{{ false }}">
+<div style="max-width:1180px;margin:0 auto;padding:88px 28px 96px">
+  <p style="font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:#852B5B;margin:0 0 24px">Sobre nosotras</p>
+  <h1 style="font-family:'Prata',serif;font-size:clamp(34px,4.6vw,56px);line-height:1.14;font-weight:400;margin:0;max-width:18ch;letter-spacing:-.015em;text-wrap:balance">Autoconocimiento, compasión y atención plena</h1>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:56px;margin-top:64px;align-items:start">
+    <div>
+      <p style="font-size:16px;line-height:1.85;color:#5B5360;margin:0;text-wrap:pretty">Texto placeholder de la historia del proyecto. Describe el origen de Mente en Balance, la unión entre psicología y yoga y la manera de acompañar a cada persona.</p>
+      <p style="font-size:16px;line-height:1.85;color:#5B5360;margin:20px 0 0;text-wrap:pretty">Segundo párrafo placeholder sobre la mirada clínica, el trabajo corporal y la comunidad que se forma alrededor de la práctica.</p>
+      <div style="display:flex;flex-direction:column;gap:0;margin-top:46px">
+        <sc-for list="{{ principios }}" as="p" hint-placeholder-count="3">
+          <div style="padding:24px 0;border-top:1px solid rgba(42,36,48,.1)">
+            <h3 style="font-family:'Prata',serif;font-size:20px;font-weight:400;margin:0">{{ p.titulo }}</h3>
+            <p style="font-size:14px;line-height:1.75;color:#5B5360;margin:8px 0 0">{{ p.desc }}</p>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+    <div style="position:relative">
+      <div style="aspect-ratio:3/4;border-radius:999px 999px 24px 24px;overflow:hidden;background:repeating-linear-gradient(135deg,#EDE6DE 0 11px,#F6F1E9 11px 22px);display:flex;align-items:flex-end;justify-content:center;padding:26px">
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#8A8078">retrato · fundadora</span>
+      </div>
+      <div style="position:absolute;left:-18px;top:12%;width:30%;aspect-ratio:1;border-radius:999px;background:rgba(6,153,153,.3)"></div>
+    </div>
+  </div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isServicios }}" hint-placeholder-val="{{ false }}">
+<div style="max-width:1180px;margin:0 auto;padding:88px 28px 96px">
+  <p style="font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:#069999;margin:0 0 24px">Servicios</p>
+  <h1 style="font-family:'Prata',serif;font-size:clamp(34px,4.6vw,56px);line-height:1.14;font-weight:400;margin:0;max-width:16ch;letter-spacing:-.015em">Terapia, práctica y comunidad</h1>
+  <div style="display:flex;flex-direction:column;margin-top:60px">
+    <sc-for list="{{ servicios }}" as="s" hint-placeholder-count="6">
+      <div style="display:flex;flex-wrap:wrap;gap:24px 40px;padding:38px 0;border-top:1px solid rgba(42,36,48,.1);align-items:start">
+        <div style="display:flex;align-items:center;gap:14px;flex:0 0 200px">
+          <span style="width:14px;height:14px;border-radius:999px;background:{{ s.dot }}"></span>
+          <h2 style="font-family:'Prata',serif;font-size:24px;font-weight:400;margin:0">{{ s.title }}</h2>
+        </div>
+        <p style="font-size:15px;line-height:1.8;color:#5B5360;margin:0;max-width:56ch;flex:1 1 320px">{{ s.largo }}</p>
+        <div style="display:flex;flex-direction:column;gap:14px;align-items:flex-start;flex:0 0 200px">
+          <span style="font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#8A8078">{{ s.meta }}</span>
+          <a href="#contacto" onClick="{{ goContacto }}" style="border:1px solid rgba(42,36,48,.18);padding:12px 24px;border-radius:999px;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#2A2430" style-hover="background:#852B5B;border-color:#852B5B;color:#FBF8F2">Consultar</a>
+        </div>
+      </div>
+    </sc-for>
+  </div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isAgenda }}" hint-placeholder-val="{{ false }}">
+<div style="max-width:1180px;margin:0 auto;padding:88px 28px 96px">
+  <p style="font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:#852B5B;margin:0 0 24px">Agenda</p>
+  <h1 style="font-family:'Prata',serif;font-size:clamp(34px,4.6vw,56px);line-height:1.14;font-weight:400;margin:0;max-width:16ch;letter-spacing:-.015em">Próximas clases y talleres</h1>
+  <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:38px">
+    <sc-for list="{{ filtros }}" as="f" hint-placeholder-count="4">
+      <button onClick="{{ f.onClick }}" style="border:1px solid {{ f.border }};background:{{ f.bg }};color:{{ f.color }};padding:11px 20px;border-radius:999px;font-family:'Montserrat',sans-serif;font-size:11px;letter-spacing:.12em;text-transform:uppercase;cursor:pointer">{{ f.label }}</button>
+    </sc-for>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:24px;margin-top:44px">
+    <sc-for list="{{ agendaFiltrada }}" as="e" hint-placeholder-count="4">
+      <div style="border:1px solid rgba(42,36,48,.1);border-radius:26px;padding:30px;display:flex;flex-direction:column;gap:16px;background:#FBF8F2" style-hover="border-color:rgba(6,153,153,.45)">
+        <div style="display:flex;align-items:baseline;justify-content:space-between;gap:16px">
+          <span style="font-family:'Prata',serif;font-size:30px;line-height:1">{{ e.fecha }}</span>
+          <span style="font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#8A8078">{{ e.hora }}</span>
+        </div>
+        <h2 style="font-family:'Prata',serif;font-size:23px;font-weight:400;margin:0">{{ e.titulo }}</h2>
+        <p style="font-size:14px;line-height:1.75;color:#5B5360;margin:0">{{ e.desc }}</p>
+        <p style="font-size:12px;color:#8A8078;margin:0">{{ e.lugar }}</p>
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;margin-top:auto;padding-top:18px;border-top:1px solid rgba(42,36,48,.08)">
+          <span style="font-size:13px;color:#852B5B">{{ e.valor }}</span>
+          <a href="#contacto" onClick="{{ goContacto }}" style="background:#069999;color:#FBF8F2;padding:12px 22px;border-radius:999px;font-size:11px;letter-spacing:.12em;text-transform:uppercase" style-hover="background:#852B5B">Inscribirme</a>
+        </div>
+      </div>
+    </sc-for>
+  </div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isDiario }}" hint-placeholder-val="{{ false }}">
+<div style="max-width:1180px;margin:0 auto;padding:88px 28px 96px">
+  <p style="font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:#069999;margin:0 0 24px">Diario</p>
+  <h1 style="font-family:'Prata',serif;font-size:clamp(34px,4.6vw,56px);line-height:1.14;font-weight:400;margin:0;max-width:16ch;letter-spacing:-.015em">Recursos para la práctica</h1>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:30px;margin-top:60px">
+    <sc-for list="{{ postsTodos }}" as="p" hint-placeholder-count="6">
+      <div style="display:flex;flex-direction:column;gap:18px">
+        <div style="aspect-ratio:4/3;border-radius:22px;overflow:hidden;background:repeating-linear-gradient(135deg,#EDE6DE 0 11px,#F6F1E9 11px 22px);display:flex;align-items:center;justify-content:center">
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#8A8078">imagen · artículo</span>
+        </div>
+        <span style="font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:#069999">{{ p.cat }}</span>
+        <h2 style="font-family:'Prata',serif;font-size:21px;font-weight:400;margin:0;line-height:1.35">{{ p.titulo }}</h2>
+        <p style="font-size:14px;line-height:1.7;color:#5B5360;margin:0">{{ p.bajada }}</p>
+      </div>
+    </sc-for>
+  </div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isContacto }}" hint-placeholder-val="{{ false }}">
+<div id="contacto" style="max-width:1180px;margin:0 auto;padding:88px 28px 96px">
+  <p style="font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:#852B5B;margin:0 0 24px">Contacto</p>
+  <h1 style="font-family:'Prata',serif;font-size:clamp(34px,4.6vw,56px);line-height:1.14;font-weight:400;margin:0;max-width:15ch;letter-spacing:-.015em">Conecta con tu cuerpo</h1>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:64px;margin-top:60px;align-items:start">
+    <div>
+      <sc-if value="{{ enviado }}" hint-placeholder-val="{{ false }}">
+        <div style="border:1px solid rgba(6,153,153,.4);background:rgba(6,153,153,.07);border-radius:26px;padding:44px 36px">
+          <h2 style="font-family:'Prata',serif;font-size:26px;font-weight:400;margin:0">Gracias, te escribiremos pronto</h2>
+          <p style="font-size:15px;line-height:1.75;color:#5B5360;margin:14px 0 0">Respondemos dentro de 48 horas hábiles. Mientras tanto, respira: un día a la vez.</p>
+        </div>
+      </sc-if>
+      <sc-if value="{{ noEnviado }}" hint-placeholder-val="{{ true }}">
+        <form onSubmit="{{ enviar }}" style="display:flex;flex-direction:column;gap:22px">
+          <label style="display:flex;flex-direction:column;gap:9px">
+            <span style="font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#5B5360">Nombre</span>
+            <input type="text" placeholder="Tu nombre" style="font-family:'Montserrat',sans-serif;font-size:15px;padding:15px 20px;border:1px solid rgba(42,36,48,.16);border-radius:999px;background:transparent;color:#2A2430" />
+          </label>
+          <label style="display:flex;flex-direction:column;gap:9px">
+            <span style="font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#5B5360">Correo</span>
+            <input type="email" placeholder="tucorreo@mail.com" style="font-family:'Montserrat',sans-serif;font-size:15px;padding:15px 20px;border:1px solid rgba(42,36,48,.16);border-radius:999px;background:transparent;color:#2A2430" />
+          </label>
+          <label style="display:flex;flex-direction:column;gap:9px">
+            <span style="font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#5B5360">Me interesa</span>
+            <select style="font-family:'Montserrat',sans-serif;font-size:15px;padding:15px 20px;border:1px solid rgba(42,36,48,.16);border-radius:999px;background:transparent;color:#2A2430">
+              <option>Terapia individual</option>
+              <option>Vinyasa Yoga</option>
+              <option>Meditación</option>
+              <option>Experiencias y talleres</option>
+            </select>
+          </label>
+          <label style="display:flex;flex-direction:column;gap:9px">
+            <span style="font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#5B5360">Mensaje</span>
+            <textarea rows="4" placeholder="Cuéntanos brevemente qué buscas" style="font-family:'Montserrat',sans-serif;font-size:15px;padding:16px 20px;border:1px solid rgba(42,36,48,.16);border-radius:24px;background:transparent;color:#2A2430;resize:vertical"></textarea>
+          </label>
+          <button type="submit" style="align-self:flex-start;background:#852B5B;color:#FBF8F2;border:none;padding:16px 32px;border-radius:999px;font-family:'Montserrat',sans-serif;font-size:12px;letter-spacing:.12em;text-transform:uppercase;font-weight:500;cursor:pointer" style-hover="background:#2A2430">Enviar</button>
+        </form>
+      </sc-if>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:30px">
+      <div style="border:1px solid rgba(42,36,48,.1);border-radius:26px;padding:30px">
+        <h2 style="font-family:'Prata',serif;font-size:20px;font-weight:400;margin:0 0 16px">Dónde estamos</h2>
+        <p style="font-size:14px;line-height:1.8;color:#5B5360;margin:0">Mariano Sánchez Fontecilla 584<br />Las Condes, Santiago</p>
+        <p style="font-size:14px;line-height:1.8;color:#5B5360;margin:14px 0 0">Sesiones online disponibles</p>
+      </div>
+      <div style="border:1px solid rgba(42,36,48,.1);border-radius:26px;padding:30px;display:flex;flex-direction:column;gap:14px">
+        <h2 style="font-family:'Prata',serif;font-size:20px;font-weight:400;margin:0">Escríbenos</h2>
+        <a href="https://www.instagram.com/menteenbalance.cl/" style="font-size:14px">@menteenbalance.cl</a>
+        <a href="#contacto" style="font-size:14px">WhatsApp +56 9 0000 0000</a>
+        <a href="#contacto" style="font-size:14px">hola@menteenbalance.cl</a>
+      </div>
+      <div style="background:rgba(249,178,51,.16);border-radius:26px;padding:30px">
+        <h2 style="font-family:'Prata',serif;font-size:20px;font-weight:400;margin:0">Súmate a la comunidad</h2>
+        <p style="font-size:14px;line-height:1.75;color:#5B5360;margin:12px 0 20px">Una carta al mes con prácticas, lecturas y fechas de clases.</p>
+        <div style="display:flex;gap:10px;flex-wrap:wrap">
+          <input type="email" placeholder="tucorreo@mail.com" style="flex:1;min-width:160px;font-family:'Montserrat',sans-serif;font-size:14px;padding:13px 18px;border:1px solid rgba(42,36,48,.18);border-radius:999px;background:#FBF8F2;color:#2A2430" />
+          <button onClick="{{ suscribir }}" style="background:#2A2430;color:#FBF8F2;border:none;padding:13px 24px;border-radius:999px;font-family:'Montserrat',sans-serif;font-size:11px;letter-spacing:.12em;text-transform:uppercase;cursor:pointer" style-hover="background:#852B5B">{{ suscritoLabel }}</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</sc-if>
+
+</main>
+
+<footer style="background:#2A2430;color:rgba(251,248,242,.72);margin-top:auto">
+  <div style="max-width:1180px;margin:0 auto;padding:64px 28px 40px;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:44px">
+    <div>
+      <div style="display:flex;align-items:center;gap:12px">
+        <img src="logo.png" alt="" style="width:32px;height:32px;object-fit:contain;filter:invert(1)" />
+        <span style="font-family:'Prata',serif;font-size:17px;color:#FBF8F2">Mente en Balance</span>
+      </div>
+      <p style="font-size:13px;line-height:1.8;margin:20px 0 0;max-width:36ch">Un espacio para generar comunidad y crear bienestar desde el autoconocimiento, compasión y atención plena.</p>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <span style="font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#F9B233">Navegar</span>
+      <sc-for list="{{ nav }}" as="item" hint-placeholder-count="5">
+        <a href="{{ item.href }}" onClick="{{ item.go }}" style="font-size:13px;color:rgba(251,248,242,.72)" style-hover="color:#F9B233">{{ item.label }}</a>
+      </sc-for>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <span style="font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#F9B233">Contacto</span>
+      <a href="https://www.instagram.com/menteenbalance.cl/" style="font-size:13px;color:rgba(251,248,242,.72)" style-hover="color:#F9B233">@menteenbalance.cl</a>
+      <span style="font-size:13px">Mariano Sánchez Fontecilla 584</span>
+      <span style="font-size:13px">Las Condes, Santiago</span>
+    </div>
+  </div>
+  <div style="max-width:1180px;margin:0 auto;padding:0 28px 40px;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:rgba(251,248,242,.4)">Mente en Balance by PRODIS · Psicología &amp; Yoga</div>
+</footer>
+
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{}">
+class Component extends DCLogic {
+  state = { page: 'inicio', filtro: 'Todo', enviado: false, suscrito: false };
+
+  go(page) {
+    return (e) => { if (e) e.preventDefault(); this.setState({ page }); window.scrollTo(0, 0); };
+  }
+
+  renderVals() {
+    const pages = [
+      ['sobre', 'Sobre'], ['servicios', 'Servicios'], ['agenda', 'Agenda'],
+      ['diario', 'Diario'], ['contacto', 'Contacto']
+    ];
+    const nav = pages.map(([id, label]) => ({ label, href: '#' + id, go: this.go(id) }));
+
+    const servicios = [
+      { title: 'Psicología', dot: '#852B5B', meta: 'Adultos y adolescentes', body: 'Texto placeholder sobre el proceso terapéutico y su encuadre.', largo: 'Descripción placeholder del proceso terapéutico: primera entrevista, frecuencia de las sesiones, enfoque de trabajo y modalidad presencial u online.' },
+      { title: 'Terapia individual', dot: '#069999', meta: '50 minutos', body: 'Texto placeholder sobre el acompañamiento uno a uno.', largo: 'Descripción placeholder del acompañamiento individual, los objetivos que se trabajan y cómo se define el plan junto a cada persona.' },
+      { title: 'Vinyasa Yoga', dot: '#F9B233', meta: 'Grupos reducidos', body: 'Texto placeholder sobre la práctica de movimiento y respiración.', largo: 'Descripción placeholder de la clase de Vinyasa: ritmo, niveles, duración, qué llevar y cómo se estructura la secuencia.' },
+      { title: 'Meditación', dot: '#D5D700', meta: 'Sesiones semanales', body: 'Texto placeholder sobre atención plena y práctica guiada.', largo: 'Descripción placeholder de las sesiones de meditación guiada, técnicas de atención plena y sugerencias para la práctica en casa.' },
+      { title: 'Experiencias', dot: '#852B5B', meta: 'Talleres y retiros', body: 'Texto placeholder sobre talleres, retiros y encuentros.', largo: 'Descripción placeholder de las experiencias: talleres temáticos, jornadas de día completo y retiros fuera de la ciudad.' },
+      { title: 'Comunidad', dot: '#069999', meta: 'Encuentros abiertos', body: 'Texto placeholder sobre los encuentros abiertos de la comunidad.', largo: 'Descripción placeholder de la comunidad: encuentros abiertos, círculos de conversación y actividades gratuitas.' }
+    ];
+
+    const agenda = [
+      { fecha: '28/06', hora: '11 hrs.', titulo: 'Sentir Yoga', tipo: 'Yoga', desc: 'Reencuentro con nuestro cuerpo a través del movimiento.', lugar: 'Mariano Sánchez Fontecilla 584, Las Condes', valor: 'Valor: $5.000' },
+      { fecha: '05/07', hora: '19 hrs.', titulo: 'Meditación guiada', tipo: 'Meditación', desc: 'Práctica placeholder de atención plena para cerrar la semana.', lugar: 'Online · Zoom', valor: 'Valor: $4.000' },
+      { fecha: '12/07', hora: '10 hrs.', titulo: 'Taller: mente y cuerpo', tipo: 'Talleres', desc: 'Taller placeholder que combina psicología y práctica corporal.', lugar: 'Mariano Sánchez Fontecilla 584, Las Condes', valor: 'Valor: $18.000' },
+      { fecha: '26/07', hora: '09 hrs.', titulo: 'Círculo de comunidad', tipo: 'Talleres', desc: 'Encuentro placeholder abierto para compartir la práctica.', lugar: 'Parque Bicentenario, Vitacura', valor: 'Actividad gratuita' }
+    ];
+
+    const filtrosBase = ['Todo', 'Yoga', 'Meditación', 'Talleres'];
+    const filtros = filtrosBase.map((label) => {
+      const on = this.state.filtro === label;
+      return {
+        label,
+        onClick: () => this.setState({ filtro: label }),
+        bg: on ? '#069999' : 'transparent',
+        color: on ? '#FBF8F2' : '#5B5360',
+        border: on ? '#069999' : 'rgba(42,36,48,.18)'
+      };
+    });
+
+    const posts = [
+      { cat: 'Psicología', titulo: 'Título placeholder de un artículo del diario', bajada: 'Bajada placeholder de dos líneas que resume el contenido del artículo.' },
+      { cat: 'Yoga', titulo: 'Título placeholder sobre la práctica semanal', bajada: 'Bajada placeholder de dos líneas que resume el contenido del artículo.' },
+      { cat: 'Meditación', titulo: 'Título placeholder sobre atención plena', bajada: 'Bajada placeholder de dos líneas que resume el contenido del artículo.' }
+    ];
+
+    return {
+      nav,
+      servicios,
+      posts,
+      postsTodos: posts.concat(posts.map((p) => ({ ...p, titulo: p.titulo + ' (2)' }))),
+      agendaCorta: agenda.slice(0, 3),
+      agendaFiltrada: this.state.filtro === 'Todo' ? agenda : agenda.filter((e) => e.tipo === this.state.filtro),
+      filtros,
+      principios: [
+        { titulo: 'Autoconocimiento', desc: 'Texto placeholder que describe este principio del trabajo.' },
+        { titulo: 'Compasión', desc: 'Texto placeholder que describe este principio del trabajo.' },
+        { titulo: 'Atención plena', desc: 'Texto placeholder que describe este principio del trabajo.' }
+      ],
+      isInicio: this.state.page === 'inicio',
+      isSobre: this.state.page === 'sobre',
+      isServicios: this.state.page === 'servicios',
+      isAgenda: this.state.page === 'agenda',
+      isDiario: this.state.page === 'diario',
+      isContacto: this.state.page === 'contacto',
+      goHome: this.go('inicio'),
+      goSobre: this.go('sobre'),
+      goAgenda: this.go('agenda'),
+      goDiario: this.go('diario'),
+      goContacto: this.go('contacto'),
+      enviado: this.state.enviado,
+      noEnviado: !this.state.enviado,
+      enviar: (e) => { e.preventDefault(); this.setState({ enviado: true }); },
+      suscrito: this.state.suscrito,
+      suscritoLabel: this.state.suscrito ? 'Listo' : 'Sumarme',
+      suscribir: () => this.setState({ suscrito: true })
+    };
+  }
+}
+</script>
+</body>
+</html>
