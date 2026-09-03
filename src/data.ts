@@ -5,7 +5,14 @@
 //  el diseño ni la lógica.
 // ─────────────────────────────────────────────────────────────
 
-import type { NavItem, Servicio, Evento, Post, Principio } from "./types";
+import type {
+  NavItem,
+  Servicio,
+  Evento,
+  Post,
+  Principio,
+  GrupoTarifas,
+} from "./types";
 
 /** Menú de navegación (header y footer). */
 export const nav: NavItem[] = [
@@ -138,6 +145,59 @@ export const posts: Post[] = [
 export const postsTodos: Post[] = [
   ...posts,
   ...posts.map((p) => ({ ...p, titulo: `${p.titulo} (2)` })),
+];
+
+/**
+ * Aranceles, separados por Psicoterapia y Yoga Vinyasa.
+ * Precios en pesos chilenos (CLP). Edita aquí si cambian los valores.
+ */
+export const aranceles: GrupoTarifas[] = [
+  {
+    categoria: "Psicoterapia",
+    items: [
+      {
+        nombre: "Sesión online",
+        modalidad: "Online",
+        duracion: "50 min",
+        precio: "$37.000",
+      },
+      {
+        nombre: "Paquete de 4 sesiones · Online",
+        modalidad: "Online",
+        duracion: "50 min por sesión",
+        precio: "$140.000",
+      },
+      {
+        nombre: "Sesión presencial",
+        modalidad: "Presencial",
+        duracion: "50 min",
+        precio: "$42.000",
+      },
+      {
+        nombre: "Paquete de 4 sesiones · Presencial",
+        modalidad: "Presencial",
+        duracion: "50 min por sesión",
+        precio: "$155.000",
+      },
+    ],
+  },
+  {
+    categoria: "Yoga Vinyasa",
+    items: [
+      {
+        nombre: "Clase suelta",
+        precio: "$10.000",
+      },
+      {
+        nombre: "Mensualidad · 1 vez por semana",
+        precio: "$35.000",
+      },
+      {
+        nombre: "Mensualidad · 2 veces por semana",
+        precio: "$50.000",
+      },
+    ],
+  },
 ];
 
 /** Principios que se muestran en la página Sobre. */

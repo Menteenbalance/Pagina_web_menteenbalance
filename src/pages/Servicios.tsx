@@ -1,6 +1,6 @@
-import { servicios, reservaUrl } from "../data";
+import { servicios, aranceles, reservaUrl } from "../data";
 
-// Página "Servicios": lista extendida con la descripción larga de cada uno.
+// Página "Servicios": lista extendida de cada servicio + aranceles.
 export default function Servicios() {
   return (
     <div className="page">
@@ -36,6 +36,57 @@ export default function Servicios() {
           </div>
         ))}
       </div>
+
+      {/* Aranceles: dos bloques separados (Psicoterapia y Yoga Vinyasa) */}
+      <section className="precios">
+        <p
+          className="eyebrow eyebrow--plum"
+          style={{ marginBottom: 24, marginTop: 96 }}
+        >
+          Aranceles
+        </p>
+        <h2 className="section-title" style={{ marginBottom: 44 }}>
+          Valores por servicio
+        </h2>
+
+        <div className="precios-grid">
+          {aranceles.map((grupo) => (
+            <div className="precio-group" key={grupo.categoria}>
+              <h3 className="precio-group__title">{grupo.categoria}</h3>
+              <ul className="precio-list">
+                {grupo.items.map((item) => (
+                  <li className="precio-item" key={item.nombre}>
+                    <div className="precio-item__info">
+                      <span className="precio-item__name">{item.nombre}</span>
+                      {(item.modalidad || item.duracion) && (
+                        <span className="precio-item__meta">
+                          {[item.modalidad, item.duracion]
+                            .filter(Boolean)
+                            .join(" · ")}
+                        </span>
+                      )}
+                    </div>
+                    <span className="precio-item__price">{item.precio}</span>
+                  </li>
+                ))}
+              </ul>
+              <a
+                href={reservaUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn btn--teal btn--sm precio-group__cta"
+              >
+                Reservar {grupo.categoria}
+              </a>
+            </div>
+          ))}
+        </div>
+
+        <p className="precios-note">
+          Valores en pesos chilenos (CLP). Reservas y pagos se gestionan a través
+          de Encuadrado.
+        </p>
+      </section>
     </div>
   );
 }

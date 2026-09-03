@@ -43,3 +43,21 @@ export interface Principio {
   titulo: string;
   desc: string;
 }
+
+/** Una tarifa individual dentro de un grupo de aranceles. */
+export interface Tarifa {
+  /** Nombre de la cita/plan, ej: "Sesión online" */
+  nombre: string;
+  /** Modalidad opcional, ej: "Online" o "Presencial" */
+  modalidad?: string;
+  /** Duración opcional, ej: "50 min" */
+  duracion?: string;
+  /** Precio ya formateado, ej: "$37.000" */
+  precio: string;
+}
+
+/** Grupo de tarifas mostrado como una columna (ej: Psicoterapia, Yoga). */
+export interface GrupoTarifas {
+  categoria: string;
+  items: Tarifa[];
+}
