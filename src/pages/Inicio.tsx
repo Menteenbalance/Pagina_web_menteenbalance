@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import Placeholder from "../components/Placeholder";
-import { servicios, agenda, posts } from "../data";
+import { servicios, agenda, posts, reservaUrl } from "../data";
 
 // Página de inicio: hero, cinta, "sobre nosotras", servicios,
 // agenda corta, cita destacada y últimos artículos del diario.
@@ -22,9 +22,14 @@ export default function Inicio() {
             autoconocimiento, compasión y atención plena.
           </p>
           <div className="hero__actions">
-            <Link to="/contacto" className="btn btn--plum">
+            <a
+              href={reservaUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn btn--plum"
+            >
               Reservar hora
-            </Link>
+            </a>
             <Link to="/agenda" className="btn btn--outline">
               Ver próximas clases
             </Link>
@@ -138,9 +143,14 @@ export default function Inicio() {
               </div>
               <div className="agenda-row__aside">
                 <span className="agenda-row__price">{e.valor}</span>
-                <Link to="/contacto" className="btn btn--outline btn--sm">
+                <a
+                  href={reservaUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn btn--outline btn--sm"
+                >
                   Inscribirme
-                </Link>
+                </a>
               </div>
             </div>
           ))}

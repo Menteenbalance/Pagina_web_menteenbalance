@@ -156,6 +156,13 @@ export const principios: Principio[] = [
   },
 ];
 
+/**
+ * Enlace externo de reservas (Encuadrado).
+ * Cámbialo aquí si en el futuro se actualiza la página de agenda.
+ */
+export const reservaUrl =
+  "https://encuadrado.com/p/maria-ignacia-canessa/";
+
 /** Datos de contacto, reutilizados en la página Contacto y el footer. */
 export const contacto = {
   instagram: {

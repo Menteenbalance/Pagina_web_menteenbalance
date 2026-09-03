@@ -1,5 +1,5 @@
 import { Link, NavLink } from "react-router-dom";
-import { nav } from "../data";
+import { nav, reservaUrl } from "../data";
 
 // Barra superior fija con logo, navegación y botón "Reservar".
 export default function Header() {
@@ -26,9 +26,14 @@ export default function Header() {
               {item.label}
             </NavLink>
           ))}
-          <Link to="/contacto" className="btn btn--teal btn--sm">
+          <a
+            href={reservaUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn btn--teal btn--sm"
+          >
             Reservar
-          </Link>
+          </a>
         </nav>
       </div>
     </header>

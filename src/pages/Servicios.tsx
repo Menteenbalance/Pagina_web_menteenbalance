@@ -1,5 +1,4 @@
-import { Link } from "react-router-dom";
-import { servicios } from "../data";
+import { servicios, reservaUrl } from "../data";
 
 // Página "Servicios": lista extendida con la descripción larga de cada uno.
 export default function Servicios() {
@@ -25,12 +24,14 @@ export default function Servicios() {
             <p className="servicio-row__desc">{s.largo}</p>
             <div className="servicio-row__aside">
               <span className="servicio-row__meta">{s.meta}</span>
-              <Link
-                to="/contacto"
+              <a
+                href={reservaUrl}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="btn btn--outline btn--outline-plum btn--sm"
               >
                 Consultar
-              </Link>
+              </a>
             </div>
           </div>
         ))}

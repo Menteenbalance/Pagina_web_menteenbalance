@@ -1,6 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
-import { agenda, filtros, type Filtro } from "../data";
+import { agenda, filtros, reservaUrl, type Filtro } from "../data";
 
 // Página "Agenda": tarjetas de clases con filtros por tipo.
 export default function Agenda() {
@@ -42,9 +41,14 @@ export default function Agenda() {
             <p className="event-card__place">{e.lugar}</p>
             <div className="event-card__foot">
               <span className="event-card__price">{e.valor}</span>
-              <Link to="/contacto" className="btn btn--teal btn--sm">
+              <a
+                href={reservaUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn btn--teal btn--sm"
+              >
                 Inscribirme
-              </Link>
+              </a>
             </div>
           </div>
         ))}
