@@ -1,5 +1,5 @@
-import Placeholder from "../components/Placeholder";
 import { principios } from "../data";
+import { img } from "../images";
 
 // Página "Sobre nosotras": historia del proyecto y principios.
 export default function Sobre() {
@@ -16,13 +16,17 @@ export default function Sobre() {
         <div>
           <div className="prose">
             <p>
-              Texto placeholder de la historia del proyecto. Describe el origen
-              de Mente en Balance, la unión entre psicología y yoga y la manera
-              de acompañar a cada persona.
+              Mente en Balance es el proyecto de María Ignacia Canessa,
+              psicóloga clínica y profesora de yoga. Un espacio para generar
+              comunidad y crear bienestar desde el autoconocimiento, la
+              compasión y la atención plena.
             </p>
             <p>
-              Segundo párrafo placeholder sobre la mirada clínica, el trabajo
-              corporal y la comunidad que se forma alrededor de la práctica.
+              Su enfoque integra las Terapias de Tercera Generación —como la
+              Terapia de Aceptación y Compromiso (ACT) y el mindfulness— con la
+              práctica de Vinyasa Yoga y meditación, para acompañar la ansiedad,
+              las emociones y la autocrítica con herramientas prácticas para el
+              día a día.
             </p>
           </div>
 
@@ -37,9 +41,10 @@ export default function Sobre() {
         </div>
 
         <div className="about-media">
-          <Placeholder
-            label="retrato · fundadora"
-            className="placeholder about-media__img"
+          <img
+            className="about-media__img"
+            src={img.claseGuiada.src}
+            alt={img.claseGuiada.alt}
           />
           <div className="about-media__accent" />
         </div>

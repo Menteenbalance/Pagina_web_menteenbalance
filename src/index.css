@@ -69,6 +69,34 @@ a:hover {
     transform: none;
   }
 }
+
+/* Aparición al hacer scroll (componente <Reveal>).
+   Curva lenta y desacelerada para una sensación calma y natural. */
+.reveal {
+  opacity: 0;
+}
+.reveal.is-visible {
+  opacity: 1;
+  animation: reveal-rise 1.1s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+}
+@keyframes reveal-rise {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+  }
+  .reveal.is-visible {
+    animation: none;
+  }
+}
 @keyframes breathe {
   0%,
   100% {
@@ -436,6 +464,17 @@ main {
   padding: 26px;
 }
 
+/* Imágenes reales: llenan el espacio de su contenedor con recorte "cover" */
+img.hero__photo,
+img.portrait__img,
+img.about-media__img,
+img.post__thumb {
+  width: 100%;
+  padding: 0;
+  object-fit: cover;
+  display: block;
+}
+
 /* --- Inicio: cinta de palabras --- */
 .ribbon {
   border-top: 1px solid var(--line-soft);
@@ -737,6 +776,7 @@ main {
   border-radius: 999px 999px 24px 24px;
   align-items: flex-end;
   padding: 26px;
+  overflow: hidden;
 }
 .about-media__accent {
   position: absolute;

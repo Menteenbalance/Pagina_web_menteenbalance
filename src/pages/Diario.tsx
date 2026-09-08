@@ -1,5 +1,16 @@
-import Placeholder from "../components/Placeholder";
-import { postsTodos } from "../data";
+import { posts } from "../data";
+import { img } from "../images";
+
+// Imágenes para las miniaturas del diario (se repiten cíclicamente
+// si hay más artículos que fotos).
+const diarioImgs = [
+  img.consulta,
+  img.retiro1,
+  img.yogaRestaurativa,
+  img.yogaParque,
+  img.claseGrupo,
+  img.balasana,
+];
 
 // Página "Diario": grilla completa de artículos.
 export default function Diario() {
@@ -13,11 +24,13 @@ export default function Diario() {
       </h1>
 
       <div className="posts posts--wide">
-        {postsTodos.map((p, i) => (
+        {posts.map((p, i) => (
           <div className="post" key={`${p.titulo}-${i}`}>
-            <Placeholder
-              label="imagen · artículo"
-              className="placeholder post__thumb"
+            <img
+              className="post__thumb"
+              src={diarioImgs[i % diarioImgs.length].src}
+              alt={diarioImgs[i % diarioImgs.length].alt}
+              loading="lazy"
             />
             <span className="post__cat">{p.cat}</span>
             <h2 className="post__title">{p.titulo}</h2>

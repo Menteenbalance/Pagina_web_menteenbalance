@@ -28,50 +28,50 @@ export const servicios: Servicio[] = [
   {
     title: "Psicología",
     dot: "var(--plum)",
-    meta: "Adultos y adolescentes",
-    body: "Texto placeholder sobre el proceso terapéutico y su encuadre.",
+    meta: "Online y presencial",
+    body: "Acompañamiento clínico para la ansiedad, las emociones y la autocrítica, desde un enfoque integrativo y consciente.",
     largo:
-      "Descripción placeholder del proceso terapéutico: primera entrevista, frecuencia de las sesiones, enfoque de trabajo y modalidad presencial u online.",
+      "Proceso terapéutico desde las Terapias de Tercera Generación —como la Terapia de Aceptación y Compromiso (ACT) y el mindfulness—, con herramientas prácticas para trabajar la ansiedad, la autoexigencia, la autoestima, los vínculos y la gestión emocional. Modalidad online o presencial en Casa Lunay.",
   },
   {
     title: "Terapia individual",
     dot: "var(--teal)",
     meta: "50 minutos",
-    body: "Texto placeholder sobre el acompañamiento uno a uno.",
+    body: "Sesiones uno a uno para trabajar, a tu ritmo, aquello que hoy te pesa.",
     largo:
-      "Descripción placeholder del acompañamiento individual, los objetivos que se trabajan y cómo se define el plan junto a cada persona.",
+      "Espacio individual de 50 minutos donde definimos juntas los objetivos y un plan a tu medida. Un lugar seguro para mirar lo que sientes con más claridad y compasión, disponible en modalidad online o presencial.",
   },
   {
     title: "Vinyasa Yoga",
     dot: "var(--amber)",
-    meta: "Grupos reducidos",
-    body: "Texto placeholder sobre la práctica de movimiento y respiración.",
+    meta: "Todos los niveles",
+    body: "Práctica dinámica y consciente que une movimiento y respiración. Para todos los niveles.",
     largo:
-      "Descripción placeholder de la clase de Vinyasa: ritmo, niveles, duración, qué llevar y cómo se estructura la secuencia.",
+      "Clases de Vinyasa para pausar, moverte con intención y volver a ti. Prácticas dinámicas y conscientes, en grupos pequeños y con acompañamiento cercano, para todos los niveles. Lunes y miércoles a las 20:00 en Casa Lunay.",
   },
   {
     title: "Meditación",
     dot: "var(--lime)",
-    meta: "Sesiones semanales",
-    body: "Texto placeholder sobre atención plena y práctica guiada.",
+    meta: "Atención plena",
+    body: "Prácticas guiadas de atención plena para calmar la mente y soltar la tensión.",
     largo:
-      "Descripción placeholder de las sesiones de meditación guiada, técnicas de atención plena y sugerencias para la práctica en casa.",
+      "Sesiones de meditación y mindfulness para reducir el estrés y la ansiedad, cultivar la calma y volver al presente. Un espacio seguro para desconectar y reconectar contigo.",
   },
   {
     title: "Experiencias",
     dot: "var(--plum)",
     meta: "Talleres y retiros",
-    body: "Texto placeholder sobre talleres, retiros y encuentros.",
+    body: "Talleres y retiros para profundizar la práctica y compartir en comunidad.",
     largo:
-      "Descripción placeholder de las experiencias: talleres temáticos, jornadas de día completo y retiros fuera de la ciudad.",
+      "Encuentros especiales —talleres temáticos, jornadas y retiros— que combinan yoga, meditación y bienestar emocional para reconectar con el cuerpo y la calma.",
   },
   {
     title: "Comunidad",
     dot: "var(--teal)",
     meta: "Encuentros abiertos",
-    body: "Texto placeholder sobre los encuentros abiertos de la comunidad.",
+    body: "Siente el poder de la comunidad: encuentros para moverte y respirar acompañada.",
     largo:
-      "Descripción placeholder de la comunidad: encuentros abiertos, círculos de conversación y actividades gratuitas.",
+      "Una comunidad que acompaña e inspira. Clases al aire libre, encuentros abiertos y actividades para crear bienestar y vínculos desde la práctica compartida.",
   },
 ];
 
@@ -83,7 +83,7 @@ export const agenda: Evento[] = [
     titulo: "Sentir Yoga",
     tipo: "Yoga",
     desc: "Reencuentro con nuestro cuerpo a través del movimiento.",
-    lugar: "Mariano Sánchez Fontecilla 584, Las Condes",
+    lugar: "Casa Lunay · Mariano Sánchez Fontecilla 584, Las Condes",
     valor: "Valor: $5.000",
   },
   {
@@ -91,7 +91,7 @@ export const agenda: Evento[] = [
     hora: "19 hrs.",
     titulo: "Meditación guiada",
     tipo: "Meditación",
-    desc: "Práctica placeholder de atención plena para cerrar la semana.",
+    desc: "Práctica de atención plena para cerrar la semana.",
     lugar: "Online · Zoom",
     valor: "Valor: $4.000",
   },
@@ -100,8 +100,8 @@ export const agenda: Evento[] = [
     hora: "10 hrs.",
     titulo: "Taller: mente y cuerpo",
     tipo: "Talleres",
-    desc: "Taller placeholder que combina psicología y práctica corporal.",
-    lugar: "Mariano Sánchez Fontecilla 584, Las Condes",
+    desc: "Taller que combina psicología y práctica corporal.",
+    lugar: "Casa Lunay · Mariano Sánchez Fontecilla 584, Las Condes",
     valor: "Valor: $18.000",
   },
   {
@@ -109,7 +109,7 @@ export const agenda: Evento[] = [
     hora: "09 hrs.",
     titulo: "Círculo de comunidad",
     tipo: "Talleres",
-    desc: "Encuentro placeholder abierto para compartir la práctica.",
+    desc: "Encuentro abierto para compartir la práctica.",
     lugar: "Parque Bicentenario, Vitacura",
     valor: "Actividad gratuita",
   },
@@ -119,32 +119,47 @@ export const agenda: Evento[] = [
 export const filtros = ["Todo", "Yoga", "Meditación", "Talleres"] as const;
 export type Filtro = (typeof filtros)[number];
 
-/** Artículos del Diario. */
+/**
+ * Artículos del Diario. Estos son temas de ejemplo alineados a la marca;
+ * reemplázalos por tus artículos reales cuando los escribas.
+ * Inicio muestra los primeros 3; la página Diario los muestra todos.
+ */
 export const posts: Post[] = [
   {
     cat: "Psicología",
-    titulo: "Título placeholder de un artículo del diario",
+    titulo: "Ansiedad: cuando la mente se adelanta",
     bajada:
-      "Bajada placeholder de dos líneas que resume el contenido del artículo.",
+      "Qué es la ansiedad y cómo las Terapias de Tercera Generación nos ayudan a relacionarnos distinto con ella.",
   },
   {
     cat: "Yoga",
-    titulo: "Título placeholder sobre la práctica semanal",
+    titulo: "Respirar para volver al presente",
     bajada:
-      "Bajada placeholder de dos líneas que resume el contenido del artículo.",
+      "El rol de la respiración en Vinyasa Yoga para soltar la tensión que acumulamos durante el día.",
   },
   {
     cat: "Meditación",
-    titulo: "Título placeholder sobre atención plena",
+    titulo: "El desafío de la quietud",
     bajada:
-      "Bajada placeholder de dos líneas que resume el contenido del artículo.",
+      "Pequeñas pautas para empezar a meditar, aunque tu mente no deje de moverse.",
   },
-];
-
-/** Lista larga de la página Diario (duplica los posts, igual que el prototipo). */
-export const postsTodos: Post[] = [
-  ...posts,
-  ...posts.map((p) => ({ ...p, titulo: `${p.titulo} (2)` })),
+  {
+    cat: "Psicología",
+    titulo: "Autocrítica y autocompasión",
+    bajada:
+      "Cómo dejar de exigirte tanto y empezar a tratarte con más amabilidad.",
+  },
+  {
+    cat: "Yoga",
+    titulo: "Yoga para todos los niveles",
+    bajada:
+      "Por qué no necesitas ser flexible ni experta para empezar a practicar.",
+  },
+  {
+    cat: "Comunidad",
+    titulo: "El poder de practicar en comunidad",
+    bajada: "Lo que ocurre cuando nos movemos y respiramos acompañadas.",
+  },
 ];
 
 /**
@@ -204,15 +219,15 @@ export const aranceles: GrupoTarifas[] = [
 export const principios: Principio[] = [
   {
     titulo: "Autoconocimiento",
-    desc: "Texto placeholder que describe este principio del trabajo.",
+    desc: "Mirar hacia adentro con curiosidad y sin juicio para entender lo que sientes y lo que necesitas.",
   },
   {
     titulo: "Compasión",
-    desc: "Texto placeholder que describe este principio del trabajo.",
+    desc: "Tratarte con amabilidad, sobre todo cuando la autocrítica y la autoexigencia aprietan.",
   },
   {
     titulo: "Atención plena",
-    desc: "Texto placeholder que describe este principio del trabajo.",
+    desc: "Volver al presente, una respiración a la vez, para vivir con más conciencia y calma.",
   },
 ];
 
@@ -229,7 +244,10 @@ export const contacto = {
     label: "@menteenbalance.cl",
     url: "https://www.instagram.com/menteenbalance.cl/",
   },
-  whatsapp: "WhatsApp +56 9 0000 0000",
+  whatsapp: "WhatsApp +56 9 4354 9436",
   email: "hola@menteenbalance.cl",
-  direccion: ["Mariano Sánchez Fontecilla 584", "Las Condes, Santiago"],
+  direccion: [
+    "Casa Lunay · Mariano Sánchez Fontecilla 584",
+    "Las Condes, Santiago",
+  ],
 };

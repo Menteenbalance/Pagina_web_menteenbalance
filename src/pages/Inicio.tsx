@@ -1,11 +1,16 @@
 import { Link } from "react-router-dom";
 import Placeholder from "../components/Placeholder";
+import Reveal from "../components/Reveal";
 import { servicios, agenda, posts, reservaUrl } from "../data";
+import { img } from "../images";
 
 // Página de inicio: hero, cinta, "sobre nosotras", servicios,
 // agenda corta, cita destacada y últimos artículos del diario.
 export default function Inicio() {
   const agendaCorta = agenda.slice(0, 3);
+
+  // Imagen para cada artículo del diario (según su orden).
+  const postImgs = [img.consulta, img.retiro1, img.yogaRestaurativa];
 
   return (
     <>
@@ -45,24 +50,28 @@ export default function Inicio() {
       </section>
 
       {/* Cinta de palabras */}
-      <section className="ribbon">
-        <div className="ribbon__inner">
+      <Reveal>
+        <section className="ribbon">
+          <div className="ribbon__inner">
           <span>Psicología</span>
           <span>Terapia individual</span>
           <span>Vinyasa Yoga</span>
           <span>Meditación</span>
           <span>Experiencias</span>
           <span>Comunidad</span>
-        </div>
-      </section>
+          </div>
+        </section>
+      </Reveal>
 
       {/* Sobre nosotras */}
-      <section className="section">
-        <div className="split">
+      <Reveal>
+        <section className="section">
+          <div className="split">
           <div className="portrait">
-            <Placeholder
-              label="retrato · equipo"
-              className="placeholder portrait__img"
+            <img
+              className="portrait__img"
+              src={img.meditacionGrupo.src}
+              alt={img.meditacionGrupo.alt}
             />
             <div className="portrait__accent" />
           </div>
@@ -73,14 +82,15 @@ export default function Inicio() {
             </h2>
             <div className="prose" style={{ marginTop: 26 }}>
               <p>
-                Texto placeholder sobre la historia del proyecto: quiénes somos,
-                cómo nace Mente en Balance y por qué unimos la psicología clínica
-                con la práctica de yoga.
+                Mente en Balance nace del encuentro entre la psicología y el
+                yoga. María Ignacia Canessa —psicóloga clínica y profesora de
+                yoga— acompaña procesos de bienestar emocional para una vida más
+                consciente.
               </p>
               <p>
-                Segundo párrafo placeholder sobre el enfoque: acompañamiento
-                respetuoso, atención plena y trabajo corporal como una sola
-                conversación.
+                Unimos la mirada clínica de las Terapias de Tercera Generación
+                con la práctica de yoga y meditación: un mismo espacio para
+                cuidar la mente, habitar el cuerpo y crear comunidad.
               </p>
             </div>
             <Link
@@ -90,25 +100,35 @@ export default function Inicio() {
             >
               Conocer el enfoque
             </Link>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      </Reveal>
 
       {/* Servicios */}
       <section className="band band--plum">
         <div className="band__inner">
-          <p className="eyebrow eyebrow--plum">Servicios</p>
-          <h2 className="section-title" style={{ marginBottom: 52 }}>
-            Formas de acompañarte
-          </h2>
+          <Reveal>
+            <p className="eyebrow eyebrow--plum">Servicios</p>
+          </Reveal>
+          <Reveal delay={100}>
+            <h2 className="section-title" style={{ marginBottom: 52 }}>
+              Formas de acompañarte
+            </h2>
+          </Reveal>
           <div className="cards">
-            {servicios.map((s) => (
-              <div className="card" key={s.title}>
-                <span className="dot card__dot" style={{ background: s.dot }} />
-                <h3 className="card__title">{s.title}</h3>
-                <p className="card__body">{s.body}</p>
-                <span className="card__meta">{s.meta}</span>
-              </div>
+            {servicios.map((s, i) => (
+              <Reveal key={s.title} delay={200 + i * 90}>
+                <div className="card">
+                  <span
+                    className="dot card__dot"
+                    style={{ background: s.dot }}
+                  />
+                  <h3 className="card__title">{s.title}</h3>
+                  <p className="card__body">{s.body}</p>
+                  <span className="card__meta">{s.meta}</span>
+                </div>
+              </Reveal>
             ))}
           </div>
         </div>
@@ -116,20 +136,23 @@ export default function Inicio() {
 
       {/* Agenda corta */}
       <section className="section">
-        <div className="section-head">
-          <div>
-            <p className="eyebrow eyebrow--teal" style={{ marginBottom: 18 }}>
-              Agenda
-            </p>
-            <h2 className="section-title">Próximas clases y talleres</h2>
+        <Reveal>
+          <div className="section-head">
+            <div>
+              <p className="eyebrow eyebrow--teal" style={{ marginBottom: 18 }}>
+                Agenda
+              </p>
+              <h2 className="section-title">Próximas clases y talleres</h2>
+            </div>
+            <Link to="/agenda" className="text-link">
+              Calendario completo
+            </Link>
           </div>
-          <Link to="/agenda" className="text-link">
-            Calendario completo
-          </Link>
-        </div>
+        </Reveal>
         <div className="agenda-list">
-          {agendaCorta.map((e) => (
-            <div className="agenda-row" key={e.titulo}>
+          {agendaCorta.map((e, i) => (
+            <Reveal key={e.titulo} delay={i * 120}>
+              <div className="agenda-row">
               <div>
                 <div className="agenda-row__date">
                   <div className="agenda-row__day">{e.fecha}</div>
@@ -151,44 +174,55 @@ export default function Inicio() {
                 >
                   Inscribirme
                 </a>
+                </div>
               </div>
-            </div>
+            </Reveal>
           ))}
         </div>
       </section>
 
       {/* Cita destacada */}
-      <section className="quote">
-        <div className="quote__inner">
-          <p className="quote__eyebrow">Recordatorio</p>
-          <p className="quote__text">Frase muy bonita corta con sentido</p>
-        </div>
-      </section>
+      <Reveal>
+        <section className="quote">
+          <div className="quote__inner">
+            <p className="quote__eyebrow">Recordatorio</p>
+            <p className="quote__text">
+              Ven a moverte, respirar y volver a ti.
+            </p>
+          </div>
+        </section>
+      </Reveal>
 
       {/* Diario */}
       <section className="section">
-        <div className="section-head">
-          <div>
-            <p className="eyebrow eyebrow--plum" style={{ marginBottom: 18 }}>
-              Diario
-            </p>
-            <h2 className="section-title">Recursos para la práctica</h2>
-          </div>
-          <Link to="/diario" className="text-link">
-            Ver todo
-          </Link>
-        </div>
-        <div className="posts">
-          {posts.map((p) => (
-            <Link to="/diario" className="post" key={p.titulo}>
-              <Placeholder
-                label="imagen · artículo"
-                className="placeholder post__thumb"
-              />
-              <span className="post__cat">{p.cat}</span>
-              <h3 className="post__title">{p.titulo}</h3>
-              <p className="post__excerpt">{p.bajada}</p>
+        <Reveal>
+          <div className="section-head">
+            <div>
+              <p className="eyebrow eyebrow--plum" style={{ marginBottom: 18 }}>
+                Diario
+              </p>
+              <h2 className="section-title">Recursos para la práctica</h2>
+            </div>
+            <Link to="/diario" className="text-link">
+              Ver todo
             </Link>
+          </div>
+        </Reveal>
+        <div className="posts">
+          {posts.slice(0, 3).map((p, i) => (
+            <Reveal key={p.titulo} delay={i * 120}>
+              <Link to="/diario" className="post">
+                <img
+                  className="post__thumb"
+                  src={postImgs[i].src}
+                  alt={postImgs[i].alt}
+                  loading="lazy"
+                />
+                <span className="post__cat">{p.cat}</span>
+                <h3 className="post__title">{p.titulo}</h3>
+                <p className="post__excerpt">{p.bajada}</p>
+              </Link>
+            </Reveal>
           ))}
         </div>
       </section>
