@@ -72,6 +72,8 @@ export default function Inicio() {
               className="portrait__img"
               src={img.meditacionGrupo.src}
               alt={img.meditacionGrupo.alt}
+              loading="lazy"
+              decoding="async"
             />
             <div className="portrait__accent" />
           </div>
@@ -217,6 +219,7 @@ export default function Inicio() {
                   src={postImgs[i].src}
                   alt={postImgs[i].alt}
                   loading="lazy"
+                  decoding="async"
                 />
                 <span className="post__cat">{p.cat}</span>
                 <h3 className="post__title">{p.titulo}</h3>

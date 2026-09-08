@@ -31,6 +31,7 @@ export default function Diario() {
               src={diarioImgs[i % diarioImgs.length].src}
               alt={diarioImgs[i % diarioImgs.length].alt}
               loading="lazy"
+              decoding="async"
             />
             <span className="post__cat">{p.cat}</span>
             <h2 className="post__title">{p.titulo}</h2>

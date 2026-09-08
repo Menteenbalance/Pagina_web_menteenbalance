@@ -45,6 +45,8 @@ export default function Sobre() {
             className="about-media__img"
             src={img.claseGuiada.src}
             alt={img.claseGuiada.alt}
+            loading="lazy"
+            decoding="async"
           />
           <div className="about-media__accent" />
         </div>

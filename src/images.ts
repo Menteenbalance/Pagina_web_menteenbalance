@@ -13,47 +13,47 @@ export interface Imagen {
 
 export const img = {
   yogaPose: {
-    src: "/img/yoga-pose.jpg",
+    src: "/img/yoga-pose.webp",
     alt: "Práctica de Vinyasa Yoga en la sala",
   },
   meditacionGrupo: {
-    src: "/img/meditacion.jpg",
+    src: "/img/meditacion.webp",
     alt: "Sesión de meditación en grupo",
   },
   consulta: {
-    src: "/img/consulta.jpg",
+    src: "/img/consulta.webp",
     alt: "Sala de consulta de psicología",
   },
   claseGrupo: {
-    src: "/img/clase-grupo.jpg",
+    src: "/img/clase-grupo.webp",
     alt: "Clase grupal de yoga en postura del guerrero",
   },
   claseGuiada: {
-    src: "/img/clase-guiada.jpg",
+    src: "/img/clase-guiada.webp",
     alt: "Clase de yoga guiada por la instructora",
   },
   retiro1: {
-    src: "/img/retiro-1.jpg",
+    src: "/img/retiro-1.webp",
     alt: "Práctica de yoga al aire libre en un retiro",
   },
   retiro2: {
-    src: "/img/retiro-2.jpg",
+    src: "/img/retiro-2.webp",
     alt: "Equilibrio de brazos en un retiro de yoga al aire libre",
   },
   retiroGrupo: {
-    src: "/img/retiro-grupo.jpg",
+    src: "/img/retiro-grupo.webp",
     alt: "Clase grupal de yoga en un retiro",
   },
   yogaParque: {
-    src: "/img/yoga-parque.jpg",
+    src: "/img/yoga-parque.webp",
     alt: "Clase de yoga al aire libre en el parque",
   },
   yogaRestaurativa: {
-    src: "/img/yoga-restaurativa.jpg",
+    src: "/img/yoga-restaurativa.webp",
     alt: "Yoga restaurativa con velas y ambiente cálido",
   },
   balasana: {
-    src: "/img/balasana.jpg",
+    src: "/img/balasana.webp",
     alt: "Grupo en postura del niño durante una clase",
   },
 } satisfies Record<string, Imagen>;
