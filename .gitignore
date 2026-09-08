@@ -17,5 +17,5 @@ npm-debug.log*
 *.local
 !.claude
 
-# Capeta de subidas
-uploads
+# Carpeta de subidas (material fuente/privado, no se versiona)
+/uploads/
