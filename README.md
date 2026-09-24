@@ -54,3 +54,25 @@ public/
 - El prototipo original (`Mente en Balance.dc.html`, `support.js`, `_ds/`) se
   conserva solo como referencia; el sitio real vive en `src/`.
 ```
+
+## Formulario de contacto
+
+El formulario de `/contacto` envía un correo a través de una función de Vercel (`api/contact.ts`) usando [Resend](https://resend.com).
+
+**Protecciones incluidas**
+
+- **Rate limit por visitante**, guardado en Upstash Redis:
+  - Por navegador (ID anónimo en `localStorage`): 3 envíos cada 10 min y 8 por día.
+  - Por IP (guardada anonimizada con SHA-256): 5 cada 10 min y 15 por día.
+  - Tope global: 150 mensajes por día.
+- **Anti-bots:** un campo trampa invisible y un tiempo mínimo de 3 s para llenar el formulario. Los bots reciben un "ok" falso y no se envía nada.
+- **Validación** en el servidor, con errores que aparecen junto a cada campo.
+
+**Configuración (una sola vez)**
+
+1. En Resend, crea una cuenta, verifica el dominio `menteenbalance.com` (registros DNS) y copia la API key.
+2. En Vercel, entra a **Storage → Upstash Redis** y conéctalo al proyecto. Esto crea `KV_REST_API_URL` y `KV_REST_API_TOKEN` automáticamente.
+3. En Vercel, entra a **Settings → Environment Variables** y agrega `RESEND_API_KEY`, `CONTACT_TO_EMAIL`, `CONTACT_FROM_EMAIL` y `RATE_LIMIT_SALT`. Ver `.env.example`.
+4. Vuelve a desplegar el sitio.
+
+**En desarrollo:** con `npm run dev` el formulario funciona localmente. Sin `RESEND_API_KEY` en `.env.local`, el correo no se envía y se muestra en la consola.

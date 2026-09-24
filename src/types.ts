@@ -24,13 +24,15 @@ export interface Servicio {
 export type TipoEvento = "Yoga" | "Meditación" | "Talleres";
 
 export interface Evento {
+  /** Fecha en formato AAAA-MM-DD, ej: "2026-06-28" */
   fecha: string;
   hora: string;
   titulo: string;
   tipo: TipoEvento;
   desc: string;
   lugar: string;
-  valor: string;
+  /** Precio en pesos chilenos, sin puntos. 0 = actividad gratuita */
+  precio: number;
 }
 
 export interface Post {
@@ -52,8 +54,8 @@ export interface Tarifa {
   modalidad?: string;
   /** Duración opcional, ej: "50 min" */
   duracion?: string;
-  /** Precio ya formateado, ej: "$37.000" */
-  precio: string;
+  /** Precio en pesos chilenos, sin puntos, ej: 37000 */
+  precio: number;
 }
 
 /** Grupo de tarifas mostrado como una columna (ej: Psicoterapia, Yoga). */

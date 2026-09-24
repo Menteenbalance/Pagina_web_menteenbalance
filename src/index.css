@@ -13,8 +13,9 @@
   --cream: #fbf8f2; /* fondo principal */
   --ink: #2a2430; /* texto oscuro */
   --muted: #5b5360; /* texto secundario */
-  --faint: #8a8078; /* texto tenue / placeholders */
-  --teal: #069999; /* turquesa (acento) */
+  --faint: #736a62; /* texto tenue / placeholders (5:1 sobre crema) */
+  --teal: #069999; /* turquesa (acento: fondos, puntos, bordes, foco) */
+  --teal-text: #067a7a; /* turquesa para TEXTO y botones: 4.9:1 sobre crema */
   --plum: #852b5b; /* ciruela (acento) */
   --amber: #f9b233; /* ámbar */
   --lime: #d5d700; /* lima */
@@ -35,6 +36,8 @@
 }
 html {
   scroll-behavior: smooth;
+  /* Que el header fijo no tape anclas ni el elemento enfocado */
+  scroll-padding-top: 96px;
 }
 body {
   margin: 0;
@@ -45,7 +48,7 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 a {
-  color: var(--teal);
+  color: var(--teal-text);
   text-decoration: none;
 }
 a:hover {
@@ -87,14 +90,6 @@ a:hover {
   to {
     opacity: 1;
     transform: translateY(0);
-  }
-}
-@media (prefers-reduced-motion: reduce) {
-  .reveal {
-    opacity: 1;
-  }
-  .reveal.is-visible {
-    animation: none;
   }
 }
 @keyframes breathe {
@@ -139,7 +134,7 @@ main {
   margin: 0 0 22px;
 }
 .eyebrow--teal {
-  color: var(--teal);
+  color: var(--teal-text);
 }
 .eyebrow--plum {
   color: var(--plum);
@@ -191,7 +186,7 @@ main {
   color: var(--cream);
 }
 .btn--teal {
-  background: var(--teal);
+  background: var(--teal-text);
   color: var(--cream);
 }
 .btn--teal:hover {
@@ -213,11 +208,11 @@ main {
 }
 .btn--outline:hover {
   border-color: var(--teal);
-  color: var(--teal);
+  color: var(--teal-text);
 }
 .btn--outline-teal:hover {
-  background: var(--teal);
-  border-color: var(--teal);
+  background: var(--teal-text);
+  border-color: var(--teal-text);
   color: var(--cream);
 }
 .btn--outline-plum:hover {
@@ -306,7 +301,7 @@ main {
   font-size: 9px;
   letter-spacing: 0.28em;
   text-transform: uppercase;
-  color: var(--teal);
+  color: var(--teal-text);
   margin-top: 3px;
 }
 .nav {
@@ -325,6 +320,125 @@ main {
 .nav__link:hover,
 .nav__link.is-active {
   color: var(--plum);
+}
+
+/* Botón del menú móvil (oculto en escritorio) */
+.menu-toggle {
+  display: none;
+  width: 44px;
+  height: 44px;
+  margin-left: 4px;
+  padding: 0;
+  border: 1px solid rgba(42, 36, 48, 0.18);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--ink);
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  touch-action: manipulation;
+}
+.menu-toggle__bars,
+.menu-toggle__bars::before,
+.menu-toggle__bars::after {
+  display: block;
+  width: 16px;
+  height: 1.5px;
+  border-radius: 2px;
+  background: currentColor;
+  transition: transform 0.25s ease, opacity 0.2s ease;
+}
+.menu-toggle__bars {
+  position: relative;
+}
+.menu-toggle__bars::before,
+.menu-toggle__bars::after {
+  content: "";
+  position: absolute;
+  left: 0;
+}
+.menu-toggle__bars::before {
+  top: -5px;
+}
+.menu-toggle__bars::after {
+  top: 5px;
+}
+.header.is-open .menu-toggle__bars {
+  background: transparent;
+}
+.header.is-open .menu-toggle__bars::before {
+  transform: translateY(5px) rotate(45deg);
+  background: var(--ink);
+}
+.header.is-open .menu-toggle__bars::after {
+  transform: translateY(-5px) rotate(-45deg);
+  background: var(--ink);
+}
+
+/* Texto solo para lectores de pantalla */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (max-width: 900px) {
+  .header__inner {
+    padding: 12px 20px;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .header__cta {
+    margin-left: auto;
+  }
+  .menu-toggle {
+    display: inline-flex;
+  }
+  /* Los links pasan a una lista vertical bajo la barra */
+  .nav {
+    display: none;
+    order: 10;
+    flex-basis: 100%;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    margin: 4px 0 6px;
+    border-top: 1px solid var(--line-soft);
+  }
+  .header.is-open .nav {
+    display: flex;
+  }
+  .nav__link {
+    padding: 15px 2px;
+    font-size: 13px;
+    border-bottom: 1px solid var(--line-soft);
+  }
+  .nav__link:last-child {
+    border-bottom: none;
+  }
+}
+@media (max-width: 480px) {
+  .header__inner {
+    padding: 10px 16px;
+    gap: 8px;
+  }
+  .brand {
+    gap: 10px;
+  }
+  .header__cta {
+    padding: 11px 16px;
+  }
+}
+@media (max-width: 380px) {
+  .brand__tag {
+    display: none;
+  }
 }
 
 .footer {
@@ -586,7 +700,7 @@ img.post__thumb {
   font-size: 11px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--teal);
+  color: var(--teal-text);
 }
 
 /* Encabezado de sección con enlace a la derecha */
@@ -716,7 +830,7 @@ img.post__thumb {
   font-size: 11px;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: var(--teal);
+  color: var(--teal-text);
 }
 .post__title {
   font-family: var(--serif);
@@ -930,9 +1044,13 @@ img.post__thumb {
   cursor: pointer;
   transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
 }
-.filtro.is-active {
+.filtro:hover {
   border-color: var(--teal);
-  background: var(--teal);
+  color: var(--ink);
+}
+.filtro.is-active {
+  border-color: var(--teal-text);
+  background: var(--teal-text);
   color: var(--cream);
 }
 .agenda-cards {
@@ -1052,6 +1170,42 @@ img.post__thumb {
 .form__submit {
   align-self: flex-start;
 }
+.form__submit:disabled {
+  opacity: 0.7;
+  cursor: progress;
+}
+/* Mensajes de error del formulario (ciruela: 7.9:1 sobre crema) */
+.field__error {
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--plum);
+}
+.input[aria-invalid="true"],
+.select[aria-invalid="true"],
+.textarea[aria-invalid="true"] {
+  border-color: var(--plum);
+}
+.form__alert {
+  margin: 0;
+  padding: 16px 20px;
+  border-radius: 18px;
+  background: rgba(133, 43, 91, 0.07);
+  border: 1px solid rgba(133, 43, 91, 0.3);
+  color: var(--ink);
+  font-size: 14px;
+  line-height: 1.6;
+}
+/* Campo trampa anti-bots: fuera de pantalla, no visible ni enfocable */
+.form__trap {
+  position: absolute;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+.sent:focus {
+  outline: none;
+}
 .sent {
   border: 1px solid rgba(6, 153, 153, 0.4);
   background: rgba(6, 153, 153, 0.07);
@@ -1138,4 +1292,250 @@ img.post__thumb {
 }
 .newsletter__btn {
   padding: 13px 24px;
+}
+
+/* 5b. ─── ACCESIBILIDAD Y ESTADOS (auditoría, prioridad media) ───
+   Patrones de "minimalismo cálido" (referencia: Notion en awesome-design):
+   sombras suaves teñidas con la tinta de marca, objetivos táctiles de 44px,
+   tarjetas sobrias. Colores y fuentes: siempre los del manual de marca. */
+
+/* Enlace "Saltar al contenido": invisible hasta que se navega con teclado */
+.skip-link {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  z-index: 100;
+  padding: 12px 20px;
+  border-radius: 999px;
+  background: var(--ink);
+  color: var(--cream);
+  font-size: 13px;
+  transform: translateY(-160%);
+}
+.skip-link:focus {
+  transform: none;
+  color: var(--cream);
+}
+/* El foco programático al cambiar de página no necesita anillo visible */
+main:focus,
+[tabindex="-1"]:focus {
+  outline: none;
+}
+/* Sección a la que se llega desde un enlace (ej: tarjeta de servicio):
+   un tinte suave en lugar de un recuadro, para orientar sin interrumpir. */
+.servicio-row:focus,
+.post:focus {
+  background: rgba(6, 153, 153, 0.06);
+  border-radius: 22px;
+  box-shadow: 0 0 0 14px rgba(6, 153, 153, 0.06);
+}
+/* Anclas (/servicios#psicologia, /diario#...) no quedan bajo el header */
+[id] {
+  scroll-margin-top: 104px;
+}
+
+/* Cinta de palabras: ahora es una lista */
+ul.ribbon__inner {
+  list-style: none;
+  margin: 0 auto;
+}
+
+/* Tarjetas de servicio en Inicio: ahora son enlaces a su detalle */
+a.card {
+  color: var(--ink);
+}
+a.card:hover {
+  color: var(--ink);
+  box-shadow: 0 10px 28px -12px rgba(42, 36, 48, 0.18);
+}
+a.card:active {
+  transform: translateY(-1px);
+}
+.card__meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.card__arrow {
+  font-size: 15px;
+  letter-spacing: 0;
+  transition: transform 0.2s ease;
+}
+a.card:hover .card__arrow {
+  transform: translateX(4px);
+}
+
+/* Posts: solo los de Inicio son enlaces; en Diario son artículos estáticos */
+.post--link .post__thumb {
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.4s ease;
+}
+.post--link:hover .post__thumb {
+  transform: translateY(-3px);
+  box-shadow: 0 14px 30px -16px rgba(42, 36, 48, 0.28);
+}
+.post--link:hover .post__title {
+  color: var(--plum);
+}
+img.post__thumb {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+/* Fechas de la agenda (ahora dentro de <time>) */
+.agenda-row__day,
+.agenda-row__time {
+  display: block;
+}
+
+/* Cifras alineadas en listas de precios */
+.precio-item__price,
+.event-card__price,
+.agenda-row__price {
+  font-variant-numeric: tabular-nums lining-nums;
+}
+
+/* Estado vacío de la agenda */
+.empty {
+  margin-top: 44px;
+  padding: 44px 36px;
+  border-radius: 26px;
+  background: rgba(249, 178, 51, 0.14);
+  max-width: 640px;
+}
+.empty__title {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 1.3;
+  margin: 0;
+  text-wrap: balance;
+}
+.empty__text {
+  font-size: 15px;
+  line-height: 1.75;
+  color: var(--muted);
+  margin: 14px 0 26px;
+  max-width: 48ch;
+}
+.empty__actions {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  flex-wrap: wrap;
+}
+
+/* Página 404 */
+.not-found {
+  min-height: 60vh;
+}
+.not-found__text {
+  font-size: 17px;
+  line-height: 1.75;
+  color: var(--muted);
+  max-width: 44ch;
+  margin: 26px 0 0;
+}
+
+/* Footer: encabezados ahora son <h2>, dirección en <address> */
+h2.footer__heading {
+  margin: 0;
+  font-weight: 400;
+}
+.footer__address {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-style: normal;
+  font-size: 13px;
+  line-height: 1.6;
+  color: rgba(251, 248, 242, 0.72);
+}
+
+/* Objetivos táctiles cómodos en pantallas chicas */
+@media (max-width: 640px) {
+  .btn--sm,
+  .filtro {
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .footer__link {
+    padding: 6px 0;
+  }
+}
+
+/* Hero con foto real: el titular y los botones deben verse sin hacer
+   scroll. La foto (arco 4:5) se limita al alto de la pantalla. */
+.hero {
+  padding-top: 64px;
+  padding-bottom: 64px;
+}
+img.hero__photo {
+  width: auto;
+  max-width: 100%;
+  height: min(620px, calc(100dvh - 190px));
+  min-height: 380px;
+  margin-left: auto;
+  object-position: center 35%;
+}
+.hero__halo {
+  width: min(62%, 340px);
+}
+
+/* Servicios: 6 tarjetas en 3 + 3 (sin fila huérfana) */
+.cards {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+@media (max-width: 960px) {
+  .cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 600px) {
+  .cards {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 720px) {
+  /* En móvil la foto va debajo del texto, a todo el ancho */
+  img.hero__photo {
+    width: 100%;
+    height: auto;
+    min-height: 0;
+    max-height: 70vh;
+  }
+}
+
+/* 6. ─── MOVIMIENTO REDUCIDO ──────────────────────────────────
+   Va al final para imponerse sobre las animaciones definidas antes. */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .reveal {
+    opacity: 1;
+  }
+  .reveal.is-visible,
+  .hero__copy,
+  .hero__media,
+  .hero__halo {
+    animation: none;
+  }
+  .btn,
+  .card,
+  .card__arrow,
+  .post--link .post__thumb,
+  .agenda-row,
+  .event-card,
+  .filtro {
+    transition: none;
+  }
+  a.card:hover,
+  a.card:hover .card__arrow,
+  .post--link:hover .post__thumb {
+    transform: none;
+  }
 }

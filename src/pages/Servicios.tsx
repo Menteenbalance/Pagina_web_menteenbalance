@@ -1,4 +1,5 @@
 import { servicios, aranceles, reservaUrl } from "../data";
+import { formatearPrecio, slug } from "../lib/formato";
 
 // Página "Servicios": lista extendida de cada servicio + aranceles.
 export default function Servicios() {
@@ -13,13 +14,22 @@ export default function Servicios() {
 
       <div className="servicios-list">
         {servicios.map((s) => (
-          <div className="servicio-row" key={s.title}>
+          <section
+            className="servicio-row"
+            key={s.title}
+            id={slug(s.title)}
+            tabIndex={-1}
+            aria-labelledby={`${slug(s.title)}-titulo`}
+          >
             <div className="servicio-row__head">
               <span
                 className="dot servicio-row__dot"
                 style={{ background: s.dot }}
+                aria-hidden="true"
               />
-              <h2 className="servicio-row__title">{s.title}</h2>
+              <h2 className="servicio-row__title" id={`${slug(s.title)}-titulo`}>
+                {s.title}
+              </h2>
             </div>
             <p className="servicio-row__desc">{s.largo}</p>
             <div className="servicio-row__aside">
@@ -29,11 +39,12 @@ export default function Servicios() {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn btn--outline btn--outline-plum btn--sm"
+                aria-label={`Consultar por ${s.title} (se abre en una pestaña nueva)`}
               >
                 Consultar
               </a>
             </div>
-          </div>
+          </section>
         ))}
       </div>
 
@@ -66,7 +77,9 @@ export default function Servicios() {
                         </span>
                       )}
                     </div>
-                    <span className="precio-item__price">{item.precio}</span>
+                    <span className="precio-item__price">
+                      {formatearPrecio(item.precio)}
+                    </span>
                   </li>
                 ))}
               </ul>
@@ -75,6 +88,7 @@ export default function Servicios() {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn btn--teal btn--sm precio-group__cta"
+                aria-label={`Reservar ${grupo.categoria} (se abre en una pestaña nueva)`}
               >
                 Reservar {grupo.categoria}
               </a>

@@ -31,7 +31,7 @@ export const servicios: Servicio[] = [
     meta: "Online y presencial",
     body: "Acompañamiento clínico para la ansiedad, las emociones y la autocrítica, desde un enfoque integrativo y consciente.",
     largo:
-      "Proceso terapéutico desde las Terapias de Tercera Generación —como la Terapia de Aceptación y Compromiso (ACT) y el mindfulness—, con herramientas prácticas para trabajar la ansiedad, la autoexigencia, la autoestima, los vínculos y la gestión emocional. Modalidad online o presencial en Casa Lunay.",
+      "Proceso terapéutico desde las Terapias de Tercera Generación, como la Terapia de Aceptación y Compromiso (ACT) y el mindfulness, con herramientas prácticas para trabajar la ansiedad, la autoexigencia, la autoestima, los vínculos y la gestión emocional. Modalidad online o presencial en Casa Lunay.",
   },
   {
     title: "Terapia individual",
@@ -63,7 +63,7 @@ export const servicios: Servicio[] = [
     meta: "Talleres y retiros",
     body: "Talleres y retiros para profundizar la práctica y compartir en comunidad.",
     largo:
-      "Encuentros especiales —talleres temáticos, jornadas y retiros— que combinan yoga, meditación y bienestar emocional para reconectar con el cuerpo y la calma.",
+      "Encuentros especiales (talleres temáticos, jornadas y retiros) que combinan yoga, meditación y bienestar emocional para reconectar con el cuerpo y la calma.",
   },
   {
     title: "Comunidad",
@@ -78,40 +78,40 @@ export const servicios: Servicio[] = [
 /** Clases y talleres. Los filtros de la Agenda usan el campo `tipo`. */
 export const agenda: Evento[] = [
   {
-    fecha: "28/06",
+    fecha: "2026-06-28",
     hora: "11 hrs.",
     titulo: "Sentir Yoga",
     tipo: "Yoga",
     desc: "Reencuentro con nuestro cuerpo a través del movimiento.",
     lugar: "Casa Lunay · Mariano Sánchez Fontecilla 584, Las Condes",
-    valor: "Valor: $5.000",
+    precio: 5000,
   },
   {
-    fecha: "05/07",
+    fecha: "2026-07-05",
     hora: "19 hrs.",
     titulo: "Meditación guiada",
     tipo: "Meditación",
     desc: "Práctica de atención plena para cerrar la semana.",
     lugar: "Online · Zoom",
-    valor: "Valor: $4.000",
+    precio: 4000,
   },
   {
-    fecha: "12/07",
+    fecha: "2026-07-12",
     hora: "10 hrs.",
     titulo: "Taller: mente y cuerpo",
     tipo: "Talleres",
     desc: "Taller que combina psicología y práctica corporal.",
     lugar: "Casa Lunay · Mariano Sánchez Fontecilla 584, Las Condes",
-    valor: "Valor: $18.000",
+    precio: 18000,
   },
   {
-    fecha: "26/07",
+    fecha: "2026-07-26",
     hora: "09 hrs.",
     titulo: "Círculo de comunidad",
     tipo: "Talleres",
     desc: "Encuentro abierto para compartir la práctica.",
     lugar: "Parque Bicentenario, Vitacura",
-    valor: "Actividad gratuita",
+    precio: 0,
   },
 ];
 
@@ -174,25 +174,25 @@ export const aranceles: GrupoTarifas[] = [
         nombre: "Sesión online",
         modalidad: "Online",
         duracion: "50 min",
-        precio: "$37.000",
+        precio: 37000,
       },
       {
         nombre: "Paquete de 4 sesiones · Online",
         modalidad: "Online",
         duracion: "50 min por sesión",
-        precio: "$140.000",
+        precio: 140000,
       },
       {
         nombre: "Sesión presencial",
         modalidad: "Presencial",
         duracion: "50 min",
-        precio: "$42.000",
+        precio: 42000,
       },
       {
         nombre: "Paquete de 4 sesiones · Presencial",
         modalidad: "Presencial",
         duracion: "50 min por sesión",
-        precio: "$155.000",
+        precio: 155000,
       },
     ],
   },
@@ -201,15 +201,15 @@ export const aranceles: GrupoTarifas[] = [
     items: [
       {
         nombre: "Clase suelta",
-        precio: "$10.000",
+        precio: 10000,
       },
       {
         nombre: "Mensualidad · 1 vez por semana",
-        precio: "$35.000",
+        precio: 35000,
       },
       {
         nombre: "Mensualidad · 2 veces por semana",
-        precio: "$50.000",
+        precio: 50000,
       },
     ],
   },

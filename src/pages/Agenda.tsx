@@ -1,9 +1,17 @@
-import { useState } from "react";
+import { Link, useSearchParams } from "react-router-dom";
 import { agenda, filtros, reservaUrl, type Filtro } from "../data";
+import { formatearFecha, formatearPrecio, slug } from "../lib/formato";
 
 // Página "Agenda": tarjetas de clases con filtros por tipo.
+// El filtro queda en la URL (ej: /agenda?tipo=yoga) para poder compartirlo.
 export default function Agenda() {
-  const [filtro, setFiltro] = useState<Filtro>("Todo");
+  const [params, setParams] = useSearchParams();
+  const filtro: Filtro =
+    filtros.find((f) => slug(f) === params.get("tipo")) ?? "Todo";
+
+  function elegir(f: Filtro) {
+    setParams(f === "Todo" ? {} : { tipo: slug(f) }, { replace: true });
+  }
 
   const eventos =
     filtro === "Todo" ? agenda : agenda.filter((e) => e.tipo === filtro);
@@ -17,11 +25,13 @@ export default function Agenda() {
         Próximas clases y talleres
       </h1>
 
-      <div className="filtros">
+      <div className="filtros" role="group" aria-label="Filtrar por tipo de actividad">
         {filtros.map((f) => (
           <button
             key={f}
-            onClick={() => setFiltro(f)}
+            type="button"
+            aria-pressed={f === filtro}
+            onClick={() => elegir(f)}
             className={f === filtro ? "filtro is-active" : "filtro"}
           >
             {f}
@@ -29,30 +39,70 @@ export default function Agenda() {
         ))}
       </div>
 
-      <div className="agenda-cards">
-        {eventos.map((e) => (
-          <div className="event-card" key={e.titulo}>
-            <div className="event-card__top">
-              <span className="event-card__date">{e.fecha}</span>
-              <span className="event-card__time">{e.hora}</span>
-            </div>
-            <h2 className="event-card__title">{e.titulo}</h2>
-            <p className="event-card__desc">{e.desc}</p>
-            <p className="event-card__place">{e.lugar}</p>
-            <div className="event-card__foot">
-              <span className="event-card__price">{e.valor}</span>
-              <a
-                href={reservaUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn btn--teal btn--sm"
-              >
-                Inscribirme
-              </a>
-            </div>
+      <p className="sr-only" aria-live="polite">
+        {eventos.length === 1
+          ? "1 actividad"
+          : `${eventos.length} actividades`}
+      </p>
+
+      {eventos.length === 0 ? (
+        <div className="empty">
+          <h2 className="empty__title">
+            Por ahora no hay fechas de {filtro.toLowerCase()}
+          </h2>
+          <p className="empty__text">
+            Publicamos nuevas clases cada mes. Revisa las otras actividades o
+            escríbenos y te avisamos cuando abramos cupos.
+          </p>
+          <div className="empty__actions">
+            <button
+              type="button"
+              className="btn btn--outline btn--sm"
+              onClick={() => elegir("Todo")}
+            >
+              Ver todas
+            </button>
+            <Link to="/contacto" className="text-link">
+              Avísenme
+            </Link>
           </div>
-        ))}
-      </div>
+        </div>
+      ) : (
+        <div className="agenda-cards">
+          {eventos.map((e) => {
+            const f = formatearFecha(e.fecha);
+            return (
+              <article className="event-card" key={e.titulo}>
+                <div className="event-card__top">
+                  <time className="event-card__date" dateTime={e.fecha}>
+                    {f.corta}
+                  </time>
+                  <span className="event-card__time">
+                    {f.dia} · {e.hora}
+                  </span>
+                </div>
+                <h2 className="event-card__title">{e.titulo}</h2>
+                <p className="event-card__desc">{e.desc}</p>
+                <p className="event-card__place">{e.lugar}</p>
+                <div className="event-card__foot">
+                  <span className="event-card__price">
+                    {formatearPrecio(e.precio)}
+                  </span>
+                  <a
+                    href={reservaUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn btn--teal btn--sm"
+                    aria-label={`Inscribirme en ${e.titulo}, ${f.larga} (se abre en una pestaña nueva)`}
+                  >
+                    Inscribirme
+                  </a>
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      )}
     </div>
   );
 }

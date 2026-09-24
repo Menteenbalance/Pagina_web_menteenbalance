@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
@@ -8,23 +8,64 @@ import Servicios from "./pages/Servicios";
 import Agenda from "./pages/Agenda";
 import Diario from "./pages/Diario";
 import Contacto from "./pages/Contacto";
+import NoEncontrada from "./pages/NoEncontrada";
 
-// Vuelve al inicio de la página cada vez que cambia la ruta,
-// tal como hacía el prototipo original.
-function ScrollToTop() {
-  const { pathname } = useLocation();
+const MARCA = "Mente en Balance";
+
+// Título de la pestaña del navegador según la página.
+const titulos: Record<string, string> = {
+  "/": `${MARCA} | Psicología & Yoga en Santiago`,
+  "/sobre": `Sobre nosotras | ${MARCA}`,
+  "/servicios": `Servicios y aranceles | ${MARCA}`,
+  "/agenda": `Agenda de clases y talleres | ${MARCA}`,
+  "/diario": `Diario | ${MARCA}`,
+  "/contacto": `Contacto | ${MARCA}`,
+};
+
+/**
+ * Al cambiar de página:
+ * - actualiza el título de la pestaña,
+ * - si hay un #ancla, baja hasta esa sección; si no, vuelve arriba,
+ * - mueve el foco al contenido principal (lectores de pantalla y teclado
+ *   “escuchan” el cambio de página, como en un sitio tradicional).
+ */
+function CambioDePagina({ mainRef }: { mainRef: React.RefObject<HTMLElement> }) {
+  const { pathname, hash } = useLocation();
+  const primeraCarga = useRef(true);
+
   useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [pathname]);
+    document.title = titulos[pathname] ?? `Página no encontrada | ${MARCA}`;
+
+    if (hash) {
+      // Espera a que la página pinte antes de buscar el ancla
+      requestAnimationFrame(() => {
+        const destino = document.getElementById(decodeURIComponent(hash.slice(1)));
+        if (destino) {
+          destino.scrollIntoView();
+          destino.focus({ preventScroll: true });
+        }
+      });
+    } else {
+      window.scrollTo(0, 0);
+      if (!primeraCarga.current) mainRef.current?.focus({ preventScroll: true });
+    }
+    primeraCarga.current = false;
+  }, [pathname, hash, mainRef]);
+
   return null;
 }
 
 export default function App() {
+  const mainRef = useRef<HTMLElement>(null);
+
   return (
     <div className="app">
-      <ScrollToTop />
+      <a className="skip-link" href="#contenido">
+        Saltar al contenido
+      </a>
+      <CambioDePagina mainRef={mainRef} />
       <Header />
-      <main>
+      <main id="contenido" ref={mainRef} tabIndex={-1}>
         <Routes>
           <Route path="/" element={<Inicio />} />
           <Route path="/sobre" element={<Sobre />} />
@@ -32,8 +73,7 @@ export default function App() {
           <Route path="/agenda" element={<Agenda />} />
           <Route path="/diario" element={<Diario />} />
           <Route path="/contacto" element={<Contacto />} />
-          {/* Cualquier ruta desconocida vuelve al inicio */}
-          <Route path="*" element={<Inicio />} />
+          <Route path="*" element={<NoEncontrada />} />
         </Routes>
       </main>
       <Footer />

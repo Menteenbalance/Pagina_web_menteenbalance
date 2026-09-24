@@ -22,8 +22,8 @@ export default function Sobre() {
               compasión y la atención plena.
             </p>
             <p>
-              Su enfoque integra las Terapias de Tercera Generación —como la
-              Terapia de Aceptación y Compromiso (ACT) y el mindfulness— con la
+              Su enfoque integra las Terapias de Tercera Generación, como la
+              Terapia de Aceptación y Compromiso (ACT) y el mindfulness, con la
               práctica de Vinyasa Yoga y meditación, para acompañar la ansiedad,
               las emociones y la autocrítica con herramientas prácticas para el
               día a día.
@@ -45,10 +45,12 @@ export default function Sobre() {
             className="about-media__img"
             src={img.claseGuiada.src}
             alt={img.claseGuiada.alt}
+            width={960}
+            height={1280}
             loading="lazy"
             decoding="async"
           />
-          <div className="about-media__accent" />
+          <div className="about-media__accent" aria-hidden="true" />
         </div>
       </div>
     </div>

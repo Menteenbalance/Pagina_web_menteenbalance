@@ -1,5 +1,6 @@
 import { posts } from "../data";
 import { img } from "../images";
+import { slug } from "../lib/formato";
 
 // Imágenes para las miniaturas del diario (se repiten cíclicamente
 // si hay más artículos que fotos).
@@ -25,18 +26,26 @@ export default function Diario() {
 
       <div className="posts posts--wide">
         {posts.map((p, i) => (
-          <div className="post" key={`${p.titulo}-${i}`}>
+          <article
+            className="post"
+            key={`${p.titulo}-${i}`}
+            id={slug(p.titulo)}
+            tabIndex={-1}
+          >
+            {/* Foto de ambiente (decorativa): no describe el artículo */}
             <img
               className="post__thumb"
               src={diarioImgs[i % diarioImgs.length].src}
-              alt={diarioImgs[i % diarioImgs.length].alt}
+              alt=""
+              width={960}
+              height={720}
               loading="lazy"
               decoding="async"
             />
             <span className="post__cat">{p.cat}</span>
             <h2 className="post__title">{p.titulo}</h2>
             <p className="post__excerpt">{p.bajada}</p>
-          </div>
+          </article>
         ))}
       </div>
     </div>
