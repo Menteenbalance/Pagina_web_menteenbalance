@@ -9,6 +9,8 @@ export interface NavItem {
 }
 
 export interface Servicio {
+  /** Identificador interno (no se muestra) */
+  id: string;
   title: string;
   /** Color del punto/indicador. Usa las variables de marca. */
   dot: string;
@@ -24,6 +26,8 @@ export interface Servicio {
 export type TipoEvento = "Yoga" | "Meditación" | "Talleres";
 
 export interface Evento {
+  /** Identificador interno (no se muestra) */
+  id: string;
   /** Fecha en formato AAAA-MM-DD, ej: "2026-06-28" */
   fecha: string;
   hora: string;
@@ -36,9 +40,22 @@ export interface Evento {
 }
 
 export interface Post {
+  /** Identificador interno (no se muestra) */
+  id: string;
+  /** Parte final de la dirección: /diario/<slug> */
+  slug: string;
   cat: string;
   titulo: string;
+  /** Resumen que aparece en las tarjetas */
   bajada: string;
+  /** Texto completo, con formato simple (ver src/lib/texto.tsx). Vacío = solo tarjeta */
+  cuerpo: string;
+  /** Imagen principal (URL o ruta /img/...) */
+  imagen?: string;
+  /** Fecha de publicación AAAA-MM-DD */
+  fecha: string;
+  /** false = borrador, no aparece en el sitio */
+  publicado: boolean;
 }
 
 export interface Principio {
@@ -62,4 +79,23 @@ export interface Tarifa {
 export interface GrupoTarifas {
   categoria: string;
   items: Tarifa[];
+}
+
+/** Ajustes generales editables desde el panel. */
+export interface Ajustes {
+  instagram: {
+    /** Mostrar u ocultar el módulo de Instagram en el Inicio */
+    visible: boolean;
+    /** Frase bajo el título del módulo */
+    texto: string;
+  };
+}
+
+/** Todo el contenido que se puede editar desde el panel /admin. */
+export interface Contenido {
+  servicios: Servicio[];
+  aranceles: GrupoTarifas[];
+  agenda: Evento[];
+  posts: Post[];
+  ajustes: Ajustes;
 }

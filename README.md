@@ -76,3 +76,35 @@ El formulario de `/contacto` envía un correo a través de una función de Verce
 4. Vuelve a desplegar el sitio.
 
 **En desarrollo:** con `npm run dev` el formulario funciona localmente. Sin `RESEND_API_KEY` en `.env.local`, el correo no se envía y se muestra en la consola.
+
+## Panel de administración (/admin)
+
+La administradora entra en **`/admin`** con su correo y contraseña. Desde ahí edita, sin tocar código:
+
+| Pestaña | Qué se edita |
+|---|---|
+| **Servicios** | Nombre, color, etiqueta y textos de cada servicio (y su orden). Grupos de aranceles con sus valores. |
+| **Agenda** | Crear, editar y eliminar actividades, con su tipo (Yoga / Meditación / Talleres, los mismos filtros del sitio). Las pasadas se ocultan solas. |
+| **Diario** | Publicaciones tipo blog: título, categoría, bajada, foto, texto con formato simple, borrador o publicado. Cada una tiene su página `/diario/<titulo>`. |
+| **Instagram** | Mostrar u ocultar el módulo "Síguenos en Instagram" del Inicio y editar su frase. |
+
+Los cambios se ven en el sitio en menos de un minuto.
+
+**Cómo funciona**
+
+- El contenido se guarda en **Upstash Redis** (el mismo del formulario). Mientras no se edite nada, el sitio usa el contenido inicial de `src/data.ts`.
+- Las fotos del Diario se comprimen en el navegador (WebP, máx. 1600 px) y se guardan en **Vercel Blob**.
+- La sesión es una cookie firmada, `HttpOnly` y `SameSite=Strict`, que dura 7 días. El login permite 8 intentos cada 15 minutos por IP.
+- El servidor valida todo lo que llega del panel; el texto de las publicaciones nunca se inserta como HTML.
+- El código del panel se descarga solo al entrar a `/admin`: no pesa en el sitio público.
+
+**Configuración en Vercel (una sola vez)**
+
+1. **Storage → Upstash Redis**: conectado para el formulario (crea `KV_REST_API_URL` y `KV_REST_API_TOKEN`).
+2. **Storage → Blob** (acceso **público**): créalo y conéctalo al proyecto. Crea `BLOB_STORE_ID`; la autenticación es automática (OIDC).
+3. **Settings → Environment Variables**: agrega `ADMIN_EMAIL`, `ADMIN_PASSWORD` y `SESSION_SECRET` (ver `.env.example`).
+4. Vuelve a desplegar.
+
+**Instagram:** el módulo del Inicio es una tarjeta de perfil con un mosaico de fotos propias del sitio (`src/components/InstagramModulo.tsx`) y un botón a @menteenbalance.cl. No usa servicios externos ni la API de Instagram, así que no requiere configuración. Para cambiar las fotos del mosaico, edita la lista `mosaico` en ese archivo.
+
+**En desarrollo:** con `npm run dev` (o `iniciar-local.bat`) el panel funciona en `http://localhost:5175/admin` con `admin@local` / `balance-local`. El contenido se guarda en `.data/` y las fotos en `public/uploads/` (ambas carpetas ignoradas por git).

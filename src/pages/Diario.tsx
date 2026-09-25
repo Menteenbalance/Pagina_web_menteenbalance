@@ -1,20 +1,11 @@
-import { posts } from "../data";
-import { img } from "../images";
-import { slug } from "../lib/formato";
+import TarjetaPost from "../components/TarjetaPost";
+import { postsRecientes, useContenido } from "../lib/contenido";
 
-// Imágenes para las miniaturas del diario (se repiten cíclicamente
-// si hay más artículos que fotos).
-const diarioImgs = [
-  img.consulta,
-  img.retiro1,
-  img.yogaRestaurativa,
-  img.yogaParque,
-  img.claseGrupo,
-  img.balasana,
-];
-
-// Página "Diario": grilla completa de artículos.
+// Página "Diario": todas las publicaciones, de la más nueva a la más antigua.
 export default function Diario() {
+  const { posts, listo } = useContenido();
+  const lista = postsRecientes(posts);
+
   return (
     <div className="page">
       <p className="eyebrow eyebrow--teal" style={{ marginBottom: 24 }}>
@@ -24,30 +15,20 @@ export default function Diario() {
         Recursos para la práctica
       </h1>
 
-      <div className="posts posts--wide">
-        {posts.map((p, i) => (
-          <article
-            className="post"
-            key={`${p.titulo}-${i}`}
-            id={slug(p.titulo)}
-            tabIndex={-1}
-          >
-            {/* Foto de ambiente (decorativa): no describe el artículo */}
-            <img
-              className="post__thumb"
-              src={diarioImgs[i % diarioImgs.length].src}
-              alt=""
-              width={960}
-              height={720}
-              loading="lazy"
-              decoding="async"
-            />
-            <span className="post__cat">{p.cat}</span>
-            <h2 className="post__title">{p.titulo}</h2>
-            <p className="post__excerpt">{p.bajada}</p>
-          </article>
-        ))}
-      </div>
+      {lista.length === 0 && listo ? (
+        <div className="empty">
+          <h2 className="empty__title">Pronto publicaremos nuevas lecturas</h2>
+          <p className="empty__text">
+            Mientras tanto, puedes seguirnos en Instagram para prácticas y recordatorios.
+          </p>
+        </div>
+      ) : (
+        <div className="posts posts--wide">
+          {lista.map((p, i) => (
+            <TarjetaPost key={p.id} post={p} indice={i} titulo="h2" />
+          ))}
+        </div>
+      )}
     </div>
   );
 }

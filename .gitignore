@@ -19,3 +19,6 @@ npm-debug.log*
 
 # Carpeta de subidas (material fuente/privado, no se versiona)
 /uploads/
+# Contenido y fotos guardados en modo local (desarrollo)
+.data/
+public/uploads/

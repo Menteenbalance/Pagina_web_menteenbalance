@@ -6,6 +6,8 @@
 // ─────────────────────────────────────────────────────────────
 
 import type {
+  Ajustes,
+  Contenido,
   NavItem,
   Servicio,
   Evento,
@@ -26,6 +28,7 @@ export const nav: NavItem[] = [
 /** Servicios que se muestran en Inicio y en la página Servicios. */
 export const servicios: Servicio[] = [
   {
+    id: "psicologia",
     title: "Psicología",
     dot: "var(--plum)",
     meta: "Online y presencial",
@@ -34,6 +37,7 @@ export const servicios: Servicio[] = [
       "Proceso terapéutico desde las Terapias de Tercera Generación, como la Terapia de Aceptación y Compromiso (ACT) y el mindfulness, con herramientas prácticas para trabajar la ansiedad, la autoexigencia, la autoestima, los vínculos y la gestión emocional. Modalidad online o presencial en Casa Lunay.",
   },
   {
+    id: "terapia-individual",
     title: "Terapia individual",
     dot: "var(--teal)",
     meta: "50 minutos",
@@ -42,6 +46,7 @@ export const servicios: Servicio[] = [
       "Espacio individual de 50 minutos donde definimos juntas los objetivos y un plan a tu medida. Un lugar seguro para mirar lo que sientes con más claridad y compasión, disponible en modalidad online o presencial.",
   },
   {
+    id: "vinyasa-yoga",
     title: "Vinyasa Yoga",
     dot: "var(--amber)",
     meta: "Todos los niveles",
@@ -50,6 +55,7 @@ export const servicios: Servicio[] = [
       "Clases de Vinyasa para pausar, moverte con intención y volver a ti. Prácticas dinámicas y conscientes, en grupos pequeños y con acompañamiento cercano, para todos los niveles. Lunes y miércoles a las 20:00 en Casa Lunay.",
   },
   {
+    id: "meditacion",
     title: "Meditación",
     dot: "var(--lime)",
     meta: "Atención plena",
@@ -58,6 +64,7 @@ export const servicios: Servicio[] = [
       "Sesiones de meditación y mindfulness para reducir el estrés y la ansiedad, cultivar la calma y volver al presente. Un espacio seguro para desconectar y reconectar contigo.",
   },
   {
+    id: "experiencias",
     title: "Experiencias",
     dot: "var(--plum)",
     meta: "Talleres y retiros",
@@ -66,6 +73,7 @@ export const servicios: Servicio[] = [
       "Encuentros especiales (talleres temáticos, jornadas y retiros) que combinan yoga, meditación y bienestar emocional para reconectar con el cuerpo y la calma.",
   },
   {
+    id: "comunidad",
     title: "Comunidad",
     dot: "var(--teal)",
     meta: "Encuentros abiertos",
@@ -78,6 +86,7 @@ export const servicios: Servicio[] = [
 /** Clases y talleres. Los filtros de la Agenda usan el campo `tipo`. */
 export const agenda: Evento[] = [
   {
+    id: "evento-1",
     fecha: "2026-06-28",
     hora: "11 hrs.",
     titulo: "Sentir Yoga",
@@ -87,6 +96,7 @@ export const agenda: Evento[] = [
     precio: 5000,
   },
   {
+    id: "evento-2",
     fecha: "2026-07-05",
     hora: "19 hrs.",
     titulo: "Meditación guiada",
@@ -96,6 +106,7 @@ export const agenda: Evento[] = [
     precio: 4000,
   },
   {
+    id: "evento-3",
     fecha: "2026-07-12",
     hora: "10 hrs.",
     titulo: "Taller: mente y cuerpo",
@@ -105,6 +116,7 @@ export const agenda: Evento[] = [
     precio: 18000,
   },
   {
+    id: "evento-4",
     fecha: "2026-07-26",
     hora: "09 hrs.",
     titulo: "Círculo de comunidad",
@@ -120,45 +132,82 @@ export const filtros = ["Todo", "Yoga", "Meditación", "Talleres"] as const;
 export type Filtro = (typeof filtros)[number];
 
 /**
- * Artículos del Diario. Estos son temas de ejemplo alineados a la marca;
- * reemplázalos por tus artículos reales cuando los escribas.
- * Inicio muestra los primeros 3; la página Diario los muestra todos.
+ * Artículos del Diario (contenido inicial). Desde el panel /admin se
+ * crean, editan y publican; esto solo se usa hasta el primer guardado.
+ * Los que no tienen `cuerpo` se muestran como tarjeta, sin página propia.
  */
 export const posts: Post[] = [
   {
+    id: "post-1",
+    slug: "ansiedad-cuando-la-mente-se-adelanta",
     cat: "Psicología",
     titulo: "Ansiedad: cuando la mente se adelanta",
     bajada:
       "Qué es la ansiedad y cómo las Terapias de Tercera Generación nos ayudan a relacionarnos distinto con ella.",
+    cuerpo: "",
+    imagen: "/img/consulta.webp",
+    fecha: "2026-06-20",
+    publicado: true,
   },
   {
+    id: "post-2",
+    slug: "respirar-para-volver-al-presente",
     cat: "Yoga",
     titulo: "Respirar para volver al presente",
     bajada:
       "El rol de la respiración en Vinyasa Yoga para soltar la tensión que acumulamos durante el día.",
+    cuerpo: "",
+    imagen: "/img/retiro-1.webp",
+    fecha: "2026-06-10",
+    publicado: true,
   },
   {
+    id: "post-3",
+    slug: "el-desafio-de-la-quietud",
     cat: "Meditación",
     titulo: "El desafío de la quietud",
     bajada:
       "Pequeñas pautas para empezar a meditar, aunque tu mente no deje de moverse.",
+    cuerpo: "",
+    imagen: "/img/yoga-restaurativa.webp",
+    fecha: "2026-05-28",
+    publicado: true,
   },
   {
+    id: "post-4",
+    slug: "autocritica-y-autocompasion",
     cat: "Psicología",
     titulo: "Autocrítica y autocompasión",
     bajada:
       "Cómo dejar de exigirte tanto y empezar a tratarte con más amabilidad.",
+    cuerpo: "",
+    imagen: "/img/yoga-parque.webp",
+    fecha: "2026-05-15",
+    publicado: true,
   },
   {
+    id: "post-5",
+    slug: "yoga-para-todos-los-niveles",
     cat: "Yoga",
     titulo: "Yoga para todos los niveles",
     bajada:
       "Por qué no necesitas ser flexible ni experta para empezar a practicar.",
+    cuerpo: "",
+    imagen: "/img/clase-grupo.webp",
+    fecha: "2026-05-02",
+    publicado: true,
   },
   {
+    id: "post-6",
+    slug: "el-poder-de-practicar-en-comunidad",
     cat: "Comunidad",
     titulo: "El poder de practicar en comunidad",
-    bajada: "Lo que ocurre cuando nos movemos y respiramos acompañadas.",
+    bajada:
+      "Lo que ocurre cuando nos movemos y respiramos acompañadas.",
+    cuerpo: "",
+    imagen: "/img/balasana.webp",
+    fecha: "2026-04-18",
+    publicado: true,
   },
 ];
 
@@ -250,4 +299,25 @@ export const contacto = {
     "Casa Lunay · Mariano Sánchez Fontecilla 584",
     "Las Condes, Santiago",
   ],
+};
+
+/** Ajustes iniciales del módulo de Instagram (editables en el panel). */
+export const ajustes: Ajustes = {
+  instagram: {
+    visible: true,
+    texto:
+      "Prácticas breves, fechas de clases y recordatorios para volver a ti, un día a la vez.",
+  },
+};
+
+/**
+ * Contenido inicial editable. El sitio lo muestra mientras carga y
+ * hasta que se guarde algo desde el panel de administración.
+ */
+export const contenidoInicial: Contenido = {
+  servicios,
+  aranceles,
+  agenda,
+  posts,
+  ajustes,
 };

@@ -1,8 +1,11 @@
 import { Link } from "react-router-dom";
 import Reveal from "../components/Reveal";
-import { servicios, agenda, posts, reservaUrl } from "../data";
+import TarjetaPost from "../components/TarjetaPost";
+import InstagramModulo from "../components/InstagramModulo";
+import { reservaUrl } from "../data";
 import { img } from "../images";
 import { formatearFecha, formatearPrecio, slug } from "../lib/formato";
+import { postsRecientes, proximasActividades, useContenido } from "../lib/contenido";
 
 // fetchpriority en minúsculas: React 18 aún no reconoce la versión camelCase.
 const prioridadAlta = { fetchpriority: "high" } as Record<string, string>;
@@ -10,10 +13,9 @@ const prioridadAlta = { fetchpriority: "high" } as Record<string, string>;
 // Página de inicio: hero, cinta, "sobre nosotras", servicios,
 // agenda corta, cita destacada y últimos artículos del diario.
 export default function Inicio() {
-  const agendaCorta = agenda.slice(0, 3);
-
-  // Imagen para cada artículo del diario (según su orden).
-  const postImgs = [img.consulta, img.retiro1, img.yogaRestaurativa];
+  const { servicios, agenda, posts } = useContenido();
+  const agendaCorta = proximasActividades(agenda).slice(0, 3);
+  const ultimosPosts = postsRecientes(posts).slice(0, 3);
 
   return (
     <>
@@ -160,11 +162,17 @@ export default function Inicio() {
             </Link>
           </div>
         </Reveal>
+        {agendaCorta.length === 0 && (
+          <p className="agenda-vacia">
+            Estamos preparando las próximas fechas.{" "}
+            <Link to="/contacto">Escríbenos</Link> y te avisamos cuando abramos cupos.
+          </p>
+        )}
         <div className="agenda-list">
           {agendaCorta.map((e, i) => {
             const f = formatearFecha(e.fecha);
             return (
-            <Reveal key={e.titulo} delay={i * 120}>
+            <Reveal key={e.id} delay={i * 120}>
               <div className="agenda-row">
               <div>
                 <time className="agenda-row__date" dateTime={e.fecha}>
@@ -212,6 +220,7 @@ export default function Inicio() {
       </Reveal>
 
       {/* Diario */}
+      {ultimosPosts.length > 0 && (
       <section className="section">
         <Reveal>
           <div className="section-head">
@@ -227,26 +236,17 @@ export default function Inicio() {
           </div>
         </Reveal>
         <div className="posts">
-          {posts.slice(0, 3).map((p, i) => (
-            <Reveal key={p.titulo} delay={i * 120}>
-              <Link to={`/diario#${slug(p.titulo)}`} className="post post--link">
-                <img
-                  className="post__thumb"
-                  src={postImgs[i].src}
-                  alt=""
-                  width={960}
-                  height={720}
-                  loading="lazy"
-                  decoding="async"
-                />
-                <span className="post__cat">{p.cat}</span>
-                <h3 className="post__title">{p.titulo}</h3>
-                <p className="post__excerpt">{p.bajada}</p>
-              </Link>
+          {ultimosPosts.map((p, i) => (
+            <Reveal key={p.id} delay={i * 120}>
+              <TarjetaPost post={p} indice={i} />
             </Reveal>
           ))}
         </div>
       </section>
+      )}
+
+      {/* Instagram */}
+      <InstagramModulo />
     </>
   );
 }

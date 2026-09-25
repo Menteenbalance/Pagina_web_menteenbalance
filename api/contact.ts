@@ -174,6 +174,11 @@ export async function POST(request: Request): Promise<Response> {
     </div>`;
 
   const apiKey = process.env.RESEND_API_KEY;
+  if (!apiKey && process.env.VERCEL) {
+    // En Vercel sin clave: error visible, para no perder mensajes en silencio
+    console.error("[contacto] Falta RESEND_API_KEY en las variables de entorno de Vercel.");
+    return json(503, { error: "El formulario no está disponible en este momento." });
+  }
   if (!apiKey) {
     // Desarrollo: sin clave, se muestra el correo en la consola.
     console.info(`[contacto] (simulado, falta RESEND_API_KEY) → ${DESTINO}\n${asunto}\n${textoPlano}`);

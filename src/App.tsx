@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { lazy, Suspense, useEffect, useRef } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
@@ -9,6 +9,11 @@ import Agenda from "./pages/Agenda";
 import Diario from "./pages/Diario";
 import Contacto from "./pages/Contacto";
 import NoEncontrada from "./pages/NoEncontrada";
+import DiarioPost from "./pages/DiarioPost";
+import { ContenidoProvider } from "./lib/contenido";
+
+// El panel de administración se descarga solo al entrar a /admin
+const AdminApp = lazy(() => import("./admin/AdminApp"));
 
 const MARCA = "Mente en Balance";
 
@@ -34,7 +39,9 @@ function CambioDePagina({ mainRef }: { mainRef: React.RefObject<HTMLElement> }) 
   const primeraCarga = useRef(true);
 
   useEffect(() => {
-    document.title = titulos[pathname] ?? `Página no encontrada | ${MARCA}`;
+    document.title =
+      titulos[pathname] ??
+      (pathname.startsWith("/diario/") ? `Diario | ${MARCA}` : `Página no encontrada | ${MARCA}`);
 
     if (hash) {
       // Espera a que la página pinte antes de buscar el ancla
@@ -56,6 +63,29 @@ function CambioDePagina({ mainRef }: { mainRef: React.RefObject<HTMLElement> }) 
 }
 
 export default function App() {
+  return (
+    <Routes>
+      <Route
+        path="/admin/*"
+        element={
+          <Suspense fallback={<p className="a-cargando" style={{ padding: 24 }}>Cargando panel…</p>}>
+            <AdminApp />
+          </Suspense>
+        }
+      />
+      <Route
+        path="*"
+        element={
+          <ContenidoProvider>
+            <SitioPublico />
+          </ContenidoProvider>
+        }
+      />
+    </Routes>
+  );
+}
+
+function SitioPublico() {
   const mainRef = useRef<HTMLElement>(null);
 
   return (
@@ -72,6 +102,7 @@ export default function App() {
           <Route path="/servicios" element={<Servicios />} />
           <Route path="/agenda" element={<Agenda />} />
           <Route path="/diario" element={<Diario />} />
+          <Route path="/diario/:slug" element={<DiarioPost />} />
           <Route path="/contacto" element={<Contacto />} />
           <Route path="*" element={<NoEncontrada />} />
         </Routes>

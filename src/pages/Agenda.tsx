@@ -1,11 +1,13 @@
 import { Link, useSearchParams } from "react-router-dom";
-import { agenda, filtros, reservaUrl, type Filtro } from "../data";
+import { filtros, reservaUrl, type Filtro } from "../data";
+import { proximasActividades, useContenido } from "../lib/contenido";
 import { formatearFecha, formatearPrecio, slug } from "../lib/formato";
 
 // Página "Agenda": tarjetas de clases con filtros por tipo.
 // El filtro queda en la URL (ej: /agenda?tipo=yoga) para poder compartirlo.
 export default function Agenda() {
   const [params, setParams] = useSearchParams();
+  const agenda = proximasActividades(useContenido().agenda);
   const filtro: Filtro =
     filtros.find((f) => slug(f) === params.get("tipo")) ?? "Todo";
 
@@ -48,20 +50,24 @@ export default function Agenda() {
       {eventos.length === 0 ? (
         <div className="empty">
           <h2 className="empty__title">
-            Por ahora no hay fechas de {filtro.toLowerCase()}
+            {filtro === "Todo"
+              ? "Estamos preparando las próximas fechas"
+              : `Por ahora no hay fechas de ${filtro.toLowerCase()}`}
           </h2>
           <p className="empty__text">
             Publicamos nuevas clases cada mes. Revisa las otras actividades o
             escríbenos y te avisamos cuando abramos cupos.
           </p>
           <div className="empty__actions">
-            <button
-              type="button"
-              className="btn btn--outline btn--sm"
-              onClick={() => elegir("Todo")}
-            >
-              Ver todas
-            </button>
+            {filtro !== "Todo" && (
+              <button
+                type="button"
+                className="btn btn--outline btn--sm"
+                onClick={() => elegir("Todo")}
+              >
+                Ver todas
+              </button>
+            )}
             <Link to="/contacto" className="text-link">
               Avísenme
             </Link>
@@ -72,7 +78,7 @@ export default function Agenda() {
           {eventos.map((e) => {
             const f = formatearFecha(e.fecha);
             return (
-              <article className="event-card" key={e.titulo}>
+              <article className="event-card" key={e.id}>
                 <div className="event-card__top">
                   <time className="event-card__date" dateTime={e.fecha}>
                     {f.corta}

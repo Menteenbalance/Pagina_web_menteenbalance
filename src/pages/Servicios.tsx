@@ -1,8 +1,10 @@
-import { servicios, aranceles, reservaUrl } from "../data";
+import { reservaUrl } from "../data";
 import { formatearPrecio, slug } from "../lib/formato";
+import { useContenido } from "../lib/contenido";
 
 // Página "Servicios": lista extendida de cada servicio + aranceles.
 export default function Servicios() {
+  const { servicios, aranceles } = useContenido();
   return (
     <div className="page">
       <p className="eyebrow eyebrow--teal" style={{ marginBottom: 24 }}>
@@ -16,7 +18,7 @@ export default function Servicios() {
         {servicios.map((s) => (
           <section
             className="servicio-row"
-            key={s.title}
+            key={s.id}
             id={slug(s.title)}
             tabIndex={-1}
             aria-labelledby={`${slug(s.title)}-titulo`}
