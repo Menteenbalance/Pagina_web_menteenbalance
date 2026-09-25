@@ -22,3 +22,6 @@ npm-debug.log*
 # Contenido y fotos guardados en modo local (desarrollo)
 .data/
 public/uploads/
+
+# Salida local de la CLI de Vercel
+.vercel

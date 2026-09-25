@@ -10,6 +10,7 @@ import Diario from "./pages/Diario";
 import Contacto from "./pages/Contacto";
 import NoEncontrada from "./pages/NoEncontrada";
 import DiarioPost from "./pages/DiarioPost";
+import LimiteDeError from "./components/LimiteDeError";
 import { ContenidoProvider } from "./lib/contenido";
 
 // El panel de administración se descarga solo al entrar a /admin
@@ -68,9 +69,11 @@ export default function App() {
       <Route
         path="/admin/*"
         element={
-          <Suspense fallback={<p className="a-cargando" style={{ padding: 24 }}>Cargando panel…</p>}>
-            <AdminApp />
-          </Suspense>
+          <LimiteDeError>
+            <Suspense fallback={<p className="a-cargando" style={{ padding: 24 }}>Cargando panel…</p>}>
+              <AdminApp />
+            </Suspense>
+          </LimiteDeError>
         }
       />
       <Route
@@ -87,6 +90,7 @@ export default function App() {
 
 function SitioPublico() {
   const mainRef = useRef<HTMLElement>(null);
+  const { pathname } = useLocation();
 
   return (
     <div className="app">
@@ -96,6 +100,7 @@ function SitioPublico() {
       <CambioDePagina mainRef={mainRef} />
       <Header />
       <main id="contenido" ref={mainRef} tabIndex={-1}>
+        <LimiteDeError clave={pathname}>
         <Routes>
           <Route path="/" element={<Inicio />} />
           <Route path="/sobre" element={<Sobre />} />
@@ -106,6 +111,7 @@ function SitioPublico() {
           <Route path="/contacto" element={<Contacto />} />
           <Route path="*" element={<NoEncontrada />} />
         </Routes>
+        </LimiteDeError>
       </main>
       <Footer />
     </div>

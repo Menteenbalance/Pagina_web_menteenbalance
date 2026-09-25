@@ -17,7 +17,7 @@ export default function DiarioPost() {
 
   if (!post) {
     // Mientras llega el contenido del servidor no se muestra el 404
-    return listo ? <NoEncontrada /> : <div className="page" aria-busy="true" />;
+    return listo ? <NoEncontrada contexto="diario" /> : <div className="page" aria-busy="true" />;
   }
 
   const f = formatearFecha(post.fecha);

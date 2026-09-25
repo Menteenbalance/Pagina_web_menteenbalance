@@ -1426,18 +1426,6 @@ img.post__thumb {
   flex-wrap: wrap;
 }
 
-/* Página 404 */
-.not-found {
-  min-height: 60vh;
-}
-.not-found__text {
-  font-size: 17px;
-  line-height: 1.75;
-  color: var(--muted);
-  max-width: 44ch;
-  margin: 26px 0 0;
-}
-
 /* Footer: encabezados ahora son <h2>, dirección en <address> */
 h2.footer__heading {
   margin: 0;
@@ -1798,6 +1786,189 @@ img.hero__photo {
   }
 }
 
+/* Página 404 y pantalla de error
+   Referencia: Airbnb en awesome-design (títulos de peso moderado, la
+   foto carga el peso visual, formas suaves, enlaces útiles en vez de un
+   callejón sin salida). Colores, fuentes y arco: los de la marca. */
+.nf {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 72px 28px 96px;
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  gap: 72px;
+  align-items: center;
+  min-height: calc(100dvh - 72px - 260px);
+}
+.nf--error {
+  grid-template-columns: minmax(0, 1fr);
+  max-width: 760px;
+}
+.nf--error .nf__titulo {
+  max-width: 22ch;
+}
+.nf__marca {
+  display: inline-block;
+  margin-bottom: 36px;
+}
+.nf__marca img {
+  display: block;
+  object-fit: contain;
+}
+.nf__codigo {
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--plum);
+  margin: 0 0 22px;
+}
+.nf__titulo {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(34px, 4.4vw, 54px);
+  line-height: 1.12;
+  letter-spacing: -0.015em;
+  margin: 0;
+  max-width: 16ch;
+  text-wrap: balance;
+}
+.nf__texto {
+  font-size: 17px;
+  line-height: 1.75;
+  color: var(--muted);
+  max-width: 46ch;
+  margin: 22px 0 0;
+  text-wrap: pretty;
+}
+.nf__ruta {
+  font-size: 14px;
+  color: var(--faint);
+  margin: 16px 0 0;
+  overflow-wrap: anywhere;
+}
+.nf__ruta code {
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--ink);
+  background: rgba(42, 36, 48, 0.06);
+  padding: 2px 8px;
+  border-radius: 6px;
+}
+.nf__acciones {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 34px;
+}
+.nf__caminos {
+  margin-top: 52px;
+  padding-top: 28px;
+  border-top: 1px solid var(--line);
+  max-width: 560px;
+}
+.nf__caminos-titulo {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--muted);
+  margin: 0 0 12px;
+}
+.nf__caminos ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 4px 20px;
+}
+.nf__camino {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-rows: auto auto;
+  column-gap: 12px;
+  padding: 12px 14px;
+  margin: 0 -14px;
+  border-radius: 14px;
+  color: var(--ink);
+  min-height: 44px;
+  transition: background-color 0.2s ease;
+}
+.nf__camino:hover {
+  color: var(--ink);
+  background: rgba(6, 153, 153, 0.07);
+}
+.nf__camino-nombre {
+  font-family: var(--serif);
+  font-size: 19px;
+  line-height: 1.3;
+}
+.nf__camino-texto {
+  grid-row: 2;
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.5;
+}
+.nf__camino-flecha {
+  grid-row: 1 / span 2;
+  grid-column: 2;
+  align-self: center;
+  color: var(--teal-text);
+  transition: transform 0.2s ease;
+}
+.nf__camino:hover .nf__camino-flecha {
+  transform: translateX(3px);
+}
+.nf__media {
+  position: relative;
+  justify-self: end;
+  width: 100%;
+  max-width: 400px;
+}
+.nf__halo {
+  position: absolute;
+  top: -6%;
+  right: -10%;
+  width: 58%;
+  aspect-ratio: 1;
+  border-radius: 999px;
+  background: rgba(249, 178, 51, 0.32);
+}
+.nf__foto {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 5.4;
+  object-fit: cover;
+  object-position: center 62%;
+  border-radius: 999px 999px 24px 24px;
+}
+
+@media (max-width: 860px) {
+  .nf {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
+    padding: 48px 20px 72px;
+    min-height: 0;
+  }
+  /* En pantallas chicas la prioridad es el mensaje y los caminos */
+  .nf__media {
+    display: none;
+  }
+}
+@media (max-width: 480px) {
+  .nf {
+    padding: 36px 16px 64px;
+  }
+  .nf__caminos ul {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .nf__acciones .btn {
+    flex: 1 1 100%;
+    text-align: center;
+  }
+}
+
 /* 6. ─── MOVIMIENTO REDUCIDO ──────────────────────────────────
    Va al final para imponerse sobre las animaciones definidas antes. */
 @media (prefers-reduced-motion: reduce) {
@@ -1823,8 +1994,13 @@ img.hero__photo {
     transition: none;
   }
   .ig__foto,
-  .articulo__mas-link {
+  .articulo__mas-link,
+  .nf__camino,
+  .nf__camino-flecha {
     transition: none;
+  }
+  .nf__camino:hover .nf__camino-flecha {
+    transform: none;
   }
   .ig__mosaico:hover .ig__foto,
   a.card:hover,

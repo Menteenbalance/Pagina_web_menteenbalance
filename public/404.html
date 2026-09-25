@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <meta name="theme-color" content="#fbf8f2" />
+    <title>Página no encontrada | Mente en Balance</title>
+    <link rel="icon" type="image/png" href="/logo.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Prata&family=Montserrat:wght@400;500&family=IBM+Plex+Mono&display=swap" rel="stylesheet" />
+    <!--
+      Respaldo estático: Vercel lo muestra solo si una dirección no llega a
+      la aplicación (la vista 404 normal vive en src/pages/NoEncontrada.tsx).
+    -->
+    <style>
+      :root {
+        --cream: #fbf8f2; --ink: #2a2430; --muted: #5b5360; --plum: #852b5b;
+        --teal-text: #067a7a; --line: rgba(42, 36, 48, 0.1);
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0; min-height: 100vh; display: flex; flex-direction: column;
+        background: var(--cream); color: var(--ink);
+        font-family: "Montserrat", system-ui, sans-serif; -webkit-font-smoothing: antialiased;
+      }
+      a { color: var(--teal-text); }
+      :focus-visible { outline: 2px solid #069999; outline-offset: 3px; }
+      header { border-bottom: 1px solid var(--line); }
+      .marca {
+        max-width: 1180px; margin: 0 auto; padding: 14px 28px;
+        display: flex; align-items: center; gap: 12px; color: var(--ink); text-decoration: none;
+      }
+      .marca img { width: 34px; height: 34px; object-fit: contain; }
+      .marca span { font-family: "Prata", serif; font-size: 17px; }
+      main { flex: 1; width: 100%; max-width: 760px; margin: 0 auto; padding: 72px 28px 96px; }
+      .codigo {
+        font-family: "IBM Plex Mono", monospace; font-size: 12px; letter-spacing: 0.14em;
+        text-transform: uppercase; color: var(--plum); margin: 0 0 22px;
+      }
+      h1 {
+        font-family: "Prata", serif; font-weight: 400; font-size: clamp(34px, 6vw, 54px);
+        line-height: 1.12; letter-spacing: -0.015em; margin: 0; max-width: 16ch; text-wrap: balance;
+      }
+      p.texto { font-size: 17px; line-height: 1.75; color: var(--muted); max-width: 46ch; margin: 22px 0 0; }
+      .btn {
+        display: inline-block; margin-top: 34px; padding: 16px 30px; border-radius: 999px;
+        background: var(--plum); color: var(--cream); text-decoration: none;
+        font-size: 12px; letter-spacing: 0.11em; text-transform: uppercase; font-weight: 500;
+      }
+      .btn:hover { background: var(--ink); color: var(--cream); }
+      nav { margin-top: 52px; padding-top: 28px; border-top: 1px solid var(--line); }
+      nav h2 { font-size: 13px; font-weight: 500; color: var(--muted); margin: 0 0 12px; }
+      nav ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px 28px; }
+      nav a { font-family: "Prata", serif; font-size: 19px; color: var(--ink); text-decoration: none; }
+      nav a:hover { color: var(--plum); }
+      @media (max-width: 480px) { main { padding: 40px 16px 64px; } .btn { display: block; text-align: center; } }
+    </style>
+  </head>
+  <body>
+    <header>
+      <a class="marca" href="/">
+        <img src="/logo.png" alt="" width="34" height="34" />
+        <span translate="no">Mente en Balance</span>
+      </a>
+    </header>
+    <main>
+      <p class="codigo">Error 404</p>
+      <h1>Esta página no existe</h1>
+      <p class="texto">
+        Puede que el enlace esté incompleto o que la página se haya movido.
+        Tómate un respiro y elige por dónde seguir.
+      </p>
+      <a class="btn" href="/">Volver al inicio</a>
+      <nav aria-label="Secciones del sitio">
+        <h2>O visita</h2>
+        <ul>
+          <li><a href="/servicios">Servicios</a></li>
+          <li><a href="/agenda">Agenda</a></li>
+          <li><a href="/diario">Diario</a></li>
+          <li><a href="/contacto">Contacto</a></li>
+        </ul>
+      </nav>
+    </main>
+  </body>
+</html>

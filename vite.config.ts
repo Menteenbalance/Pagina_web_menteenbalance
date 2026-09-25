@@ -31,12 +31,12 @@ function apiLocal(): Plugin {
         const archivo = path.join(server.config.root, "api", `${ruta}.ts`);
         // Solo rutas simples; las carpetas que empiezan con _ son internas.
         // Nada bajo /api se sirve como archivo (igual que en Vercel).
-        if (!/^(\/[a-z0-9-]+)+$/i.test(ruta) || ruta.includes("/_") || !existsSync(archivo)) {
-          res.statusCode = 404;
-          res.setHeader("Content-Type", "application/json");
-          res.end(JSON.stringify({ error: "No encontrado" }));
-          return;
-        }
+        // Ruta inexistente: misma respuesta que en Vercel (api/no-encontrada.ts)
+        const existe = /^(\/[a-z0-9-]+)+$/i.test(ruta) && !ruta.includes("/_") && existsSync(archivo);
+        const destino = existe
+          ? archivo
+          : path.join(server.config.root, "api", "no-encontrada.ts");
+        const query = existe ? "" : `?ruta=${encodeURIComponent(ruta.replace(/^\//, ""))}`;
 
         try {
           const chunks: Buffer[] = [];
@@ -50,12 +50,12 @@ function apiLocal(): Plugin {
             headers.set("x-forwarded-for", req.socket.remoteAddress ?? "local");
           }
           const metodo = req.method ?? "GET";
-          const request = new Request(`http://${req.headers.host ?? "localhost"}${req.url}`, {
+          const request = new Request(`http://${req.headers.host ?? "localhost"}/api${existe ? req.url : query}`, {
             method: metodo,
             headers,
             body: metodo === "GET" || metodo === "HEAD" ? undefined : Buffer.concat(chunks),
           });
-          const mod = await server.ssrLoadModule(archivo);
+          const mod = await server.ssrLoadModule(destino);
           const handler = mod[metodo];
           const response: Response = handler
             ? await handler(request)
