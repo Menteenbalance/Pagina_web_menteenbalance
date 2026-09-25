@@ -294,7 +294,7 @@ export const contacto = {
     url: "https://www.instagram.com/menteenbalance.cl/",
   },
   whatsapp: "WhatsApp +56 9 4354 9436",
-  email: "hola@menteenbalance.cl",
+  email: "ignaciacanessa@menteenbalance.com",
   direccion: [
     "Casa Lunay · Mariano Sánchez Fontecilla 584",
     "Las Condes, Santiago",

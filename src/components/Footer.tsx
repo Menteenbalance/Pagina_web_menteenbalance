@@ -38,6 +38,10 @@ export default function Footer() {
 
         <div className="footer__col">
           <h2 className="footer__heading">Contacto</h2>
+          <a href={`mailto:${contacto.email}`} className="footer__link">
+            {contacto.email.split("@")[0]}@<wbr />
+            {contacto.email.split("@")[1]}
+          </a>
           <a
             href={contacto.instagram.url}
             className="footer__link"
@@ -56,8 +60,7 @@ export default function Footer() {
       </div>
 
       <div className="footer__meta">
-        <span translate="no">Mente en Balance</span> by PRODIS · Psicología
-        &amp; Yoga
+        <span translate="no">Mente en Balance | María Ignacia Canessa</span>
       </div>
     </footer>
   );

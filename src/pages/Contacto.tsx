@@ -256,7 +256,8 @@ export default function Contacto() {
               className="info-card__link"
               href={`mailto:${contacto.email}`}
             >
-              {contacto.email}
+              {contacto.email.split("@")[0]}@<wbr />
+              {contacto.email.split("@")[1]}
             </a>
           </div>
 

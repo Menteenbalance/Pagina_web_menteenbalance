@@ -490,6 +490,7 @@ main {
 .footer__link {
   font-size: 13px;
   color: rgba(251, 248, 242, 0.72);
+  overflow-wrap: break-word;
 }
 .footer__link:hover {
   color: var(--amber);
@@ -1256,6 +1257,7 @@ img.post__thumb {
 }
 .info-card__link {
   font-size: 14px;
+  overflow-wrap: break-word;
 }
 .newsletter {
   background: rgba(249, 178, 51, 0.16);
