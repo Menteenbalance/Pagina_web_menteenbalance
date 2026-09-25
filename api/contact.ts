@@ -14,7 +14,7 @@
 //    RATE_LIMIT_SALT           texto secreto para anonimizar IPs
 // ─────────────────────────────────────────────────────────────
 
-import { hash, revisarLimites, redisConfigurado, type Limite } from "./_lib/rateLimit";
+import { hash, revisarLimites, redisConfigurado, type Limite } from "./_lib/rateLimit.js";
 
 const DESTINO = process.env.CONTACT_TO_EMAIL ?? "ignaciacanessa@menteenbalance.com";
 const REMITENTE =

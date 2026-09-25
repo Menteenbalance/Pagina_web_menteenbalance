@@ -9,8 +9,8 @@
 import { promises as fs } from "node:fs";
 import path from "node:path";
 import { put } from "@vercel/blob";
-import { exigirAdmin } from "../_lib/auth";
-import { enVercel, ErrorHttp, json, responderError } from "../_lib/http";
+import { exigirAdmin } from "../_lib/auth.js";
+import { enVercel, ErrorHttp, json, responderError } from "../_lib/http.js";
 
 const TIPOS: Record<string, string> = {
   "image/webp": "webp",

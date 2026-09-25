@@ -2,11 +2,11 @@
 //   GET → todo el contenido, incluidos los borradores del diario
 //   PUT → guarda una sección { seccion, datos }
 
-import { exigirAdmin } from "../_lib/auth";
-import { leerContenido } from "../_lib/contenido";
-import { json, responderError, ErrorHttp } from "../_lib/http";
-import { guardar } from "../_lib/store";
-import { esSeccion, validar } from "../_lib/validar";
+import { exigirAdmin } from "../_lib/auth.js";
+import { leerContenido } from "../_lib/contenido.js";
+import { json, responderError, ErrorHttp } from "../_lib/http.js";
+import { guardar } from "../_lib/store.js";
+import { esSeccion, validar } from "../_lib/validar.js";
 
 const SIN_CACHE = { "Cache-Control": "no-store" };
 

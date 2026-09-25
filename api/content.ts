@@ -2,8 +2,8 @@
 // agenda, publicaciones del diario y ajustes). Los borradores del
 // diario no se incluyen.
 
-import { leerContenido } from "./_lib/contenido";
-import { json, responderError } from "./_lib/http";
+import { leerContenido } from "./_lib/contenido.js";
+import { json, responderError } from "./_lib/http.js";
 
 export async function GET(): Promise<Response> {
   try {

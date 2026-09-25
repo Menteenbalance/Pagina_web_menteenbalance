@@ -11,8 +11,8 @@ import type {
   Post,
   Servicio,
   TipoEvento,
-} from "../../src/types";
-import { ErrorHttp } from "./http";
+} from "../../src/types.js";
+import { ErrorHttp } from "./http.js";
 
 export const SECCIONES = ["servicios", "aranceles", "agenda", "posts", "ajustes"] as const;
 export type Seccion = (typeof SECCIONES)[number];

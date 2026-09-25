@@ -9,9 +9,9 @@ import {
   cookieDeSesion,
   credencialesValidas,
   leerSesion,
-} from "../_lib/auth";
-import { json, obtenerIp, responderError } from "../_lib/http";
-import { hash, revisarLimites } from "../_lib/rateLimit";
+} from "../_lib/auth.js";
+import { json, obtenerIp, responderError } from "../_lib/http.js";
+import { hash, revisarLimites } from "../_lib/rateLimit.js";
 
 export async function GET(request: Request): Promise<Response> {
   const email = leerSesion(request);

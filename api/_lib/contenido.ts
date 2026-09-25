@@ -1,10 +1,10 @@
 // Lee todo el contenido editable, usando el contenido inicial del
 // sitio (src/data.ts) para las secciones que aún no se han editado.
 
-import { contenidoInicial } from "../../src/data";
-import type { Contenido } from "../../src/types";
-import { leer } from "./store";
-import { SECCIONES } from "./validar";
+import { contenidoInicial } from "../../src/data.js";
+import type { Contenido } from "../../src/types.js";
+import { leer } from "./store.js";
+import { SECCIONES } from "./validar.js";
 
 export async function leerContenido(): Promise<Contenido> {
   const valores = await Promise.all(SECCIONES.map((s) => leer(s)));

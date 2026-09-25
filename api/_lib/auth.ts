@@ -13,7 +13,7 @@
 // ─────────────────────────────────────────────────────────────
 
 import { createHash, createHmac, timingSafeEqual } from "node:crypto";
-import { enVercel, ErrorHttp } from "./http";
+import { enVercel, ErrorHttp } from "./http.js";
 
 const COOKIE = "meb_admin";
 const DURACION_SEG = 7 * 24 * 60 * 60; // 7 días
