@@ -2,6 +2,7 @@ import { existsSync, createReadStream } from "node:fs";
 import path from "node:path";
 import { defineConfig, loadEnv, type Plugin } from "vite";
 import react from "@vitejs/plugin-react";
+import { resolverUrlDelSitio } from "./api/_lib/config";
 
 /**
  * En desarrollo (`npm run dev`) sirve las funciones de /api con el mismo
@@ -78,6 +79,9 @@ function apiLocal(): Plugin {
 export default defineConfig(({ mode }) => {
   // Carga .env / .env.local también para el código de /api en desarrollo
   Object.assign(process.env, loadEnv(mode, process.cwd(), ""));
+  // Dirección del sitio para las etiquetas de vista previa (index.html usa
+  // %VITE_SITE_URL%) y para el código del navegador (import.meta.env).
+  process.env.VITE_SITE_URL = resolverUrlDelSitio(process.env);
   return {
     plugins: [react(), apiLocal()],
     server: {

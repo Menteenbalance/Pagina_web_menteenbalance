@@ -32,6 +32,7 @@ export default function NoEncontrada({ contexto = "general" }: Props) {
       ? "Publicación no disponible | Mente en Balance"
       : "Página no encontrada | Mente en Balance";
     // Los buscadores no deben indexar esta dirección
+    document.querySelector('link[rel="canonical"]')?.remove();
     const meta = document.createElement("meta");
     meta.name = "robots";
     meta.content = "noindex";

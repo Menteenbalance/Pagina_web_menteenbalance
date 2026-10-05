@@ -108,3 +108,12 @@ Los cambios se ven en el sitio en menos de un minuto.
 **Instagram:** el módulo del Inicio es una tarjeta de perfil con un mosaico de fotos propias del sitio (`src/components/InstagramModulo.tsx`) y un botón a @menteenbalance.cl. No usa servicios externos ni la API de Instagram, así que no requiere configuración. Para cambiar las fotos del mosaico, edita la lista `mosaico` en ese archivo.
 
 **En desarrollo:** con `npm run dev` (o `iniciar-local.bat`) el panel funciona en `http://localhost:5175/admin` con `admin@local` / `balance-local`. El contenido se guarda en `.data/` y las fotos en `public/uploads/` (ambas carpetas ignoradas por git).
+
+## Dirección del sitio y vista previa al compartir
+
+- La dirección pública se define en **un solo lugar** (`api/_lib/config.ts`): usa `VITE_SITE_URL` si existe; si no, la que Vercel entrega en cada build (`VERCEL_PROJECT_PRODUCTION_URL`, que pasa a ser el dominio propio apenas se conecta). En local: `http://localhost:5175`.
+- En el navegador se usa desde `src/config.ts` (`SITE_URL`, `url("/ruta")`).
+- `index.html` incluye las etiquetas Open Graph y de Twitter; la imagen es `public/og/portada.jpg` (1200×630).
+- Cada página declara su dirección oficial (`<link rel="canonical">`) en minúsculas y sin "/" final; las páginas 404 no la llevan.
+- Si se cambia la imagen de vista previa, WhatsApp y Facebook pueden tardar en actualizarla: se fuerza con el [Depurador de Facebook](https://developers.facebook.com/tools/debug/) ("Volver a extraer").
+

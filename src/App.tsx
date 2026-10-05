@@ -11,6 +11,7 @@ import Contacto from "./pages/Contacto";
 import NoEncontrada from "./pages/NoEncontrada";
 import DiarioPost from "./pages/DiarioPost";
 import LimiteDeError from "./components/LimiteDeError";
+import { url } from "./config";
 import { ContenidoProvider } from "./lib/contenido";
 
 // El panel de administración se descarga solo al entrar a /admin
@@ -29,6 +30,26 @@ const titulos: Record<string, string> = {
 };
 
 /**
+ * Dirección "oficial" de la página para Google (evita duplicados por
+ * mayúsculas, "/" final o parámetros). Las páginas que no existen no la llevan.
+ */
+function actualizarCanonica(pathname: string) {
+  const limpia = pathname.toLowerCase().replace(/\/+$/, "") || "/";
+  const conocida = limpia in titulos || /^\/diario\/[a-z0-9-]+$/.test(limpia);
+  let link = document.querySelector<HTMLLinkElement>('link[rel="canonical"]');
+  if (!conocida) {
+    link?.remove();
+    return;
+  }
+  if (!link) {
+    link = document.createElement("link");
+    link.rel = "canonical";
+    document.head.appendChild(link);
+  }
+  link.href = url(limpia);
+}
+
+/**
  * Al cambiar de página:
  * - actualiza el título de la pestaña,
  * - si hay un #ancla, baja hasta esa sección; si no, vuelve arriba,
@@ -40,6 +61,7 @@ function CambioDePagina({ mainRef }: { mainRef: React.RefObject<HTMLElement> }) 
   const primeraCarga = useRef(true);
 
   useEffect(() => {
+    actualizarCanonica(pathname);
     document.title =
       titulos[pathname] ??
       (pathname.startsWith("/diario/") ? `Diario | ${MARCA}` : `Página no encontrada | ${MARCA}`);
