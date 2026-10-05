@@ -582,7 +582,6 @@ main {
 /* Imágenes reales: llenan el espacio de su contenedor con recorte "cover" */
 img.hero__photo,
 img.portrait__img,
-img.about-media__img,
 img.post__thumb {
   width: 100%;
   padding: 0;
@@ -854,53 +853,376 @@ img.post__thumb {
   padding: 88px 28px 96px;
 }
 
-/* Sobre */
-.about-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: 56px;
-  margin-top: 64px;
-  align-items: start;
+/* Detrás de Mente en Balance
+   Cada sección usa una composición distinta (texto, banda con pasos,
+   retrato, dos columnas de lista, texto + foto, banda oscura, grilla). */
+.db-intro {
+  padding-bottom: 72px;
 }
-.principios {
+.db-intro__titulo {
+  max-width: 14ch;
+}
+.db-intro__texto {
+  margin-top: 36px;
+}
+.db-intro__texto p {
+  font-size: 17px;
+  max-width: 62ch;
+}
+
+.db-balance {
+  background: rgba(6, 153, 153, 0.06);
+  border-top: 1px solid var(--line-soft);
+  border-bottom: 1px solid var(--line-soft);
+}
+.db-balance__inner {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 88px 28px;
+}
+.db-balance__head {
+  max-width: 62ch;
+}
+.db-balance__lead {
+  font-family: var(--serif);
+  font-size: clamp(21px, 2.4vw, 26px);
+  line-height: 1.45;
+  margin: 22px 0 0;
+  text-wrap: balance;
+}
+.db-balance__texto {
+  font-size: 16px;
+  line-height: 1.8;
+  color: var(--muted);
+  margin: 18px 0 0;
+}
+.db-pasos {
+  list-style: none;
+  margin: 56px 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0;
+}
+.db-paso {
+  position: relative;
   display: flex;
   flex-direction: column;
-  margin-top: 46px;
+  gap: 10px;
+  padding: 26px 28px 0 0;
+  border-top: 2px solid var(--teal);
 }
-.principio {
-  padding: 24px 0;
-  border-top: 1px solid var(--line);
-}
-.principio__title {
-  font-family: var(--serif);
-  font-size: 20px;
-  font-weight: 400;
-  margin: 0;
-}
-.principio__desc {
+/* Flecha entre pasos (decorativa) */
+.db-paso:not(:last-child)::after {
+  content: "→";
+  position: absolute;
+  top: -15px;
+  right: 14px;
+  width: 28px;
+  height: 28px;
+  display: grid;
+  place-items: center;
+  border-radius: 999px;
+  background: #eef5f2;
+  color: var(--teal-text);
   font-size: 14px;
-  line-height: 1.75;
-  color: var(--muted);
-  margin: 8px 0 0;
 }
-.about-media {
+.db-paso__verbo {
+  font-family: var(--serif);
+  font-size: 26px;
+  line-height: 1.2;
+}
+.db-paso__texto {
+  font-size: 15px;
+  line-height: 1.65;
+  color: var(--muted);
+  max-width: 26ch;
+}
+.db-balance__cierre {
+  font-family: var(--serif);
+  font-size: 19px;
+  color: var(--plum);
+  margin: 52px 0 0;
+}
+
+.db-persona {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  gap: 72px;
+  align-items: start;
+}
+.db-persona__media {
   position: relative;
 }
-.about-media__img {
-  aspect-ratio: 3 / 4;
+.db-persona__foto {
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 714 / 984;
+  object-fit: cover;
   border-radius: 999px 999px 24px 24px;
-  align-items: flex-end;
-  padding: 26px;
-  overflow: hidden;
 }
-.about-media__accent {
+.db-persona__accent {
   position: absolute;
-  left: -18px;
-  top: 12%;
-  width: 30%;
+  left: -22px;
+  bottom: 14%;
+  width: 34%;
   aspect-ratio: 1;
   border-radius: 999px;
-  background: rgba(6, 153, 153, 0.3);
+  background: rgba(249, 178, 51, 0.38);
+}
+.db-persona__nombre {
+  font-family: var(--serif);
+  font-size: 24px;
+  margin: 28px 0 0;
+}
+.db-persona__rol {
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  color: var(--teal-text);
+  margin: 6px 0 0;
+}
+
+.db-detalle {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  gap: 72px;
+  padding-top: 0;
+  align-items: start;
+}
+.db-h3 {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 1.3;
+  margin: 0 0 24px;
+}
+.db-acompanar {
+  background: rgba(249, 178, 51, 0.14);
+  border-radius: 26px;
+  padding: 36px 34px;
+}
+.db-acompanar__lista {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.db-acompanar__lista li {
+  font-family: var(--serif);
+  font-size: 19px;
+  line-height: 1.45;
+  padding-left: 22px;
+  position: relative;
+}
+.db-acompanar__lista li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.62em;
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: var(--plum);
+}
+.db-formacion__lista {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.db-formacion__item {
+  display: grid;
+  grid-template-columns: 64px minmax(0, 1fr);
+  gap: 20px;
+  padding: 18px 0;
+}
+.db-formacion__item + .db-formacion__item {
+  border-top: 1px solid var(--line);
+}
+.db-formacion__anio {
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--plum);
+  padding-top: 3px;
+  font-variant-numeric: tabular-nums;
+}
+.db-formacion__cuerpo {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.db-formacion__titulo {
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.45;
+}
+.db-formacion__lugar {
+  font-size: 14px;
+  color: var(--muted);
+}
+.db-formacion__detalle {
+  font-size: 14px;
+  line-height: 1.65;
+  color: var(--muted);
+  margin-top: 4px;
+}
+
+.db-yoga {
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  gap: 72px;
+  align-items: center;
+  padding-top: 32px;
+}
+.db-yoga__foto {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  border-radius: 26px;
+}
+
+.db-comunidad {
+  background: var(--ink);
+  color: var(--cream);
+}
+.db-comunidad__inner {
+  max-width: 820px;
+  margin: 0 auto;
+  padding: 96px 28px;
+}
+.db-comunidad__titulo {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(30px, 3.6vw, 42px);
+  line-height: 1.2;
+  margin: 0;
+}
+.db-comunidad__texto {
+  margin-top: 28px;
+}
+.db-comunidad__texto p {
+  font-size: 16px;
+  line-height: 1.85;
+  color: rgba(251, 248, 242, 0.78);
+  margin: 0;
+  max-width: 64ch;
+}
+.db-comunidad__texto p + p {
+  margin-top: 18px;
+}
+.db-comunidad__frase {
+  font-family: var(--serif);
+  font-size: clamp(21px, 2.4vw, 26px);
+  line-height: 1.45;
+  color: var(--amber);
+  margin: 40px 0 0;
+  text-wrap: balance;
+}
+.db-comunidad__cta {
+  margin-top: 36px;
+  background: var(--amber);
+  color: var(--ink);
+}
+.db-comunidad__cta:hover {
+  background: var(--cream);
+  color: var(--ink);
+}
+
+.db-valores__grid {
+  list-style: none;
+  margin: 44px 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0 40px;
+}
+.db-valor {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 26px 0 30px;
+  border-top: 1px solid var(--line);
+}
+.db-valor__titulo {
+  font-family: var(--serif);
+  font-size: 22px;
+  line-height: 1.3;
+}
+.db-valor__desc {
+  font-size: 15px;
+  line-height: 1.65;
+  color: var(--muted);
+}
+.db-cierre {
+  margin-top: 64px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 28px 48px;
+  flex-wrap: wrap;
+}
+.db-cierre__texto {
+  font-family: var(--serif);
+  font-size: clamp(22px, 2.6vw, 30px);
+  line-height: 1.4;
+  margin: 0;
+  max-width: 30ch;
+  text-wrap: balance;
+}
+
+@media (max-width: 960px) {
+  .db-pasos {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    row-gap: 40px;
+  }
+  .db-paso:nth-child(2)::after {
+    display: none;
+  }
+  .db-persona,
+  .db-detalle,
+  .db-yoga {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 44px;
+  }
+  .db-persona__media {
+    max-width: 420px;
+  }
+  .db-valores__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 600px) {
+  .db-balance__inner,
+  .db-comunidad__inner {
+    padding: 64px 20px;
+  }
+  .db-pasos {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 32px;
+  }
+  .db-paso:not(:last-child)::after {
+    display: none;
+  }
+  .db-paso {
+    padding-right: 0;
+  }
+  .db-acompanar {
+    padding: 28px 24px;
+  }
+  .db-valores__grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .db-comunidad__cta,
+  .db-cierre .btn {
+    width: 100%;
+    text-align: center;
+  }
 }
 
 /* Servicios (página) */

@@ -12,6 +12,10 @@ export interface Imagen {
 }
 
 export const img = {
+  mariaIgnacia: {
+    src: "/img/maria-ignacia.webp",
+    alt: "María Ignacia Canessa sonriendo, frente a un muro con plantas y una mandala de madera",
+  },
   yogaPose: {
     src: "/img/yoga-pose.webp",
     alt: "Práctica de Vinyasa Yoga en la sala",

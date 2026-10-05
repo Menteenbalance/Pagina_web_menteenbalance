@@ -264,19 +264,44 @@ export const aranceles: GrupoTarifas[] = [
   },
 ];
 
-/** Principios que se muestran en la página Sobre. */
-export const principios: Principio[] = [
+/** Valores del espacio (página "Detrás de Mente en Balance"). */
+export const valores: Principio[] = [
+  { titulo: "Autoconocimiento", desc: "Conocerte para comprenderte." },
+  { titulo: "Compasión y no juicio", desc: "Aprender a acompañarnos incluso en lo difícil." },
+  { titulo: "Presencia", desc: "Volver al momento que estás viviendo." },
+  { titulo: "Cercanía", desc: "Un espacio humano, cálido y sin juicios." },
+  { titulo: "Evidencia", desc: "Integrar herramientas respaldadas por la psicología y la ciencia." },
+  { titulo: "Comunidad", desc: "Porque no tenemos que atravesar todo solos." },
+];
+
+/** Formación de María Ignacia (página "Detrás de Mente en Balance"). */
+export const formacion: { anio: string; titulo: string; lugar: string; detalle?: string }[] = [
   {
-    titulo: "Autoconocimiento",
-    desc: "Mirar hacia adentro con curiosidad y sin juicio para entender lo que sientes y lo que necesitas.",
+    anio: "2026",
+    titulo: "Máster en Terapias Psicológicas de Tercera Generación",
+    lugar: "Universidad de Valencia",
+    detalle:
+      "Terapia de Aceptación y Compromiso, Terapia Dialéctico Conductual y Terapia Cognitivo Conductual para la ansiedad y la depresión.",
   },
   {
-    titulo: "Compasión",
-    desc: "Tratarte con amabilidad, sobre todo cuando la autocrítica y la autoexigencia aprietan.",
+    anio: "2024",
+    titulo: "Instructora de Vinyasa Yoga Somático (200 hrs)",
+    lugar: "Escuela SOMA Yoga, Brasil",
   },
   {
-    titulo: "Atención plena",
-    desc: "Volver al presente, una respiración a la vez, para vivir con más conciencia y calma.",
+    anio: "2023",
+    titulo: "Diplomado en Intervención en Ansiedad y Estrés en NNA",
+    lugar: "Universidad del Desarrollo",
+  },
+  {
+    anio: "2023",
+    titulo: "Instructora de Vinyasa Yoga (200 hrs)",
+    lugar: "Vinyasa Yoga Chile",
+  },
+  {
+    anio: "2022",
+    titulo: "Psicóloga Clínica",
+    lugar: "Universidad del Desarrollo",
   },
 ];
 
@@ -295,6 +320,8 @@ export const contacto = {
   },
   whatsapp: "WhatsApp +56 9 4354 9436",
   email: "ignaciacanessa@menteenbalance.com",
+  /** Comunidad de WhatsApp de Mente en Balance */
+  comunidadWhatsapp: "https://chat.whatsapp.com/LtzlDJO4s8I0gvLbAD1oKi",
   direccion: [
     "Casa Lunay · Mariano Sánchez Fontecilla 584",
     "Las Condes, Santiago",
