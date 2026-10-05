@@ -10,7 +10,7 @@ import { postsRecientes, proximasActividades, useContenido } from "../lib/conten
 // fetchpriority en minúsculas: React 18 aún no reconoce la versión camelCase.
 const prioridadAlta = { fetchpriority: "high" } as Record<string, string>;
 
-// Página de inicio: hero, cinta, "sobre nosotras", servicios,
+// Página de inicio: hero, cinta, "un espacio para volver a ti", servicios,
 // agenda corta, cita destacada y últimos artículos del diario.
 export default function Inicio() {
   const { servicios, agenda, posts } = useContenido();
@@ -74,7 +74,7 @@ export default function Inicio() {
         </section>
       </Reveal>
 
-      {/* Sobre nosotras */}
+      {/* Sobre Mente en Balance */}
       <Reveal>
         <section className="section">
           <div className="split">
@@ -92,19 +92,20 @@ export default function Inicio() {
           </div>
           <div>
             <h2 className="section-title" style={{ lineHeight: 1.16 }}>
-              Mente, cuerpo y alma en un mismo lugar
+              Un espacio para volver a ti
             </h2>
             <div className="prose" style={{ marginTop: 26 }}>
               <p>
-                Mente en Balance nace del encuentro entre la psicología y el
-                yoga. María Ignacia Canessa, psicóloga clínica y profesora de
-                yoga, acompaña procesos de bienestar emocional para una vida más
-                consciente.
+                Mente en Balance nace desde la idea de que no siempre
+                necesitamos hacer más. A veces necesitamos parar, salir del
+                piloto automático, escucharnos y comprender qué es lo que nos
+                está pasando.
               </p>
               <p>
-                Unimos la mirada clínica de las Terapias de Tercera Generación
-                con la práctica de yoga y meditación: un mismo espacio para
-                cuidar la mente, habitar el cuerpo y crear comunidad.
+                Soy María Ignacia Canessa, psicóloga clínica y profesora de
+                yoga. Integro psicología, yoga y mindfulness para acompañarte a
+                conectar con tu mente, tu cuerpo y tus emociones desde la
+                presencia, la curiosidad y la compasión.
               </p>
             </div>
             <Link
@@ -112,7 +113,7 @@ export default function Inicio() {
               className="text-link"
               style={{ marginTop: 32 }}
             >
-              Conocer el enfoque
+              Conocer más
             </Link>
             </div>
           </div>
@@ -164,8 +165,8 @@ export default function Inicio() {
         </Reveal>
         {agendaCorta.length === 0 && (
           <p className="agenda-vacia">
-            Estamos preparando las próximas fechas.{" "}
-            <Link to="/contacto">Escríbenos</Link> y te avisamos cuando abramos cupos.
+            Estoy preparando las próximas fechas.{" "}
+            <Link to="/contacto">Escríbeme</Link> y te aviso cuando abra cupos.
           </p>
         )}
         <div className="agenda-list">

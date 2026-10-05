@@ -7,7 +7,7 @@ const caminos = [
   { to: "/servicios", titulo: "Servicios", texto: "Psicología, yoga y meditación" },
   { to: "/agenda", titulo: "Agenda", texto: "Próximas clases y talleres" },
   { to: "/diario", titulo: "Diario", texto: "Lecturas para la práctica" },
-  { to: "/contacto", titulo: "Contacto", texto: "Escríbenos, te respondemos" },
+  { to: "/contacto", titulo: "Contacto", texto: "Escríbeme, te respondo" },
 ];
 
 interface Props {

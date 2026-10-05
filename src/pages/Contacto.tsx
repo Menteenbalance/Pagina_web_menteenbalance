@@ -79,13 +79,13 @@ export default function Contacto() {
       }
       if (res.status === 429) {
         setMensajeError(
-          `Ya recibimos varios mensajes desde este dispositivo. Puedes volver a escribir ${tiempoRestante(
+          `Ya recibí varios mensajes desde este dispositivo. Puedes volver a escribir ${tiempoRestante(
             Number(data.reintentarEnSeg) || 600
-          )} o hablarnos por WhatsApp.`
+          )} o hablarme por WhatsApp.`
         );
       } else {
         setMensajeError(
-          "No pudimos enviar tu mensaje. Inténtalo de nuevo en unos minutos o escríbenos por WhatsApp."
+          "No se pudo enviar tu mensaje. Inténtalo de nuevo en unos minutos o escríbeme por WhatsApp."
         );
       }
       setEstado("error");
@@ -113,9 +113,9 @@ export default function Contacto() {
         <div aria-live="polite">
           {estado === "enviado" ? (
             <div className="sent" ref={exitoRef} tabIndex={-1}>
-              <h2 className="sent__title">Gracias, te escribiremos pronto</h2>
+              <h2 className="sent__title">Gracias, te escribiré pronto</h2>
               <p className="sent__text">
-                Respondemos dentro de 48 horas hábiles. Mientras tanto, respira:
+                Respondo dentro de 48 horas hábiles. Mientras tanto, respira:
                 un día a la vez.
               </p>
             </div>
@@ -242,7 +242,7 @@ export default function Contacto() {
           </div>
 
           <div className="info-card info-card--links">
-            <h2 className="info-card__title">Escríbenos</h2>
+            <h2 className="info-card__title">Escríbeme</h2>
             <a
               className="info-card__link"
               href={contacto.instagram.url}

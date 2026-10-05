@@ -51,12 +51,12 @@ export default function Agenda() {
         <div className="empty">
           <h2 className="empty__title">
             {filtro === "Todo"
-              ? "Estamos preparando las próximas fechas"
+              ? "Estoy preparando las próximas fechas"
               : `Por ahora no hay fechas de ${filtro.toLowerCase()}`}
           </h2>
           <p className="empty__text">
-            Publicamos nuevas clases cada mes. Revisa las otras actividades o
-            escríbenos y te avisamos cuando abramos cupos.
+            Publico nuevas clases cada mes. Revisa las otras actividades o
+            escríbeme y te aviso cuando abra cupos.
           </p>
           <div className="empty__actions">
             {filtro !== "Todo" && (
@@ -69,7 +69,7 @@ export default function Agenda() {
               </button>
             )}
             <Link to="/contacto" className="text-link">
-              Avísenme
+              Avísame
             </Link>
           </div>
         </div>

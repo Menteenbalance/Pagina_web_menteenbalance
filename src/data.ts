@@ -203,7 +203,7 @@ export const posts: Post[] = [
     cat: "Comunidad",
     titulo: "El poder de practicar en comunidad",
     bajada:
-      "Lo que ocurre cuando nos movemos y respiramos acompañadas.",
+      "Lo que ocurre cuando nos movemos y respiramos en compañía.",
     cuerpo: "",
     imagen: "/img/balasana.webp",
     fecha: "2026-04-18",
