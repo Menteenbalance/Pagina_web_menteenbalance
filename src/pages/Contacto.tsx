@@ -26,7 +26,6 @@ export default function Contacto() {
   const [estado, setEstado] = useState<Estado>("idle");
   const [errores, setErrores] = useState<Partial<Record<Campo, string>>>({});
   const [mensajeError, setMensajeError] = useState("");
-  const [suscrito, setSuscrito] = useState(false);
   const inicio = useRef(Date.now());
   const formRef = useRef<HTMLFormElement>(null);
   const exitoRef = useRef<HTMLDivElement>(null);
@@ -265,21 +264,19 @@ export default function Contacto() {
           <div className="newsletter">
             <h2 className="newsletter__title">Súmate a la comunidad</h2>
             <p className="newsletter__text">
-              Una carta al mes con prácticas, lecturas y fechas de clases.
+              Información de clases, precios especiales en talleres y
+              experiencias, y espacios para encontrarnos. Únete a la comunidad
+              de WhatsApp.
             </p>
-            <div className="newsletter__row">
-              <input
-                className="newsletter__input"
-                type="email"
-                placeholder="tucorreo@mail.com"
-              />
-              <button
-                className="btn btn--dark newsletter__btn"
-                onClick={() => setSuscrito(true)}
-              >
-                {suscrito ? "Listo" : "Sumarme"}
-              </button>
-            </div>
+            <a
+              href={contacto.comunidadWhatsapp}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn btn--dark newsletter__btn"
+              aria-label="Unirme a la comunidad de WhatsApp (se abre en una pestaña nueva)"
+            >
+              Unirme a la comunidad
+            </a>
           </div>
         </div>
       </div>

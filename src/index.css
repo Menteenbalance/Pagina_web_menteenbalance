@@ -1598,22 +1598,6 @@ img.post__thumb {
   color: var(--muted);
   margin: 12px 0 20px;
 }
-.newsletter__row {
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-}
-.newsletter__input {
-  flex: 1;
-  min-width: 160px;
-  font-family: var(--sans);
-  font-size: 14px;
-  padding: 13px 18px;
-  border: 1px solid rgba(42, 36, 48, 0.18);
-  border-radius: 999px;
-  background: var(--cream);
-  color: var(--ink);
-}
 .newsletter__btn {
   padding: 13px 24px;
 }
