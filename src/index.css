@@ -388,7 +388,7 @@ main {
   border: 0;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 1080px) {
   .header__inner {
     padding: 12px 20px;
     gap: 12px;

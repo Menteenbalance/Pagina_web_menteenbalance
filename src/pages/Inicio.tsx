@@ -108,7 +108,7 @@ export default function Inicio() {
               </p>
             </div>
             <Link
-              to="/sobre"
+              to="/detras-de-mente-en-balance"
               className="text-link"
               style={{ marginTop: 32 }}
             >

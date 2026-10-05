@@ -1,5 +1,5 @@
 import { lazy, Suspense, useEffect, useRef } from "react";
-import { Routes, Route, useLocation } from "react-router-dom";
+import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Inicio from "./pages/Inicio";
@@ -21,7 +21,7 @@ const MARCA = "Mente en Balance";
 // Título de la pestaña del navegador según la página.
 const titulos: Record<string, string> = {
   "/": `${MARCA} | Psicología & Yoga en Santiago`,
-  "/sobre": `Sobre nosotras | ${MARCA}`,
+  "/detras-de-mente-en-balance": `Detrás de Mente en Balance | ${MARCA}`,
   "/servicios": `Servicios y aranceles | ${MARCA}`,
   "/agenda": `Agenda de clases y talleres | ${MARCA}`,
   "/diario": `Diario | ${MARCA}`,
@@ -103,7 +103,9 @@ function SitioPublico() {
         <LimiteDeError clave={pathname}>
         <Routes>
           <Route path="/" element={<Inicio />} />
-          <Route path="/sobre" element={<Sobre />} />
+          <Route path="/detras-de-mente-en-balance" element={<Sobre />} />
+          {/* Dirección anterior: se conserva para no romper enlaces ya compartidos */}
+          <Route path="/sobre" element={<Navigate to="/detras-de-mente-en-balance" replace />} />
           <Route path="/servicios" element={<Servicios />} />
           <Route path="/agenda" element={<Agenda />} />
           <Route path="/diario" element={<Diario />} />

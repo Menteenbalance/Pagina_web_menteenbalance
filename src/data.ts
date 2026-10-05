@@ -18,7 +18,7 @@ import type {
 
 /** Menú de navegación (header y footer). */
 export const nav: NavItem[] = [
-  { label: "Sobre", path: "/sobre" },
+  { label: "Detrás de Mente en Balance", path: "/detras-de-mente-en-balance" },
   { label: "Servicios", path: "/servicios" },
   { label: "Agenda", path: "/agenda" },
   { label: "Diario", path: "/diario" },
