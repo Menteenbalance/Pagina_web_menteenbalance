@@ -1797,17 +1797,26 @@ img.hero__photo {
   width: min(62%, 340px);
 }
 
-/* Servicios: 6 tarjetas en 3 + 3 (sin fila huérfana) */
+/* Servicios: columnas según la cantidad (3, 4 o 2), sin filas huérfanas */
 .cards {
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
+.cards--4 {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+.cards--2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
 @media (max-width: 960px) {
-  .cards {
+  .cards,
+  .cards--4 {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 @media (max-width: 600px) {
-  .cards {
+  .cards,
+  .cards--4,
+  .cards--2 {
     grid-template-columns: 1fr;
   }
 }

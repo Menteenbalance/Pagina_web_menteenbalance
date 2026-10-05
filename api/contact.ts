@@ -34,10 +34,11 @@ const LIMITES_IP: Limite[] = [
 const LIMITE_GLOBAL: Limite[] = [{ nombre: "24h", max: 150, ventanaSeg: 24 * 60 * 60 }];
 
 const INTERESES = [
-  "Terapia individual",
-  "Vinyasa Yoga",
-  "Meditación",
-  "Experiencias y talleres",
+  "Psicoterapia individual",
+  "Vinyasa Yoga y Meditación",
+  "Encuentros, talleres y experiencias",
+  "Bienestar para organizaciones",
+  "Otro",
 ] as const;
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;

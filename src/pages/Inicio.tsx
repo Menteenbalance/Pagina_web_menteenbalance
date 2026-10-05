@@ -131,7 +131,8 @@ export default function Inicio() {
               Formas de acompañarte
             </h2>
           </Reveal>
-          <div className="cards">
+          {/* Columnas según cuántos servicios haya (sin filas huérfanas) */}
+          <div className={`cards cards--${servicios.length % 4 === 0 ? 4 : servicios.length === 2 ? 2 : 3}`}>
             {servicios.map((s, i) => (
               <Reveal key={s.title} delay={200 + i * 90}>
                 <Link to={`/servicios#${slug(s.title)}`} className="card">

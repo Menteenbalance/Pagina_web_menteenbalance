@@ -28,58 +28,40 @@ export const nav: NavItem[] = [
 /** Servicios que se muestran en Inicio y en la página Servicios. */
 export const servicios: Servicio[] = [
   {
-    id: "psicologia",
-    title: "Psicología",
+    id: "psicoterapia-individual",
+    title: "Psicoterapia individual",
     dot: "var(--plum)",
     meta: "Online y presencial",
-    body: "Acompañamiento clínico para la ansiedad, las emociones y la autocrítica, desde un enfoque integrativo y consciente.",
+    body: "Un espacio individual para comprender lo que estás viviendo, conocerte con mayor profundidad y desarrollar herramientas para tu día a día.",
     largo:
-      "Proceso terapéutico desde las Terapias de Tercera Generación, como la Terapia de Aceptación y Compromiso (ACT) y el mindfulness, con herramientas prácticas para trabajar la ansiedad, la autoexigencia, la autoestima, los vínculos y la gestión emocional. Modalidad online o presencial en Casa Lunay.",
+      "Un espacio individual para comprender lo que estás viviendo, conocerte con mayor profundidad y desarrollar herramientas que te permitan relacionarte contigo y con tu entorno de una manera más consciente y amable. Modalidad online o presencial en Casa Lunay.",
   },
   {
-    id: "terapia-individual",
-    title: "Terapia individual",
+    id: "vinyasa-yoga-y-meditacion",
+    title: "Vinyasa Yoga y Meditación",
     dot: "var(--teal)",
-    meta: "50 minutos",
-    body: "Sesiones uno a uno para trabajar, a tu ritmo, aquello que hoy te pesa.",
+    meta: "Grupales y particulares",
+    body: "Clases grupales los lunes y miércoles a las 20:00 hrs en Casa Lunay, y clases particulares.",
     largo:
-      "Espacio individual de 50 minutos donde definimos juntas los objetivos y un plan a tu medida. Un lugar seguro para mirar lo que sientes con más claridad y compasión, disponible en modalidad online o presencial.",
+      "Clases de Vinyasa Yoga y meditación para moverte, respirar y volver al presente. Grupales: lunes y miércoles a las 20:00 hrs en Casa Lunay. También clases particulares, adaptadas a lo que necesitas.",
   },
   {
-    id: "vinyasa-yoga",
-    title: "Vinyasa Yoga",
+    id: "encuentros-talleres-y-experiencias",
+    title: "Encuentros, talleres y experiencias",
     dot: "var(--amber)",
-    meta: "Todos los niveles",
-    body: "Práctica dinámica y consciente que une movimiento y respiración. Para todos los niveles.",
+    meta: "Uno al mes",
+    body: "Un encuentro mensual para pausar, compartir y aprender en comunidad, además de experiencias especiales.",
     largo:
-      "Clases de Vinyasa para pausar, moverte con intención y volver a ti. Prácticas dinámicas y conscientes, en grupos pequeños y con acompañamiento cercano, para todos los niveles. Lunes y miércoles a las 20:00 en Casa Lunay.",
+      "Un encuentro mensual para pausar, compartir experiencias, aprender y conectar con otros desde un lugar seguro. Además, experiencias especiales y actividades en colaboración a lo largo del año.",
   },
   {
-    id: "meditacion",
-    title: "Meditación",
+    id: "bienestar-para-organizaciones",
+    title: "Bienestar para organizaciones",
     dot: "var(--lime)",
-    meta: "Atención plena",
-    body: "Prácticas guiadas de atención plena para calmar la mente y soltar la tensión.",
+    meta: "Para equipos",
+    body: "Charlas, pausas activas, clases y psicoeducación para cuidar el bienestar de tu equipo.",
     largo:
-      "Sesiones de meditación y mindfulness para reducir el estrés y la ansiedad, cultivar la calma y volver al presente. Un espacio seguro para desconectar y reconectar contigo.",
-  },
-  {
-    id: "experiencias",
-    title: "Experiencias",
-    dot: "var(--plum)",
-    meta: "Talleres y retiros",
-    body: "Talleres y retiros para profundizar la práctica y compartir en comunidad.",
-    largo:
-      "Encuentros especiales (talleres temáticos, jornadas y retiros) que combinan yoga, meditación y bienestar emocional para reconectar con el cuerpo y la calma.",
-  },
-  {
-    id: "comunidad",
-    title: "Comunidad",
-    dot: "var(--teal)",
-    meta: "Encuentros abiertos",
-    body: "Siente el poder de la comunidad: encuentros para moverte y respirar acompañada.",
-    largo:
-      "Una comunidad que acompaña e inspira. Clases al aire libre, encuentros abiertos y actividades para crear bienestar y vínculos desde la práctica compartida.",
+      "Programas de bienestar para organizaciones: charlas, pausas activas, clases de yoga y meditación y psicoeducación, para cuidar la salud emocional de los equipos en su lugar de trabajo.",
   },
 ];
 

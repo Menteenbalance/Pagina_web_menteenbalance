@@ -3,10 +3,11 @@ import { contacto } from "../data";
 import { obtenerVisitanteId } from "../lib/visitante";
 
 const INTERESES = [
-  "Terapia individual",
-  "Vinyasa Yoga",
-  "Meditación",
-  "Experiencias y talleres",
+  "Psicoterapia individual",
+  "Vinyasa Yoga y Meditación",
+  "Encuentros, talleres y experiencias",
+  "Bienestar para organizaciones",
+  "Otro",
 ];
 
 type Campo = "nombre" | "email" | "interes" | "mensaje";
