@@ -121,3 +121,16 @@ Los cambios se ven en el sitio en menos de un minuto.
 - Cada página declara su dirección oficial (`<link rel="canonical">`) en minúsculas y sin "/" final; las páginas 404 no la llevan.
 - Si se cambia la imagen de vista previa, WhatsApp y Facebook pueden tardar en actualizarla: se fuerza con el [Depurador de Facebook](https://developers.facebook.com/tools/debug/) ("Volver a extraer").
 
+
+## Estadísticas de visitas
+
+El sitio usa **Vercel Web Analytics** (`src/Estadisticas.tsx`): sin cookies y sin
+datos personales, por lo que no necesita banner de consentimiento.
+
+- **Activar:** en Vercel → proyecto → pestaña **Analytics** → **Enable**. Hasta
+  activarlo, el sitio funciona igual pero no se registra nada.
+- **Qué se ve:** visitas por página, de dónde llegan (Instagram, Google,
+  WhatsApp…), país y tipo de dispositivo.
+- **Qué no se cuenta:** el panel `/admin`. De la dirección solo se conservan los
+  parámetros `utm_*` (útiles para campañas); el resto se quita antes de enviar.
+- **En local** no se envía nada.
