@@ -6,6 +6,7 @@ import type { Guardar } from "./AdminApp";
 import { BotonEliminar, Campo } from "./ui";
 
 const TIPOS: TipoEvento[] = ["Yoga", "Meditación", "Talleres"];
+const TITULOS = { nueva: "Nueva actividad", editar: "Editar actividad", duplicar: "Duplicar actividad" } as const;
 
 /** "11 hrs." / "19:30 hrs." → "11:00" / "19:30" para el campo de hora */
 function aHoraInput(hora: string): string {
@@ -31,9 +32,30 @@ function vacio(): Evento {
   };
 }
 
+/** Suma días a una fecha AAAA-MM-DD (sin zonas horarias de por medio). */
+function sumarDias(fecha: string, dias: number): string {
+  const [a, m, d] = fecha.split("-").map(Number);
+  const f = new Date(Date.UTC(a, m - 1, d + dias));
+  return f.toISOString().slice(0, 10);
+}
+
+/**
+ * Copia de una actividad para la semana siguiente: mismo día de la semana,
+ * hora, lugar y valor. Si la original ya pasó, avanza de a una semana hasta
+ * llegar a una fecha desde hoy en adelante.
+ */
+function duplicar(ev: Evento, hoy: string): Evento {
+  let fecha = sumarDias(ev.fecha, 7);
+  while (fecha < hoy) fecha = sumarDias(fecha, 7);
+  return { ...ev, id: crypto.randomUUID(), fecha };
+}
+
+type Modo = "nueva" | "editar" | "duplicar";
+
 export default function EditorAgenda({ agenda, guardar }: { agenda: Evento[]; guardar: Guardar }) {
   const [editando, setEditando] = useState<Evento | null>(null);
-  const [esNuevo, setEsNuevo] = useState(false);
+  const [modo, setModo] = useState<Modo>("nueva");
+  const [original, setOriginal] = useState<Evento | null>(null);
   const [guardando, setGuardando] = useState(false);
   const hoy = hoyEnSantiago();
 
@@ -52,9 +74,16 @@ export default function EditorAgenda({ agenda, guardar }: { agenda: Evento[]; gu
   async function enviar(e: FormEvent) {
     e.preventDefault();
     if (!editando) return;
-    const lista = esNuevo ? [...agenda, editando] : agenda.map((x) => (x.id === editando.id ? editando : x));
+    const lista = modo === "editar" ? agenda.map((x) => (x.id === editando.id ? editando : x)) : [...agenda, editando];
     if (await persistir(lista)) setEditando(null);
   }
+
+  // Aviso (no bloquea) si la copia quedó idéntica a otra actividad
+  const repetida =
+    !!editando &&
+    agenda.some(
+      (x) => x.id !== editando.id && x.titulo.trim() === editando.titulo.trim() && x.fecha === editando.fecha && x.hora === editando.hora
+    );
 
   const tarjeta = (ev: Evento, pasada = false) => {
     const f = formatearFecha(ev.fecha);
@@ -74,12 +103,24 @@ export default function EditorAgenda({ agenda, guardar }: { agenda: Evento[]; gu
             type="button"
             className="a-btn a-btn--ghost"
             onClick={() => {
-              setEsNuevo(false);
+              setModo("editar");
               setEditando(ev);
             }}
             aria-label={`Editar ${ev.titulo}`}
           >
             Editar
+          </button>
+          <button
+            type="button"
+            className="a-btn a-btn--ghost"
+            onClick={() => {
+              setModo("duplicar");
+              setOriginal(ev);
+              setEditando(duplicar(ev, hoy));
+            }}
+            aria-label={`Duplicar ${ev.titulo}`}
+          >
+            Duplicar
           </button>
           <BotonEliminar que={`la actividad ${ev.titulo}`} onConfirmar={() => persistir(agenda.filter((x) => x.id !== ev.id))} />
         </div>
@@ -99,7 +140,7 @@ export default function EditorAgenda({ agenda, guardar }: { agenda: Evento[]; gu
             type="button"
             className="a-btn a-btn--primario"
             onClick={() => {
-              setEsNuevo(true);
+              setModo("nueva");
               setEditando(vacio());
             }}
           >
@@ -109,8 +150,15 @@ export default function EditorAgenda({ agenda, guardar }: { agenda: Evento[]; gu
       </header>
 
       {editando && (
-        <form className="a-item a-form-evento" onSubmit={enviar} aria-label={esNuevo ? "Nueva actividad" : "Editar actividad"}>
-          <h2 className="a-item__titulo">{esNuevo ? "Nueva actividad" : "Editar actividad"}</h2>
+        <form key={editando.id} className="a-item a-form-evento" onSubmit={enviar} aria-label={TITULOS[modo]}>
+          <h2 className="a-item__titulo">{TITULOS[modo]}</h2>
+          {modo === "duplicar" && original && (
+            <p className="a-campo__ayuda a-form-evento__nota">
+              Copia de «{original.titulo}» del {formatearFecha(original.fecha).larga}. Te propongo el
+              mismo día de la semana y la misma hora, en la próxima semana disponible: revisa la
+              fecha y ajusta lo que cambie.
+            </p>
+          )}
 
           <Campo etiqueta="Título">
             {(p) => <input {...p} className="a-input" required maxLength={80} value={editando.titulo} placeholder="Ej: Sentir Yoga…" onChange={(e) => setEditando({ ...editando, titulo: e.target.value })} autoFocus />}
@@ -127,7 +175,7 @@ export default function EditorAgenda({ agenda, guardar }: { agenda: Evento[]; gu
           </fieldset>
 
           <div className="a-grid-2">
-            <Campo etiqueta="Fecha">
+            <Campo etiqueta="Fecha" error={repetida ? "Ya hay una actividad con este título, fecha y hora." : undefined}>
               {(p) => <input {...p} className="a-input" type="date" required value={editando.fecha} onChange={(e) => setEditando({ ...editando, fecha: e.target.value })} />}
             </Campo>
             <Campo etiqueta="Hora">
@@ -167,7 +215,7 @@ export default function EditorAgenda({ agenda, guardar }: { agenda: Evento[]; gu
               Cancelar
             </button>
             <button type="submit" className="a-btn a-btn--primario" disabled={guardando} aria-busy={guardando}>
-              {guardando ? "Guardando…" : esNuevo ? "Publicar actividad" : "Guardar cambios"}
+              {guardando ? "Guardando…" : modo === "editar" ? "Guardar cambios" : "Publicar actividad"}
             </button>
           </div>
         </form>
