@@ -38,7 +38,11 @@ src/
     Diario.tsx          Diario / artículos
     Contacto.tsx        Contacto (formulario + newsletter)
 public/
-  logo.png              Logo del sitio
+  logo.svg              Logo del sitio (5 KB, vectorizado desde logo.png)
+  logo.png              Original en alta resolución (ya no lo carga el sitio)
+  favicon.svg / .ico    Ícono de la pestaña
+  apple-touch-icon.png  Ícono para "Agregar a inicio" (iPhone)
+  icon-192/512.png      Íconos del acceso directo (site.webmanifest)
 ```
 
 ## Dónde hacer cambios frecuentes

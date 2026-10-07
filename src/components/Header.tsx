@@ -29,7 +29,7 @@ export default function Header() {
       <div className="header__inner">
         <Link to="/" className="brand">
           <img
-            src="/logo.png"
+            src="/logo.svg"
             alt=""
             width={34}
             height={34}

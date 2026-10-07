@@ -9,7 +9,7 @@ export default function Footer() {
         <div>
           <div className="footer__brand">
             <img
-              src="/logo.png"
+              src="/logo.svg"
               alt=""
               width={32}
               height={32}

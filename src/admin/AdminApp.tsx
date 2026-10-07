@@ -119,7 +119,7 @@ export default function AdminApp() {
       <header className="a-top">
         <div className="a-top__inner">
           <Link to="/admin" className="a-marca">
-            <img src="/logo.png" alt="" width={28} height={28} />
+            <img src="/logo.svg" alt="" width={28} height={28} />
             <span>
               <span className="a-marca__nombre" translate="no">Mente en Balance</span>
               <span className="a-marca__sub">Panel de administración</span>

@@ -31,7 +31,7 @@ export default function InstagramModulo() {
         <div className="ig__perfil">
           <div className="ig__cuenta">
             <span className="ig__avatar" aria-hidden="true">
-              <img src="/logo.png" alt="" width={40} height={46} />
+              <img src="/logo.svg" alt="" width={40} height={46} />
             </span>
             <span className="ig__cuenta-texto">
               <span className="ig__handle" translate="no">

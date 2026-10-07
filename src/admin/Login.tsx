@@ -27,7 +27,7 @@ export default function Login({
 
   return (
     <main className="a-login">
-      <img src="/logo.png" alt="" width={44} height={44} className="a-login__logo" />
+      <img src="/logo.svg" alt="" width={44} height={44} className="a-login__logo" />
       <h1 className="a-login__titulo">Panel de administración</h1>
       <p className="a-login__sub">
         <span translate="no">Mente en Balance</span>

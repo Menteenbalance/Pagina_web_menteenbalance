@@ -52,7 +52,7 @@ export default class LimiteDeError extends Component<Props, Estado> {
       <div className="nf nf--error">
         <div className="nf__copy">
           <a href="/" className="nf__marca" aria-label="Mente en Balance, ir al inicio">
-            <img src="/logo.png" alt="" width={36} height={36} />
+            <img src="/logo.svg" alt="" width={36} height={36} />
           </a>
           <p className="nf__codigo">{carga ? "Nueva versión disponible" : "Algo salió mal"}</p>
           <h1 className="nf__titulo" ref={this.titulo} tabIndex={-1}>
