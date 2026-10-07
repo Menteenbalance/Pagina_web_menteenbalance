@@ -1,5 +1,5 @@
 import { useRef, useState, type FormEvent } from "react";
-import { contacto } from "../data";
+import { contacto, enlaceWhatsApp } from "../data";
 import { obtenerVisitanteId } from "../lib/visitante";
 
 const INTERESES = [
@@ -251,7 +251,15 @@ export default function Contacto() {
             >
               {contacto.instagram.label}
             </a>
-            <span className="info-card__link">{contacto.whatsapp}</span>
+            <a
+              className="info-card__link"
+              href={enlaceWhatsApp()}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`${contacto.whatsapp} (se abre en una pestaña nueva)`}
+            >
+              {contacto.whatsapp}
+            </a>
             <a
               className="info-card__link"
               href={`mailto:${contacto.email}`}
