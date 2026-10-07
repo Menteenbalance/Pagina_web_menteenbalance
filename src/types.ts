@@ -52,6 +52,8 @@ export interface Post {
   cuerpo: string;
   /** Imagen principal (URL o ruta /img/...) */
   imagen?: string;
+  /** Descripción de la imagen para lectores de pantalla (texto alternativo) */
+  imagenAlt?: string;
   /** Fecha de publicación AAAA-MM-DD */
   fecha: string;
   /** false = borrador, no aparece en el sitio */

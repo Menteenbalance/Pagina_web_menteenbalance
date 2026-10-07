@@ -139,6 +139,7 @@ const validadores: Record<Seccion, (datos: unknown) => unknown> = {
     const posts = lista(datos, 300, "Diario").map((x) => {
       const p = obj(x);
       const titulo = txt(p.titulo, "Título", { min: 1, max: 120 });
+      const imagen = urlImagen(p.imagen) || undefined;
       return {
         id: id(p.id),
         slug: slugValido(p.slug, titulo),
@@ -146,7 +147,9 @@ const validadores: Record<Seccion, (datos: unknown) => unknown> = {
         cat: txt(p.cat, "Categoría", { min: 1, max: 30 }),
         bajada: txt(p.bajada, "Bajada", { min: 1, max: 280 }),
         cuerpo: txt(p.cuerpo, "Texto de la publicación", { max: 40_000 }),
-        imagen: urlImagen(p.imagen) || undefined,
+        imagen,
+        // La descripción solo tiene sentido si hay foto; vacía = no se guarda
+        imagenAlt: (imagen && txt(p.imagenAlt, "Descripción de la foto", { max: 200 })) || undefined,
         fecha: fechaIso(p.fecha, "Fecha de publicación"),
         publicado: p.publicado === true,
       };

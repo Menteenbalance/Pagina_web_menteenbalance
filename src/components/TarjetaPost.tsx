@@ -19,12 +19,17 @@ export default function TarjetaPost({
   indice: number;
   titulo?: "h2" | "h3";
 }) {
+  // Si la tarjeta es un enlace, el título ya lo nombra: la foto es decorativa
+  // (así el lector de pantalla no repite). En tarjetas informativas sí se
+  // describe la foto propia; las de ambiente son siempre decorativas.
+  const alt = !post.cuerpo && post.imagen ? post.imagenAlt ?? "" : "";
+
   const contenido = (
     <>
       <img
         className="post__thumb"
         src={post.imagen || respaldo[indice % respaldo.length].src}
-        alt=""
+        alt={alt}
         width={960}
         height={720}
         loading="lazy"

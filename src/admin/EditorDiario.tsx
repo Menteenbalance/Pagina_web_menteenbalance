@@ -58,6 +58,7 @@ function Lista({ posts, guardar }: { posts: Post[]; guardar: Guardar }) {
                 <p className="a-post__meta">
                   {p.cat} · {formatearFecha(p.fecha).larga}
                   {!p.cuerpo && " · sin texto completo"}
+                  {p.imagen && !p.imagenAlt?.trim() && " · foto sin descripción"}
                 </p>
               </div>
               <div className="a-evento__acciones">
@@ -122,7 +123,8 @@ function Formulario({ posts, guardar }: { posts: Post[]; guardar: Guardar }) {
     try {
       const liviana = await comprimirImagen(archivo);
       const { url } = await api.subirImagen(liviana);
-      cambio({ imagen: url });
+      // Foto nueva: la descripción anterior ya no corresponde
+      cambio({ imagen: url, imagenAlt: undefined });
     } catch (err) {
       setErrorImagen((err as Error).message);
     } finally {
@@ -201,7 +203,7 @@ function Formulario({ posts, guardar }: { posts: Post[]; guardar: Guardar }) {
                 <button type="button" className="a-btn a-btn--ghost" onClick={() => inputArchivo.current?.click()} disabled={subiendo}>
                   Cambiar
                 </button>
-                <button type="button" className="a-btn a-btn--ghost" onClick={() => cambio({ imagen: undefined })} disabled={subiendo}>
+                <button type="button" className="a-btn a-btn--ghost" onClick={() => cambio({ imagen: undefined, imagenAlt: undefined })} disabled={subiendo}>
                   Quitar
                 </button>
               </div>
@@ -216,6 +218,24 @@ function Formulario({ posts, guardar }: { posts: Post[]; guardar: Guardar }) {
           {subiendo && post.imagen && <p className="a-campo__ayuda">Subiendo foto…</p>}
           {errorImagen && <p className="a-campo__error" role="alert">{errorImagen}</p>}
         </div>
+
+        {post.imagen && (
+          <Campo
+            etiqueta="Describe la foto en una frase (recomendado)"
+            ayuda={`La leen en voz alta los lectores de pantalla de personas ciegas o con baja visión, y ayuda a Google. Cuenta lo que se ve, sin "foto de…". Ej: "Grupo practicando yoga sobre el pasto en un parque al atardecer". ${(post.imagenAlt ?? "").length}/200`}
+          >
+            {(p) => (
+              <input
+                {...p}
+                className="a-input"
+                maxLength={200}
+                value={post.imagenAlt ?? ""}
+                placeholder="Ej: Mari guiando una meditación en una sala con luz natural"
+                onChange={(e) => cambio({ imagenAlt: e.target.value })}
+              />
+            )}
+          </Campo>
+        )}
 
         <div className="a-campo">
           <div className="a-editor__barra">

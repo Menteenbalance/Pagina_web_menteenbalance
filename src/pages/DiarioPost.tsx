@@ -44,7 +44,7 @@ export default function DiarioPost() {
         <img
           className="articulo__imagen"
           src={post.imagen}
-          alt=""
+          alt={post.imagenAlt ?? ""}
           width={1600}
           height={1000}
           decoding="async"
