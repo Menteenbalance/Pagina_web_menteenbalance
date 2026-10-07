@@ -11,6 +11,7 @@ import Contacto from "./pages/Contacto";
 import NoEncontrada from "./pages/NoEncontrada";
 import DiarioPost from "./pages/DiarioPost";
 import LimiteDeError from "./components/LimiteDeError";
+import BotonWhatsApp from "./components/BotonWhatsApp";
 import { url } from "./config";
 import { ContenidoProvider } from "./lib/contenido";
 
@@ -138,6 +139,7 @@ function SitioPublico() {
         </LimiteDeError>
       </main>
       <Footer />
+      <BotonWhatsApp />
     </div>
   );
 }

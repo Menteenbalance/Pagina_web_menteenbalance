@@ -14,6 +14,12 @@ export default function Header() {
     setAbierto(false);
   }, [pathname]);
 
+  // Avisa al resto del sitio (p. ej. el botón de WhatsApp) que el menú está abierto
+  useEffect(() => {
+    document.documentElement.toggleAttribute("data-menu-abierto", abierto);
+    return () => document.documentElement.removeAttribute("data-menu-abierto");
+  }, [abierto]);
+
   // Cierra el menú con la tecla Escape
   useEffect(() => {
     if (!abierto) return;

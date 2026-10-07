@@ -301,6 +301,11 @@ export const contacto = {
     url: "https://www.instagram.com/menteenbalance.cl/",
   },
   whatsapp: "WhatsApp +56 9 4354 9436",
+  /** Número para los enlaces de WhatsApp (formato internacional, solo dígitos) */
+  whatsappNumero: "56943549436",
+  /** Mensaje con que se abre la conversación desde el sitio */
+  whatsappMensaje:
+    "Hola Mari, te escribo desde la página de Mente en Balance. Me gustaría hacerte una consulta.",
   email: "ignaciacanessa@menteenbalance.com",
   /** Comunidad de WhatsApp de Mente en Balance */
   comunidadWhatsapp: "https://chat.whatsapp.com/LtzlDJO4s8I0gvLbAD1oKi",
@@ -330,3 +335,8 @@ export const contenidoInicial: Contenido = {
   posts,
   ajustes,
 };
+
+/** Enlace que abre una conversación de WhatsApp con el mensaje prellenado. */
+export function enlaceWhatsApp(mensaje: string = contacto.whatsappMensaje): string {
+  return `https://wa.me/${contacto.whatsappNumero}?text=${encodeURIComponent(mensaje)}`;
+}

@@ -2286,11 +2286,83 @@ img.hero__photo {
   }
 }
 
+/* Botón flotante de WhatsApp: solo en celulares (componente BotonWhatsApp).
+   Pastilla con ícono genérico de chat + texto, en el turquesa de marca
+   (crema sobre #067a7a = 4.9:1). Respeta la zona segura inferior del iPhone. */
+.wa-flotante {
+  display: none;
+}
+@media (max-width: 767px) {
+  .wa-flotante {
+    position: fixed;
+    right: calc(16px + env(safe-area-inset-right, 0px));
+    bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+    z-index: 40;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 48px;
+    padding: 0 18px 0 15px;
+    border-radius: 999px;
+    background: var(--teal-text);
+    color: var(--cream);
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    box-shadow: 0 10px 24px -10px rgba(42, 36, 48, 0.45),
+      0 2px 6px rgba(42, 36, 48, 0.12);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(12px);
+    transition: opacity 0.25s ease, transform 0.25s ease, visibility 0s linear 0.25s;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .wa-flotante.is-visible {
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    transition: opacity 0.25s ease, transform 0.25s ease, visibility 0s;
+  }
+  .wa-flotante:hover,
+  .wa-flotante:focus-visible {
+    color: var(--cream);
+    background: #055f5f;
+  }
+  .wa-flotante:focus-visible {
+    outline: 2px solid var(--ink);
+    outline-offset: 3px;
+  }
+  html[data-menu-abierto] .wa-flotante {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+.wa-flotante__icono {
+  flex: none;
+  fill: currentColor;
+}
+.wa-flotante__icono path {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linejoin: round;
+}
+@media print {
+  .wa-flotante {
+    display: none !important;
+  }
+}
+
 /* 6. ─── MOVIMIENTO REDUCIDO ──────────────────────────────────
    Va al final para imponerse sobre las animaciones definidas antes. */
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
+  }
+  .wa-flotante,
+  .wa-flotante.is-visible {
+    transform: none;
+    transition: none;
   }
   .reveal {
     opacity: 1;
