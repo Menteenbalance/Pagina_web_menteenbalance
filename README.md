@@ -134,3 +134,20 @@ datos personales, por lo que no necesita banner de consentimiento.
 - **Qué no se cuenta:** el panel `/admin`. De la dirección solo se conservan los
   parámetros `utm_*` (útiles para campañas); el resto se quita antes de enviar.
 - **En local** no se envía nada.
+
+## Encabezados de seguridad
+
+`vercel.json` agrega a todas las respuestas:
+
+| Encabezado | Para qué |
+|---|---|
+| `Content-Security-Policy` | Solo se ejecutan scripts del propio sitio; fuentes de Google Fonts; imágenes de cualquier `https:` (fotos del Diario en Vercel Blob). Nadie puede meter el sitio dentro de otra página (`frame-ancestors 'none'`). |
+| `X-Frame-Options: DENY` | Lo mismo para navegadores antiguos (evita *clickjacking*). |
+| `X-Content-Type-Options: nosniff` | El navegador no "adivina" tipos de archivo. |
+| `Referrer-Policy` | Al salir a otro sitio solo se informa el dominio, no la página. |
+| `Permissions-Policy` | Cámara, micrófono, ubicación y pagos desactivados. |
+| `Cross-Origin-Opener-Policy` | Aísla la pestaña de ventanas abiertas por otros sitios. |
+
+`/admin` y `/api` llevan además `X-Robots-Tag: noindex, nofollow` (Google no los indexa) y `/admin` no se guarda en caché.
+
+**Si se agrega un servicio externo** (un video de YouTube, un mapa, un script de terceros), hay que sumarlo a la directiva que corresponda de `Content-Security-Policy` en `vercel.json` (`frame-src`, `script-src`, `connect-src`…); si no, el navegador lo bloquea. Los errores aparecen en la consola del navegador como "Refused to…".
