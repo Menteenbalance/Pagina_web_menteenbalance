@@ -161,7 +161,7 @@ export default function AdminApp() {
               />
             }
           />
-          <Route path="agenda" element={<EditorAgenda agenda={contenido.agenda} guardar={guardar} />} />
+          <Route path="agenda" element={<EditorAgenda agenda={contenido.agenda} recurrentes={contenido.recurrentes ?? []} guardar={guardar} />} />
           <Route path="diario/*" element={<EditorDiario posts={contenido.posts} guardar={guardar} />} />
           <Route
             path="instagram"

@@ -279,6 +279,12 @@
   gap: 16px;
   align-items: start;
 }
+.a-grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  align-items: start;
+}
 
 /* ── Campos ────────────────────────────────────────────────────── */
 .a-campo {
@@ -577,6 +583,70 @@
   background: rgba(133, 43, 91, 0.1);
   color: var(--plum);
 }
+/* Clases que se repiten */
+.a-recurrentes {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--a-borde);
+}
+.a-recurrentes__head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.a-recurrentes__head .a-campo__ayuda {
+  margin-top: 4px;
+}
+.a-serie {
+  list-style: none;
+}
+.a-serie.is-pasado {
+  opacity: 0.65;
+}
+.a-serie__dias {
+  font-size: 17px;
+  text-transform: capitalize;
+}
+.a-serie__fechas {
+  margin: 6px 4px 0;
+  font-size: 14px;
+}
+.a-serie__fechas summary {
+  cursor: pointer;
+  color: var(--teal-text);
+  font-weight: 500;
+  padding: 8px 0;
+  min-height: 40px;
+}
+.a-serie__fechas ul {
+  list-style: none;
+  margin: 4px 0 0;
+  padding: 0;
+  display: grid;
+  gap: 6px;
+}
+.a-serie__fechas li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 6px 12px;
+  border-radius: 12px;
+  background: var(--a-surface);
+  border: 1px solid var(--a-borde);
+  text-transform: capitalize;
+}
+.a-serie__fechas li.is-cancelada > span {
+  color: var(--muted);
+  text-decoration: line-through;
+}
+.a-serie__estado {
+  text-transform: none;
+}
 .a-pasadas summary {
   cursor: pointer;
   list-style: revert;
@@ -839,7 +909,8 @@
   .a-item {
     padding: 18px 16px;
   }
-  .a-grid-2 {
+  .a-grid-2,
+  .a-grid-3 {
     grid-template-columns: 1fr;
   }
   .a-tarifa {

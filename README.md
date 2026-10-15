@@ -88,7 +88,7 @@ La administradora entra en **`/admin`** con su correo y contraseña. Desde ahí 
 | Pestaña | Qué se edita |
 |---|---|
 | **Servicios** | Nombre, color, etiqueta y textos de cada servicio (y su orden). Grupos de aranceles con sus valores. |
-| **Agenda** | Crear, editar y eliminar actividades, con su tipo (Yoga / Meditación / Talleres, los mismos filtros del sitio). Las pasadas se ocultan solas. |
+| **Agenda** | Crear, editar, duplicar y eliminar actividades, con su tipo (Yoga / Meditación / Talleres, los mismos filtros del sitio). Las pasadas se ocultan solas. **Clases que se repiten**: se crean una vez (días de la semana, hora, desde/hasta) y el sitio muestra solas las fechas de las próximas 4 semanas; se puede cancelar una fecha puntual. |
 | **Diario** | Publicaciones tipo blog: título, categoría, bajada, foto, texto con formato simple, borrador o publicado. Cada una tiene su página `/diario/<titulo>`. |
 | **Instagram** | Mostrar u ocultar el módulo "Síguenos en Instagram" del Inicio y editar su frase. |
 
@@ -96,6 +96,7 @@ Los cambios se ven en el sitio en menos de un minuto.
 
 **Cómo funciona**
 
+- Las clases que se repiten se guardan como una serie (`recurrentes`) y `/api/content` las convierte en fechas al momento de servirlas (`src/lib/recurrentes.ts`; cambia `SEMANAS_VISIBLES` para mostrar más o menos semanas). En Inicio cada serie aparece solo con su fecha más próxima.
 - El contenido se guarda en **Upstash Redis** (el mismo del formulario). Mientras no se edite nada, el sitio usa el contenido inicial de `src/data.ts`.
 - Las fotos del Diario se comprimen en el navegador (WebP, máx. 1600 px) y se guardan en **Vercel Blob**.
 - La sesión es una cookie firmada, `HttpOnly` y `SameSite=Strict`, que dura 7 días. El login permite 8 intentos cada 15 minutos por IP.

@@ -1,23 +1,15 @@
 import { useMemo, useState, type FormEvent } from "react";
-import type { Evento, TipoEvento } from "../types";
+import type { ActividadRecurrente, Evento } from "../types";
 import { formatearFecha, formatearPrecio } from "../lib/formato";
 import { hoyEnSantiago } from "../lib/contenido";
 import type { Guardar } from "./AdminApp";
 import { BotonEliminar, Campo } from "./ui";
+import { TIPOS, aHoraInput, aHoraTexto } from "./agendaComun";
+import { sumarDias } from "../lib/recurrentes";
+import EditorRecurrentes from "./EditorRecurrentes";
 
-const TIPOS: TipoEvento[] = ["Yoga", "Meditación", "Talleres"];
 const TITULOS = { nueva: "Nueva actividad", editar: "Editar actividad", duplicar: "Duplicar actividad" } as const;
 
-/** "11 hrs." / "19:30 hrs." → "11:00" / "19:30" para el campo de hora */
-function aHoraInput(hora: string): string {
-  const m = hora.match(/(\d{1,2})(?::(\d{2}))?/);
-  return m ? `${m[1].padStart(2, "0")}:${m[2] ?? "00"}` : "";
-}
-/** "09:00" → "09 hrs." · "19:30" → "19:30 hrs." (mismo estilo del sitio) */
-function aHoraTexto(valor: string): string {
-  const [h, m] = valor.split(":");
-  return m === "00" ? `${h} hrs.` : `${h}:${m} hrs.`;
-}
 
 function vacio(): Evento {
   return {
@@ -30,13 +22,6 @@ function vacio(): Evento {
     lugar: "",
     precio: 0,
   };
-}
-
-/** Suma días a una fecha AAAA-MM-DD (sin zonas horarias de por medio). */
-function sumarDias(fecha: string, dias: number): string {
-  const [a, m, d] = fecha.split("-").map(Number);
-  const f = new Date(Date.UTC(a, m - 1, d + dias));
-  return f.toISOString().slice(0, 10);
 }
 
 /**
@@ -52,7 +37,15 @@ function duplicar(ev: Evento, hoy: string): Evento {
 
 type Modo = "nueva" | "editar" | "duplicar";
 
-export default function EditorAgenda({ agenda, guardar }: { agenda: Evento[]; guardar: Guardar }) {
+export default function EditorAgenda({
+  agenda,
+  recurrentes,
+  guardar,
+}: {
+  agenda: Evento[];
+  recurrentes: ActividadRecurrente[];
+  guardar: Guardar;
+}) {
   const [editando, setEditando] = useState<Evento | null>(null);
   const [modo, setModo] = useState<Modo>("nueva");
   const [original, setOriginal] = useState<Evento | null>(null);
@@ -62,7 +55,10 @@ export default function EditorAgenda({ agenda, guardar }: { agenda: Evento[]; gu
   const ordenada = useMemo(() => [...agenda].sort((a, b) => a.fecha.localeCompare(b.fecha)), [agenda]);
   const proximas = ordenada.filter((e) => e.fecha >= hoy);
   const pasadas = ordenada.filter((e) => e.fecha < hoy).reverse();
-  const lugares = useMemo(() => [...new Set(agenda.map((e) => e.lugar))], [agenda]);
+  const lugares = useMemo(
+    () => [...new Set([...agenda, ...recurrentes].map((e) => e.lugar))],
+    [agenda, recurrentes]
+  );
 
   async function persistir(lista: Evento[]) {
     setGuardando(true);
@@ -221,7 +217,9 @@ export default function EditorAgenda({ agenda, guardar }: { agenda: Evento[]; gu
         </form>
       )}
 
-      <h2 className="a-h2">Próximas ({proximas.length})</h2>
+      <EditorRecurrentes recurrentes={recurrentes} lugares={lugares} guardar={guardar} />
+
+      <h2 className="a-h2">Actividades de una sola fecha ({proximas.length})</h2>
       {proximas.length === 0 ? (
         <p className="a-vacio">No hay actividades próximas. El sitio mostrará un mensaje invitando a escribir.</p>
       ) : (
