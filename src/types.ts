@@ -37,6 +37,35 @@ export interface Evento {
   lugar: string;
   /** Precio en pesos chilenos, sin puntos. 0 = actividad gratuita */
   precio: number;
+  /** Solo en fechas generadas por una actividad que se repite: id de la serie */
+  serie?: string;
+  /** Solo en fechas generadas: texto como "Todos los lunes y miércoles" */
+  repeticion?: string;
+}
+
+/** Día de la semana: 1 = lunes … 7 = domingo. */
+export type DiaSemana = 1 | 2 | 3 | 4 | 5 | 6 | 7;
+
+/**
+ * Actividad que se repite cada semana (ej: Vinyasa lunes y miércoles 20:00).
+ * El sitio la muestra como fechas concretas (ver src/lib/recurrentes.ts).
+ */
+export interface ActividadRecurrente {
+  id: string;
+  titulo: string;
+  tipo: TipoEvento;
+  /** Días en que se repite */
+  dias: DiaSemana[];
+  hora: string;
+  /** Primera fecha posible, AAAA-MM-DD */
+  desde: string;
+  /** Última fecha posible (opcional), AAAA-MM-DD */
+  hasta?: string;
+  desc: string;
+  lugar: string;
+  precio: number;
+  /** Fechas canceladas puntualmente (AAAA-MM-DD) */
+  excepciones: string[];
 }
 
 export interface Post {
@@ -98,6 +127,8 @@ export interface Contenido {
   servicios: Servicio[];
   aranceles: GrupoTarifas[];
   agenda: Evento[];
+  /** Actividades que se repiten cada semana */
+  recurrentes: ActividadRecurrente[];
   posts: Post[];
   ajustes: Ajustes;
 }

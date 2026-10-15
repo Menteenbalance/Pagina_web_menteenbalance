@@ -9,6 +9,7 @@
 import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
 import { contenidoInicial } from "../data";
 import type { Contenido } from "../types";
+import { hoyEnSantiago } from "./recurrentes";
 
 interface Estado extends Contenido {
   /** true cuando ya llegó el contenido del servidor */
@@ -50,11 +51,7 @@ export function useContenido(): Estado {
 }
 
 /** Fecha de hoy (AAAA-MM-DD) en Santiago, para separar próximas y pasadas. */
-export function hoyEnSantiago(): string {
-  return new Intl.DateTimeFormat("en-CA", {
-    timeZone: "America/Santiago",
-  }).format(new Date());
-}
+export { hoyEnSantiago };
 
 /** Actividades desde hoy en adelante, ordenadas por fecha. */
 export function proximasActividades<T extends { fecha: string }>(agenda: T[]): T[] {

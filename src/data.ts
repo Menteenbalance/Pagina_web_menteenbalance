@@ -338,6 +338,7 @@ export const contenidoInicial: Contenido = {
   servicios,
   aranceles,
   agenda,
+  recurrentes: [],
   posts,
   ajustes,
 };

@@ -5,7 +5,9 @@
 // ─────────────────────────────────────────────────────────────
 
 import type {
+  ActividadRecurrente,
   Ajustes,
+  DiaSemana,
   Evento,
   GrupoTarifas,
   Post,
@@ -14,7 +16,7 @@ import type {
 } from "../../src/types.js";
 import { ErrorHttp } from "./http.js";
 
-export const SECCIONES = ["servicios", "aranceles", "agenda", "posts", "ajustes"] as const;
+export const SECCIONES = ["servicios", "aranceles", "agenda", "recurrentes", "posts", "ajustes"] as const;
 export type Seccion = (typeof SECCIONES)[number];
 
 const TIPOS: TipoEvento[] = ["Yoga", "Meditación", "Talleres"];
@@ -132,6 +134,36 @@ const validadores: Record<Seccion, (datos: unknown) => unknown> = {
         desc: txt(e.desc, "Descripción", { min: 1, max: 280 }),
         lugar: txt(e.lugar, "Lugar", { min: 1, max: 140 }),
         precio: precio(e.precio, "Valor"),
+      };
+    }),
+
+  recurrentes: (datos): ActividadRecurrente[] =>
+    lista(datos, 30, "Actividades que se repiten").map((x) => {
+      const r = obj(x);
+      const tipo = String(r.tipo) as TipoEvento;
+      if (!TIPOS.includes(tipo)) falla("Tipo de actividad inválido.");
+      const dias = [...new Set(lista(r.dias, 7, "Días").map(Number))]
+        .filter((d): d is DiaSemana => Number.isInteger(d) && d >= 1 && d <= 7)
+        .sort((a, b) => a - b);
+      if (dias.length === 0) falla("Elige al menos un día de la semana.");
+      const desde = fechaIso(r.desde, "Desde");
+      const hasta = r.hasta ? fechaIso(r.hasta, "Hasta") : undefined;
+      if (hasta && hasta < desde) falla("La fecha de término es anterior a la de inicio.");
+      const excepciones = [
+        ...new Set(lista(r.excepciones ?? [], 400, "Fechas canceladas").map((f) => fechaIso(f, "Fecha cancelada"))),
+      ].sort();
+      return {
+        id: id(r.id),
+        titulo: txt(r.titulo, "Título de la actividad", { min: 1, max: 80 }),
+        tipo,
+        dias,
+        hora: txt(r.hora, "Hora", { min: 1, max: 20 }),
+        desde,
+        hasta,
+        desc: txt(r.desc, "Descripción", { min: 1, max: 280 }),
+        lugar: txt(r.lugar, "Lugar", { min: 1, max: 140 }),
+        precio: precio(r.precio, "Valor"),
+        excepciones,
       };
     }),
 

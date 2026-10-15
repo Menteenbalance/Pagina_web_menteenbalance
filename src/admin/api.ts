@@ -2,7 +2,7 @@
 
 import type { Contenido } from "../types";
 
-export type Seccion = "servicios" | "aranceles" | "agenda" | "posts" | "ajustes";
+export type Seccion = "servicios" | "aranceles" | "agenda" | "recurrentes" | "posts" | "ajustes";
 
 export class ErrorApi extends Error {
   constructor(public status: number, message: string) {
