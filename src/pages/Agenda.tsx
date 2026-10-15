@@ -90,6 +90,9 @@ export default function Agenda() {
                 <h2 className="event-card__title">{e.titulo}</h2>
                 <p className="event-card__desc">{e.desc}</p>
                 <p className="event-card__place">{e.lugar}</p>
+                {e.repeticion && (
+                  <p className="event-card__repite">{e.repeticion}</p>
+                )}
                 <div className="event-card__foot">
                   <span className="event-card__price">
                     {formatearPrecio(e.precio)}

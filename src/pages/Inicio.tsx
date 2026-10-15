@@ -14,7 +14,12 @@ const prioridadAlta = { fetchpriority: "high" } as Record<string, string>;
 // agenda corta, cita destacada y últimos artículos del diario.
 export default function Inicio() {
   const { servicios, agenda, posts } = useContenido();
-  const agendaCorta = proximasActividades(agenda).slice(0, 3);
+  // Una clase que se repite aparece solo con su fecha más próxima,
+  // para que la portada muestre actividades distintas.
+  const series = new Set<string>();
+  const agendaCorta = proximasActividades(agenda)
+    .filter((e) => !e.serie || (!series.has(e.serie) && series.add(e.serie)))
+    .slice(0, 3);
   const ultimosPosts = postsRecientes(posts).slice(0, 3);
 
   return (
@@ -187,7 +192,10 @@ export default function Inicio() {
               <div className="agenda-row__body">
                 <h3 className="agenda-row__title">{e.titulo}</h3>
                 <p className="agenda-row__desc">{e.desc}</p>
-                <p className="agenda-row__place">{e.lugar}</p>
+                <p className="agenda-row__place">
+                  {e.lugar}
+                  {e.repeticion && ` · ${e.repeticion}`}
+                </p>
               </div>
               <div className="agenda-row__aside">
                 <span className="agenda-row__price">
