@@ -5,7 +5,7 @@
 // ─────────────────────────────────────────────────────────────
 
 import { useCallback, useEffect, useState } from "react";
-import { Link, NavLink, Navigate, Route, Routes } from "react-router-dom";
+import { Link, NavLink, Navigate, Route, Routes, useLocation } from "react-router-dom";
 import type { Contenido } from "../types";
 import { api, ErrorApi, type Seccion } from "./api";
 import { Avisos, type Aviso } from "./ui";
@@ -14,6 +14,7 @@ import EditorServicios from "./EditorServicios";
 import EditorAgenda from "./EditorAgenda";
 import EditorDiario from "./EditorDiario";
 import EditorInstagram from "./EditorInstagram";
+import Historial, { type SeccionHistorial } from "./Historial";
 import "./admin.css";
 
 type Fase = "cargando" | "login" | "dentro";
@@ -27,12 +28,30 @@ const pestañas = [
   { ruta: "instagram", texto: "Instagram" },
 ];
 
+/** Secciones guardadas que se pueden deshacer desde cada pestaña. */
+const historialPorPestaña: Record<string, SeccionHistorial[]> = {
+  servicios: [
+    { seccion: "servicios", nombre: "Servicios" },
+    { seccion: "aranceles", nombre: "Aranceles" },
+  ],
+  agenda: [
+    { seccion: "agenda", nombre: "Actividades" },
+    { seccion: "recurrentes", nombre: "Clases que se repiten" },
+  ],
+  diario: [{ seccion: "posts", nombre: "Diario" }],
+  instagram: [{ seccion: "ajustes", nombre: "Instagram" }],
+};
+
 export default function AdminApp() {
   const [fase, setFase] = useState<Fase>("cargando");
   const [email, setEmail] = useState("");
   const [contenido, setContenido] = useState<Contenido | null>(null);
   const [aviso, setAviso] = useState<Aviso | null>(null);
   const [motivoLogin, setMotivoLogin] = useState("");
+  // Al restaurar una versión, los editores se vuelven a montar con el contenido nuevo
+  const [restauraciones, setRestauraciones] = useState(0);
+  const { pathname } = useLocation();
+  const pestañaActual = pathname.split("/")[2] ?? "";
 
   useEffect(() => {
     document.title = "Panel | Mente en Balance";
@@ -79,6 +98,23 @@ export default function AdminApp() {
       return false;
     }
   };
+
+  async function restaurar(seccion: Seccion, fecha: string): Promise<boolean> {
+    try {
+      const res = await api.restaurar(seccion, fecha);
+      setContenido((c) => (c ? { ...c, [seccion]: res.datos } : c));
+      setRestauraciones((n) => n + 1);
+      setAviso({ tipo: "ok", texto: "Versión restaurada. Si fue un error, puedes deshacerlo desde el mismo historial." });
+      return true;
+    } catch (err) {
+      if (err instanceof ErrorApi && err.status === 401) {
+        setMotivoLogin("Tu sesión expiró. Entra de nuevo.");
+        setFase("login");
+      }
+      setAviso({ tipo: "error", texto: (err as Error).message });
+      return false;
+    }
+  }
 
   async function salir() {
     await api.salir().catch(() => {});
@@ -149,7 +185,17 @@ export default function AdminApp() {
       </header>
 
       <main className="a-main" id="contenido" tabIndex={-1}>
-        <Routes>
+        {historialPorPestaña[pestañaActual] && (
+          <div className="a-hist-barra">
+            <Historial
+              key={pestañaActual}
+              secciones={historialPorPestaña[pestañaActual]}
+              contenido={contenido}
+              onRestaurar={restaurar}
+            />
+          </div>
+        )}
+        <Routes key={restauraciones}>
           <Route index element={<Navigate to="servicios" replace />} />
           <Route
             path="servicios"

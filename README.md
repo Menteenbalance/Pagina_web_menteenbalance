@@ -94,6 +94,8 @@ La administradora entra en **`/admin`** con su correo y contraseña. Desde ahí 
 
 Los cambios se ven en el sitio en menos de un minuto.
 
+**Historial y deshacer:** cada pestaña tiene un botón **Historial**. Cada vez que se guarda, la versión anterior queda ahí (las últimas 15 por sección, con fecha y quién hizo el cambio). Cada versión explica qué pasaría al restaurarla ("Vuelve…", "Se quita…", "Cambia…") y se recupera con dos clics. Restaurar también queda en el historial, así que se puede deshacer. En Redis se guarda en `meb:historial:<sección>`; en local, en `.data/historial/`.
+
 **Cómo funciona**
 
 - Las clases que se repiten se guardan como una serie (`recurrentes`) y `/api/content` las convierte en fechas al momento de servirlas (`src/lib/recurrentes.ts`; cambia `SEMANAS_VISIBLES` para mostrar más o menos semanas). En Inicio cada serie aparece solo con su fecha más próxima.

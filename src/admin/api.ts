@@ -1,6 +1,6 @@
 // Llamadas del panel a la API de administración.
 
-import type { Contenido } from "../types";
+import type { Contenido, VersionHistorial } from "../types";
 
 export type Seccion = "servicios" | "aranceles" | "agenda" | "recurrentes" | "posts" | "ajustes";
 
@@ -47,6 +47,16 @@ export const api = {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ seccion, datos }),
+    }),
+
+  historial: (seccion: Seccion) =>
+    pedir<{ versiones: VersionHistorial[] }>(`/api/admin/historial?seccion=${seccion}`),
+
+  restaurar: <T>(seccion: Seccion, fecha: string) =>
+    pedir<{ ok: true; datos: T }>("/api/admin/historial", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ seccion, fecha }),
     }),
 
   subirImagen: (archivo: Blob) =>
