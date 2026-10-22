@@ -5,7 +5,7 @@
 import { exigirAdmin } from "../_lib/auth.js";
 import { leerContenido } from "../_lib/contenido.js";
 import { json, responderError, ErrorHttp } from "../_lib/http.js";
-import { guardar } from "../_lib/store.js";
+import { guardarConHistorial } from "../_lib/historial.js";
 import { esSeccion, validar } from "../_lib/validar.js";
 
 const SIN_CACHE = { "Cache-Control": "no-store" };
@@ -21,7 +21,7 @@ export async function GET(request: Request): Promise<Response> {
 
 export async function PUT(request: Request): Promise<Response> {
   try {
-    exigirAdmin(request);
+    const email = exigirAdmin(request);
     const body = (await request.json().catch(() => null)) as {
       seccion?: unknown;
       datos?: unknown;
@@ -30,7 +30,7 @@ export async function PUT(request: Request): Promise<Response> {
       throw new ErrorHttp(400, "Sección desconocida.");
     }
     const limpio = validar(body.seccion, body.datos);
-    await guardar(body.seccion, limpio);
+    await guardarConHistorial(body.seccion, limpio, email);
     return json(200, { ok: true, datos: limpio }, SIN_CACHE);
   } catch (err) {
     return responderError(err);

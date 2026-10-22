@@ -123,6 +123,17 @@ export interface Ajustes {
 }
 
 /** Todo el contenido que se puede editar desde el panel /admin. */
+/** Versión anterior de una sección del panel (historial para deshacer). */
+export interface VersionHistorial {
+  /** Momento en que fue reemplazada (ISO 8601) */
+  fecha: string;
+  /** Quién hizo el cambio que la reemplazó */
+  autor: string;
+  /** true si era el contenido original del sitio (antes de editar en el panel) */
+  original?: boolean;
+  datos: unknown;
+}
+
 export interface Contenido {
   servicios: Servicio[];
   aranceles: GrupoTarifas[];
