@@ -89,10 +89,12 @@ La administradora entra en **`/admin`** con su correo y contraseña. Desde ahí 
 |---|---|
 | **Servicios** | Nombre, color, etiqueta y textos de cada servicio (y su orden). Grupos de aranceles con sus valores. |
 | **Agenda** | Crear, editar, duplicar y eliminar actividades, con su tipo (Yoga / Meditación / Talleres, los mismos filtros del sitio). Las pasadas se ocultan solas. **Clases que se repiten**: se crean una vez (días de la semana, hora, desde/hasta) y el sitio muestra solas las fechas de las próximas 4 semanas; se puede cancelar una fecha puntual. |
-| **Diario** | Publicaciones tipo blog: título, categoría, bajada, foto, texto con formato simple, borrador o publicado. Cada una tiene su página `/diario/<titulo>`. |
+| **Diario** | Publicaciones tipo blog: título, categoría, bajada, foto, texto con formato simple, borrador, publicado o **programado** (fecha y hora de Chile: aparece sola a esa hora). Cada una tiene su página `/diario/<titulo>`. |
 | **Instagram** | Mostrar u ocultar el módulo "Síguenos en Instagram" del Inicio y editar su frase. |
 
 Los cambios se ven en el sitio en menos de un minuto.
+
+**Publicaciones programadas:** no usan tareas programadas. `/api/content` filtra al momento de leer (`src/lib/tiempo.ts`, hora de Santiago), así que la publicación aparece en el sitio en cuanto llega su hora (hasta ~30 s por la caché).
 
 **Historial y deshacer:** cada pestaña tiene un botón **Historial**. Cada vez que se guarda, la versión anterior queda ahí (las últimas 15 por sección, con fecha y quién hizo el cambio). Cada versión explica qué pasaría al restaurarla ("Vuelve…", "Se quita…", "Cambia…") y se recupera con dos clics. Restaurar también queda en el historial, así que se puede deshacer. En Redis se guarda en `meb:historial:<sección>`; en local, en `.data/historial/`.
 

@@ -88,6 +88,16 @@ function fechaIso(v: unknown, campo: string): string {
   return s;
 }
 
+/** "2026-10-26T08:00" o vacío → undefined */
+function fechaHora(v: unknown): string | undefined {
+  const s = typeof v === "string" ? v.trim() : "";
+  if (!s) return undefined;
+  if (!/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$/.test(s) || Number.isNaN(Date.parse(s))) {
+    falla("Fecha y hora de publicación inválidas.");
+  }
+  return s;
+}
+
 const validadores: Record<Seccion, (datos: unknown) => unknown> = {
   servicios: (datos): Servicio[] =>
     lista(datos, 20, "Servicios").map((x) => {
@@ -184,6 +194,7 @@ const validadores: Record<Seccion, (datos: unknown) => unknown> = {
         imagenAlt: (imagen && txt(p.imagenAlt, "Descripción de la foto", { max: 200 })) || undefined,
         fecha: fechaIso(p.fecha, "Fecha de publicación"),
         publicado: p.publicado === true,
+        publicarEl: fechaHora(p.publicarEl),
       };
     });
     const slugs = new Set<string>();

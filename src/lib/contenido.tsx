@@ -10,6 +10,7 @@ import { createContext, useContext, useEffect, useState, type ReactNode } from "
 import { contenidoInicial } from "../data";
 import type { Contenido } from "../types";
 import { hoyEnSantiago } from "./recurrentes";
+import { seVeEnElSitio } from "./tiempo";
 
 interface Estado extends Contenido {
   /** true cuando ya llegó el contenido del servidor */
@@ -18,7 +19,7 @@ interface Estado extends Contenido {
 
 const inicial: Estado = {
   ...contenidoInicial,
-  posts: contenidoInicial.posts.filter((p) => p.publicado),
+  posts: contenidoInicial.posts.filter((p) => seVeEnElSitio(p)),
   listo: false,
 };
 

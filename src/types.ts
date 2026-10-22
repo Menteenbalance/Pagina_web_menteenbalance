@@ -87,6 +87,11 @@ export interface Post {
   fecha: string;
   /** false = borrador, no aparece en el sitio */
   publicado: boolean;
+  /**
+   * Publicación programada: fecha y hora de Santiago (AAAA-MM-DDTHH:mm).
+   * Con publicado = true, aparece en el sitio recién a esa hora.
+   */
+  publicarEl?: string;
 }
 
 export interface Principio {
