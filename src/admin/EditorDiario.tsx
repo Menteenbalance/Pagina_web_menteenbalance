@@ -3,6 +3,7 @@ import { Link, Route, Routes, useNavigate, useParams } from "react-router-dom";
 import type { Post } from "../types";
 import { formatearFecha, slug as crearSlug } from "../lib/formato";
 import { hoyEnSantiago } from "../lib/contenido";
+import { ahoraEnSantiago, estadoPost } from "../lib/tiempo";
 import { TextoConFormato } from "../lib/texto";
 import type { Guardar } from "./AdminApp";
 import { api } from "./api";
@@ -21,6 +22,24 @@ export default function EditorDiario({ posts, guardar }: { posts: Post[]; guarda
   );
 }
 
+/** "lunes 27 de octubre, 08:00" a partir de "2026-10-27T08:00" */
+function fechaHoraLegible(valor: string): string {
+  const [fecha, hora] = valor.split("T");
+  return `${formatearFecha(fecha).larga}, ${hora}`;
+}
+
+function EstadoPost({ post }: { post: Post }) {
+  const estado = estadoPost(post);
+  if (estado === "programado") {
+    return <span className="a-estado a-estado--prog">Programada · {fechaHoraLegible(post.publicarEl!)}</span>;
+  }
+  return (
+    <span className={estado === "publicado" ? "a-estado a-estado--pub" : "a-estado"}>
+      {estado === "publicado" ? "Publicado" : "Borrador"}
+    </span>
+  );
+}
+
 /* ── Lista de publicaciones ─────────────────────────────────────── */
 function Lista({ posts, guardar }: { posts: Post[]; guardar: Guardar }) {
   const ordenados = useMemo(() => [...posts].sort((a, b) => b.fecha.localeCompare(a.fecha)), [posts]);
@@ -31,7 +50,8 @@ function Lista({ posts, guardar }: { posts: Post[]; guardar: Guardar }) {
         <div>
           <h1 className="a-h1">Diario</h1>
           <p className="a-lead">
-            Publicaciones del blog. Los borradores no se ven en el sitio hasta que los publiques.
+            Publicaciones del blog. Los borradores no se ven en el sitio hasta que los publiques, y las
+            programadas aparecen solas a la hora elegida.
           </p>
         </div>
         <Link to="nueva" className="a-btn a-btn--primario">
@@ -51,9 +71,7 @@ function Lista({ posts, guardar }: { posts: Post[]; guardar: Guardar }) {
                 <span className="a-post__img a-post__img--vacia" aria-hidden="true" />
               )}
               <div className="a-post__cuerpo">
-                <span className={p.publicado ? "a-estado a-estado--pub" : "a-estado"}>
-                  {p.publicado ? "Publicado" : "Borrador"}
-                </span>
+                <EstadoPost post={p} />
                 <h2 className="a-post__titulo">{p.titulo}</h2>
                 <p className="a-post__meta">
                   {p.cat} · {formatearFecha(p.fecha).larga}
@@ -62,7 +80,7 @@ function Lista({ posts, guardar }: { posts: Post[]; guardar: Guardar }) {
                 </p>
               </div>
               <div className="a-evento__acciones">
-                {p.publicado && p.cuerpo && (
+                {estadoPost(p) === "publicado" && p.cuerpo && (
                   <a className="a-btn a-btn--ghost" href={`/diario/${p.slug}`} target="_blank" rel="noopener noreferrer" aria-label={`Ver ${p.titulo} en el sitio`}>
                     Ver
                   </a>
@@ -104,6 +122,11 @@ function Formulario({ posts, guardar }: { posts: Post[]; guardar: Guardar }) {
   const [errorImagen, setErrorImagen] = useState("");
   const [guardando, setGuardando] = useState(false);
   const inputArchivo = useRef<HTMLInputElement>(null);
+  // Programar: activo si la publicación ya tenía una hora futura
+  const [programar, setProgramar] = useState(
+    () => !!existente?.publicarEl && existente.publicarEl > ahoraEnSantiago()
+  );
+  const [errorProgramar, setErrorProgramar] = useState("");
 
   if (id && !existente) {
     return (
@@ -142,7 +165,20 @@ function Formulario({ posts, guardar }: { posts: Post[]; guardar: Guardar }) {
     const base = slug;
     while (ocupados.has(slug)) slug = `${base}-${n++}`;
 
-    const final = { ...post, slug, publicado };
+    let final: Post = { ...post, slug, publicado, publicarEl: undefined };
+    if (publicado && programar) {
+      const cuando = post.publicarEl ?? "";
+      if (!cuando || cuando <= ahoraEnSantiago()) {
+        setErrorProgramar("Elige una fecha y hora futuras para programarla.");
+        return;
+      }
+      // La fecha que se muestra en el sitio es la del día programado
+      final = { ...final, publicarEl: cuando, fecha: cuando.slice(0, 10) };
+    } else if (!publicado && post.publicarEl && programar) {
+      // Un borrador conserva la hora elegida por si se programa después
+      final = { ...final, publicarEl: post.publicarEl };
+    }
+    setErrorProgramar("");
     const lista = existente ? posts.map((p) => (p.id === post.id ? final : p)) : [final, ...posts];
     setGuardando(true);
     const ok = await guardar("posts", lista);
@@ -160,9 +196,15 @@ function Formulario({ posts, guardar }: { posts: Post[]; guardar: Guardar }) {
       <Link to="/admin/diario" className="a-volver">← Volver al Diario</Link>
       <header className="a-seccion__head">
         <h1 className="a-h1">{existente ? "Editar publicación" : "Nueva publicación"}</h1>
-        {existente?.publicado && (
+        {existente && estadoPost(existente) === "publicado" && (
           <p className="a-lead">
             Publicada en <span className="a-mono">/diario/{existente.slug}</span>
+          </p>
+        )}
+        {existente && estadoPost(existente) === "programado" && (
+          <p className="a-lead">
+            Programada para el {fechaHoraLegible(existente.publicarEl!)} en{" "}
+            <span className="a-mono">/diario/{existente.slug}</span>
           </p>
         )}
       </header>
@@ -185,8 +227,8 @@ function Formulario({ posts, guardar }: { posts: Post[]; guardar: Guardar }) {
               </>
             )}
           </Campo>
-          <Campo etiqueta="Fecha de publicación">
-            {(p) => <input {...p} className="a-input" type="date" required value={post.fecha} onChange={(e) => cambio({ fecha: e.target.value })} />}
+          <Campo etiqueta="Fecha de publicación" ayuda={programar ? "Se usa la fecha programada." : undefined}>
+            {(p) => <input {...p} className="a-input" type="date" required disabled={programar} value={programar && post.publicarEl ? post.publicarEl.slice(0, 10) : post.fecha} onChange={(e) => cambio({ fecha: e.target.value })} />}
           </Campo>
         </div>
 
@@ -276,12 +318,56 @@ function Formulario({ posts, guardar }: { posts: Post[]; guardar: Guardar }) {
           )}
         </div>
 
+        <div className="a-programar">
+          <label className="a-check">
+            <input
+              type="checkbox"
+              checked={programar}
+              onChange={(e) => {
+                setProgramar(e.target.checked);
+                setErrorProgramar("");
+              }}
+            />
+            Programar la publicación para más adelante
+          </label>
+          {programar && (
+            <Campo
+              etiqueta="Publicar el"
+              ayuda="Hora de Chile. Aparecerá sola en el sitio a esa hora (puede tardar hasta un minuto)."
+              error={errorProgramar || undefined}
+            >
+              {(p) => (
+                <input
+                  {...p}
+                  className="a-input a-input--fecha-hora"
+                  type="datetime-local"
+                  required
+                  min={ahoraEnSantiago()}
+                  value={post.publicarEl ?? ""}
+                  onChange={(e) => {
+                    setErrorProgramar("");
+                    cambio({ publicarEl: e.target.value || undefined });
+                  }}
+                />
+              )}
+            </Campo>
+          )}
+        </div>
+
         <div className="a-item__pie a-item__pie--entre">
           <button type="button" className="a-btn a-btn--ghost" onClick={() => guardarComo(false)} disabled={guardando || subiendo}>
             {existente?.publicado ? "Pasar a borrador" : "Guardar borrador"}
           </button>
           <button type="submit" className="a-btn a-btn--primario" disabled={guardando || subiendo} aria-busy={guardando}>
-            {guardando ? "Guardando…" : existente?.publicado ? "Guardar y mantener publicada" : "Publicar"}
+            {guardando
+              ? "Guardando…"
+              : programar
+                ? existente && estadoPost(existente) === "programado"
+                  ? "Guardar y mantener programada"
+                  : "Programar"
+                : existente && estadoPost(existente) === "publicado"
+                  ? "Guardar y mantener publicada"
+                  : "Publicar ahora"}
           </button>
         </div>
       </form>
