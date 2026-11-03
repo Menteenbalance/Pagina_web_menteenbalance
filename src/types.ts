@@ -119,6 +119,18 @@ export interface GrupoTarifas {
   items: Tarifa[];
 }
 
+/** Un estudio o certificación de "Mi formación" (Detrás de Mente en Balance). */
+export interface Formacion {
+  id: string;
+  /** Año o período, ej: "2026", "2023 – 2024" o "En curso" */
+  anio: string;
+  titulo: string;
+  /** Institución y lugar */
+  lugar: string;
+  /** Detalle opcional (contenidos, horas…) */
+  detalle?: string;
+}
+
 /** Mensaje preparado para la comunidad de WhatsApp (pestaña Comunidad). Nunca se publica en el sitio. */
 export interface MensajeComunidad {
   id: string;
@@ -192,6 +204,10 @@ export interface Contenido {
   recurrentes: ActividadRecurrente[];
   posts: Post[];
   ajustes: Ajustes;
+  /** Textos del sitio cambiados desde el panel (clave del texto → texto) */
+  textos: Partial<Record<string, string>>;
+  /** "Mi formación" en Detrás de Mente en Balance, en el orden en que se muestra */
+  formacion: Formacion[];
   /** Mensajes preparados para la comunidad de WhatsApp (solo panel) */
   comunidad: MensajeComunidad[];
   /** Fotos del sitio cambiadas desde el panel (clave del lugar → foto) */

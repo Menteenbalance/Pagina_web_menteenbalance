@@ -11,6 +11,7 @@ import { contenidoInicial } from "../data";
 import type { Contenido } from "../types";
 import { hoyEnSantiago } from "./recurrentes";
 import { fotoDe, type ClaveFoto, type FotoVisible } from "./fotos";
+import { textoDe, type ClaveTexto } from "./textos";
 import { seVeEnElSitio } from "./tiempo";
 
 interface Estado extends Contenido {
@@ -129,4 +130,9 @@ export function proximasActividades<T extends { fecha: string }>(agenda: T[]): T
 /** Publicaciones de la más nueva a la más antigua. */
 export function postsRecientes<T extends { fecha: string }>(posts: T[]): T[] {
   return [...posts].sort((a, b) => b.fecha.localeCompare(a.fecha));
+}
+
+/** Texto de un lugar del sitio (el que editó Mari o el original). */
+export function useTexto(clave: ClaveTexto): string {
+  return textoDe(useContext(Ctx).textos, clave);
 }

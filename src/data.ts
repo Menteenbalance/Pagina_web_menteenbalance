@@ -6,6 +6,7 @@
 // ─────────────────────────────────────────────────────────────
 
 import type {
+  Formacion,
   ResenasEncuadrado,
   Ajustes,
   Contenido,
@@ -264,8 +265,9 @@ export const valores: Principio[] = [
 ];
 
 /** Formación de María Ignacia (página "Detrás de Mente en Balance"). */
-export const formacion: { anio: string; titulo: string; lugar: string; detalle?: string }[] = [
+export const formacion: Formacion[] = [
   {
+    id: "formacion-1",
     anio: "2026",
     titulo: "Máster en Terapias Psicológicas de Tercera Generación",
     lugar: "Universidad de Valencia",
@@ -273,21 +275,25 @@ export const formacion: { anio: string; titulo: string; lugar: string; detalle?:
       "Terapia de Aceptación y Compromiso, Terapia Dialéctico Conductual y Terapia Cognitivo Conductual para la ansiedad y la depresión.",
   },
   {
+    id: "formacion-2",
     anio: "2024",
     titulo: "Instructora de Vinyasa Yoga Somático (200 hrs)",
     lugar: "Escuela SOMA Yoga, Brasil",
   },
   {
+    id: "formacion-3",
     anio: "2023",
     titulo: "Diplomado en Intervención en Ansiedad y Estrés en NNA",
     lugar: "Universidad del Desarrollo",
   },
   {
+    id: "formacion-4",
     anio: "2023",
     titulo: "Instructora de Vinyasa Yoga (200 hrs)",
     lugar: "Vinyasa Yoga Chile",
   },
   {
+    id: "formacion-5",
     anio: "2022",
     titulo: "Psicóloga Clínica",
     lugar: "Universidad del Desarrollo",
@@ -384,6 +390,8 @@ export const contenidoInicial: Contenido = {
   agenda,
   recurrentes: [],
   fotos: {},
+  textos: {},
+  formacion,
   comunidad: [],
   posts,
   ajustes,

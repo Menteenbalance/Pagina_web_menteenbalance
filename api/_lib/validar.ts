@@ -10,6 +10,7 @@ import type {
   DiaSemana,
   Evento,
   FotoEditada,
+  Formacion,
   MensajeComunidad,
   GrupoTarifas,
   Post,
@@ -18,8 +19,9 @@ import type {
 } from "../../src/types.js";
 import { ErrorHttp } from "./http.js";
 import { esClaveFoto } from "../../src/lib/clavesFotos.js";
+import { TEXTO_POR_CLAVE, esClaveTexto } from "../../src/lib/textos.js";
 
-export const SECCIONES = ["servicios", "aranceles", "agenda", "recurrentes", "posts", "ajustes", "fotos", "comunidad"] as const;
+export const SECCIONES = ["servicios", "aranceles", "agenda", "recurrentes", "posts", "ajustes", "fotos", "comunidad", "textos", "formacion"] as const;
 export type Seccion = (typeof SECCIONES)[number];
 
 const TIPOS: TipoEvento[] = ["Yoga", "Meditación", "Talleres"];
@@ -218,6 +220,32 @@ const validadores: Record<Seccion, (datos: unknown) => unknown> = {
         texto: txt(m.texto, "Texto del mensaje", { min: 1, max: 4000 }),
         programadoEl: fechaHora(m.programadoEl),
         enviadoEl: enviado,
+      };
+    }),
+
+  textos: (datos): Record<string, string> => {
+    const t = obj(datos);
+    const limpio: Record<string, string> = {};
+    for (const [clave, valor] of Object.entries(t)) {
+      if (!esClaveTexto(clave)) continue; // textos que ya no existen se ignoran
+      const lugar = TEXTO_POR_CLAVE[clave];
+      const s = typeof valor === "string" ? valor.replace(/\r\n?/g, "\n").trim() : "";
+      if (!s || s === lugar.original) continue; // vacío o igual al original = usa el original
+      if (s.length > lugar.max) falla(`${lugar.grupo} · ${lugar.nombre}: máximo ${lugar.max} caracteres.`);
+      limpio[clave] = lugar.tipo === "linea" ? s.replace(/\s*\n+\s*/g, " ") : s;
+    }
+    return limpio;
+  },
+
+  formacion: (datos): Formacion[] =>
+    lista(datos, 40, "Formación").map((x) => {
+      const f = obj(x);
+      return {
+        id: id(f.id),
+        anio: txt(f.anio, "Año", { min: 1, max: 20 }),
+        titulo: txt(f.titulo, "Título o certificación", { min: 1, max: 140 }),
+        lugar: txt(f.lugar, "Institución", { max: 140 }),
+        detalle: txt(f.detalle, "Detalle", { max: 400 }) || undefined,
       };
     }),
 
