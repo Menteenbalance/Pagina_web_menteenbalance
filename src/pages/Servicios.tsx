@@ -1,6 +1,7 @@
 import { reservaUrl } from "../data";
 import { formatearPrecio, slug } from "../lib/formato";
 import { useContenido } from "../lib/contenido";
+import { Linea } from "../components/Textos";
 
 // Página "Servicios": lista extendida de cada servicio + aranceles.
 export default function Servicios() {
@@ -11,7 +12,7 @@ export default function Servicios() {
         Servicios
       </p>
       <h1 className="page-title" style={{ maxWidth: "16ch" }}>
-        Terapia, práctica y comunidad
+        <Linea clave="servicios-titulo" />
       </h1>
 
       <div className="servicios-list">
@@ -99,8 +100,7 @@ export default function Servicios() {
         </div>
 
         <p className="precios-note">
-          Valores en pesos chilenos (CLP). Reservas y pagos se gestionan a través
-          de Encuadrado.
+          <Linea clave="servicios-nota-precios" />
         </p>
       </section>
     </div>

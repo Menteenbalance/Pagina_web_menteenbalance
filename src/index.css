@@ -896,6 +896,12 @@ img.post__thumb {
   color: var(--muted);
   margin: 18px 0 0;
 }
+.db-balance__texto p {
+  margin: 0;
+}
+.db-balance__texto p + p {
+  margin-top: 1em;
+}
 .db-pasos {
   list-style: none;
   margin: 56px 0 0;

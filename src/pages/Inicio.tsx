@@ -5,6 +5,7 @@ import InstagramModulo from "../components/InstagramModulo";
 import Resenas from "../components/Resenas";
 import { reservaUrl } from "../data";
 import FotoSitio from "../components/FotoSitio";
+import { Linea, Parrafos, Titulo } from "../components/Textos";
 import { formatearFecha, formatearPrecio, slug } from "../lib/formato";
 import { postsRecientes, proximasActividades, useContenido } from "../lib/contenido";
 
@@ -30,12 +31,10 @@ export default function Inicio() {
         <div className="hero__copy">
           <p className="hero__eyebrow">Santiago · Presencial y online</p>
           <h1 className="hero__title">
-            Un día
-            <br />a la vez
+            <Titulo clave="inicio-hero-titulo" />
           </h1>
           <p className="hero__lead">
-            Un espacio para generar comunidad y crear bienestar desde el
-            autoconocimiento, compasión y atención plena.
+            <Linea clave="inicio-hero-texto" />
           </p>
           <div className="hero__actions">
             <a
@@ -96,21 +95,10 @@ export default function Inicio() {
           </div>
           <div>
             <h2 className="section-title" style={{ lineHeight: 1.16 }}>
-              Un espacio para volver a ti
+              <Linea clave="inicio-sobre-titulo" />
             </h2>
             <div className="prose" style={{ marginTop: 26 }}>
-              <p>
-                Mente en Balance nace desde la idea de que no siempre
-                necesitamos hacer más. A veces necesitamos parar, salir del
-                piloto automático, escucharnos y comprender qué es lo que nos
-                está pasando.
-              </p>
-              <p>
-                Soy María Ignacia Canessa, psicóloga clínica y profesora de
-                yoga. Integro psicología, yoga y mindfulness para acompañarte a
-                conectar con tu mente, tu cuerpo y tus emociones desde la
-                presencia, la curiosidad y la compasión.
-              </p>
+              <Parrafos clave="inicio-sobre-texto" />
             </div>
             <Link
               to="/detras-de-mente-en-balance"
@@ -222,7 +210,7 @@ export default function Inicio() {
         <section className="quote">
           <div className="quote__inner">
             <p className="quote__text">
-              Ven a moverte, respirar y volver a ti.
+              <Linea clave="inicio-cita" />
             </p>
           </div>
         </section>
