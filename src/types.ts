@@ -1,3 +1,5 @@
+import type { ClaveFoto } from "./lib/clavesFotos";
+
 // Tipos compartidos para el contenido del sitio.
 // Al tener el contenido tipado, el editor te avisa si falta un campo.
 
@@ -117,6 +119,15 @@ export interface GrupoTarifas {
   items: Tarifa[];
 }
 
+/** Foto que Mari subió para reemplazar una del sitio (pestaña Fotos). */
+export interface FotoEditada {
+  src: string;
+  /** Descripción para lectores de pantalla y Google */
+  alt: string;
+  /** Punto que debe quedar siempre visible, ej: "50% 30%" (CSS object-position) */
+  posicion?: string;
+}
+
 /** Ajustes generales editables desde el panel. */
 export interface Ajustes {
   instagram: {
@@ -168,4 +179,6 @@ export interface Contenido {
   recurrentes: ActividadRecurrente[];
   posts: Post[];
   ajustes: Ajustes;
+  /** Fotos del sitio cambiadas desde el panel (clave del lugar → foto) */
+  fotos: Partial<Record<ClaveFoto, FotoEditada>>;
 }

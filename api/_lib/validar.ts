@@ -9,14 +9,16 @@ import type {
   Ajustes,
   DiaSemana,
   Evento,
+  FotoEditada,
   GrupoTarifas,
   Post,
   Servicio,
   TipoEvento,
 } from "../../src/types.js";
 import { ErrorHttp } from "./http.js";
+import { esClaveFoto } from "../../src/lib/clavesFotos.js";
 
-export const SECCIONES = ["servicios", "aranceles", "agenda", "recurrentes", "posts", "ajustes"] as const;
+export const SECCIONES = ["servicios", "aranceles", "agenda", "recurrentes", "posts", "ajustes", "fotos"] as const;
 export type Seccion = (typeof SECCIONES)[number];
 
 const TIPOS: TipoEvento[] = ["Yoga", "Meditación", "Talleres"];
@@ -203,6 +205,25 @@ const validadores: Record<Seccion, (datos: unknown) => unknown> = {
       slugs.add(p.slug);
     }
     return posts;
+  },
+
+  fotos: (datos): Record<string, FotoEditada> => {
+    const f = obj(datos);
+    const limpio: Record<string, FotoEditada> = {};
+    for (const [clave, valor] of Object.entries(f)) {
+      if (!esClaveFoto(clave)) continue; // lugares que ya no existen se ignoran
+      const v = obj(valor);
+      const src = urlImagen(v.src);
+      if (!src) falla("Falta la foto.");
+      const posicion = typeof v.posicion === "string" ? v.posicion.trim() : "";
+      if (posicion && !/^\d{1,3}(\.\d+)?% \d{1,3}(\.\d+)?%$/.test(posicion)) falla("Punto de enfoque inválido.");
+      limpio[clave] = {
+        src,
+        alt: txt(v.alt, "Descripción de la foto", { max: 200 }),
+        ...(posicion && { posicion }),
+      };
+    }
+    return limpio;
   },
 
   ajustes: (datos): Ajustes => {

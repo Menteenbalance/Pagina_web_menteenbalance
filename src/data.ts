@@ -383,6 +383,7 @@ export const contenidoInicial: Contenido = {
   aranceles,
   agenda,
   recurrentes: [],
+  fotos: {},
   posts,
   ajustes,
 };

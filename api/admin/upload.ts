@@ -1,5 +1,5 @@
 // POST /api/admin/upload (requiere sesión)
-// Sube una imagen para el diario. El panel la comprime antes a WebP
+// Sube una imagen (Diario o pestaña Fotos, según ?carpeta=). El panel la comprime antes a WebP
 // (máx. 1600 px), así que llega liviana.
 // - Producción: Vercel Blob. Los stores nuevos se autentican con OIDC
 //   (BLOB_STORE_ID + token temporal que Vercel entrega solo); los antiguos,
@@ -31,7 +31,8 @@ export async function POST(request: Request): Promise<Response> {
     if (datos.byteLength === 0) throw new ErrorHttp(400, "La imagen está vacía.");
     if (datos.byteLength > MAX_BYTES) throw new ErrorHttp(413, "La imagen pesa demasiado (máx. 4 MB).");
 
-    const nombre = `diario/${Date.now()}-${crypto.randomUUID().slice(0, 8)}.${ext}`;
+    const carpeta = new URL(request.url).searchParams.get("carpeta") === "fotos" ? "fotos" : "diario";
+    const nombre = `${carpeta}/${Date.now()}-${crypto.randomUUID().slice(0, 8)}.${ext}`;
 
     if (process.env.BLOB_STORE_ID || process.env.BLOB_READ_WRITE_TOKEN) {
       try {
