@@ -2358,6 +2358,119 @@ img.hero__photo {
   }
 }
 
+/* --- Reseñas de Encuadrado (Inicio) --- */
+.resenas {
+  border-top: 1px solid var(--line-soft);
+}
+.resenas__resumen {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin: -12px 0 40px;
+}
+.resenas__promedio {
+  font-family: var(--serif);
+  font-size: 54px;
+  line-height: 1;
+  color: var(--ink);
+}
+.resenas__total {
+  margin: 6px 0 0;
+  font-size: 13px;
+  color: var(--muted);
+}
+.resenas__total span {
+  color: var(--faint);
+}
+.resenas__lista {
+  columns: 3 300px;
+  column-gap: 22px;
+}
+.resena {
+  break-inside: avoid;
+  margin: 0 0 22px;
+  padding: 28px;
+  border: 1px solid var(--line);
+  border-radius: 26px;
+  background: var(--cream);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.resena__estrellas {
+  display: inline-flex;
+  gap: 3px;
+}
+.resena__estrellas svg {
+  fill: rgba(42, 36, 48, 0.14);
+}
+.resena__estrellas svg.is-llena {
+  fill: var(--amber);
+}
+.resena__texto {
+  margin: 0;
+}
+.resena__texto p {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.75;
+  color: var(--ink);
+  overflow-wrap: anywhere;
+}
+.resena__mas {
+  align-self: flex-start;
+  background: none;
+  border: none;
+  padding: 6px 0;
+  min-height: 32px;
+  font: inherit;
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--teal-text);
+  cursor: pointer;
+}
+.resena__autor {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 10px;
+  align-items: baseline;
+  padding-top: 14px;
+  border-top: 1px solid var(--line-soft);
+}
+.resena__nombre {
+  font-family: var(--serif);
+  font-size: 17px;
+}
+.resena__fecha {
+  font-size: 12px;
+  color: var(--faint);
+}
+@media (max-width: 640px) {
+  .resenas__resumen {
+    margin: -16px 0 28px;
+  }
+  .resenas__promedio {
+    font-size: 44px;
+  }
+  /* En el celular: carrusel horizontal con desplazamiento por tarjeta */
+  .resenas__lista {
+    columns: auto;
+    display: flex;
+    gap: 14px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    padding-bottom: 12px;
+    scrollbar-width: thin;
+  }
+  .resena {
+    flex: 0 0 88%;
+    margin: 0;
+    padding: 24px;
+    scroll-snap-align: start;
+  }
+}
+
 /* 6. ─── MOVIMIENTO REDUCIDO ──────────────────────────────────
    Va al final para imponerse sobre las animaciones definidas antes. */
 @media (prefers-reduced-motion: reduce) {

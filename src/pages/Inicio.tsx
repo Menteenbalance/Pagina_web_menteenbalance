@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import Reveal from "../components/Reveal";
 import TarjetaPost from "../components/TarjetaPost";
 import InstagramModulo from "../components/InstagramModulo";
+import Resenas from "../components/Resenas";
 import { reservaUrl } from "../data";
 import { img } from "../images";
 import { formatearFecha, formatearPrecio, slug } from "../lib/formato";
@@ -254,6 +255,9 @@ export default function Inicio() {
         </div>
       </section>
       )}
+
+      {/* Reseñas de Encuadrado */}
+      <Resenas />
 
       {/* Instagram */}
       <InstagramModulo />

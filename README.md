@@ -156,3 +156,12 @@ datos personales, por lo que no necesita banner de consentimiento.
 `/admin` y `/api` llevan además `X-Robots-Tag: noindex, nofollow` (Google no los indexa) y `/admin` no se guarda en caché.
 
 **Si se agrega un servicio externo** (un video de YouTube, un mapa, un script de terceros), hay que sumarlo a la directiva que corresponda de `Content-Security-Policy` en `vercel.json` (`frame-src`, `script-src`, `connect-src`…); si no, el navegador lo bloquea. Los errores aparecen en la consola del navegador como "Refused to…".
+
+## Reseñas de Encuadrado (Inicio)
+
+Después del Diario, el Inicio muestra las evaluaciones del perfil de Encuadrado (`src/components/Resenas.tsx`).
+
+- **De dónde salen:** `GET /api/resenas` lee la página pública del perfil (`api/_lib/encuadrado.ts`) como máximo cada 6 horas y guarda la última copia buena (Redis en producción, `.data/` en local). Encuadrado no tiene API pública: se usan sus datos estructurados si los publica o, si no, el HTML de la sección "Evaluaciones".
+- **Si Encuadrado falla o cambia su página:** se sigue mostrando la última copia buena; si nunca hubo una, la copia de respaldo `resenasRespaldo` de `src/data.ts`. El bloque nunca queda vacío por un error externo.
+- **Qué se muestra:** promedio, total de evaluaciones y hasta 6 comentarios, con el nombre tal como lo muestra Encuadrado ("Usuario anónimo", "Francisca R.") y un enlace a todas las evaluaciones.
+- Encuadrado muestra en su página solo las evaluaciones más recientes (5); las demás quedan en el enlace "Ver todas en Encuadrado".
