@@ -4,7 +4,7 @@ import TarjetaPost from "../components/TarjetaPost";
 import InstagramModulo from "../components/InstagramModulo";
 import Resenas from "../components/Resenas";
 import { reservaUrl } from "../data";
-import { img } from "../images";
+import FotoSitio from "../components/FotoSitio";
 import { formatearFecha, formatearPrecio, slug } from "../lib/formato";
 import { postsRecientes, proximasActividades, useContenido } from "../lib/contenido";
 
@@ -54,10 +54,9 @@ export default function Inicio() {
         </div>
         <div className="hero__media">
           <div className="hero__halo" aria-hidden="true" />
-          <img
+          <FotoSitio
+            clave="inicio-portada"
             className="hero__photo"
-            src={img.yogaPose.src}
-            alt={img.yogaPose.alt}
             width={1000}
             height={1333}
             decoding="async"
@@ -85,10 +84,9 @@ export default function Inicio() {
         <section className="section">
           <div className="split">
           <div className="portrait">
-            <img
+            <FotoSitio
+              clave="inicio-sobre"
               className="portrait__img"
-              src={img.meditacionGrupo.src}
-              alt={img.meditacionGrupo.alt}
               width={1000}
               height={1333}
               loading="lazy"

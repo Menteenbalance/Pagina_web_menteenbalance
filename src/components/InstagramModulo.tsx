@@ -1,15 +1,16 @@
 import { InstagramLogo } from "@phosphor-icons/react/dist/csr/InstagramLogo";
 import { contacto } from "../data";
-import { img } from "../images";
+import FotoSitio from "./FotoSitio";
 import { useContenido } from "../lib/contenido";
 
 // Tres fotos reales de la práctica, en formatos distintos (vertical,
 // horizontal y vertical) para que el mosaico respire como un feed.
+// Se cambian desde el panel (pestaña Fotos).
 const mosaico = [
-  { ...img.yogaParque, ancho: 780, alto: 1040, clase: "ig__foto--alta" },
-  { ...img.retiroGrupo, ancho: 1000, alto: 667, clase: "ig__foto--ancha" },
-  { ...img.claseGrupo, ancho: 1000, alto: 1333, clase: "ig__foto--baja" },
-];
+  { clave: "instagram-1", ancho: 780, alto: 1040, clase: "ig__foto--alta" },
+  { clave: "instagram-2", ancho: 1000, alto: 667, clase: "ig__foto--ancha" },
+  { clave: "instagram-3", ancho: 1000, alto: 1333, clase: "ig__foto--baja" },
+] as const;
 
 /**
  * Módulo "Síguenos en Instagram".
@@ -72,11 +73,11 @@ export default function InstagramModulo() {
           aria-hidden="true"
         >
           {mosaico.map((f) => (
-            <img
-              key={f.src}
+            <FotoSitio
+              key={f.clave}
+              clave={f.clave}
+              decorativa
               className={`ig__foto ${f.clase}`}
-              src={f.src}
-              alt=""
               width={f.ancho}
               height={f.alto}
               loading="lazy"

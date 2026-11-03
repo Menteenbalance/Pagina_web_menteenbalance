@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { contacto, formacion, valores } from "../data";
-import { img } from "../images";
+import FotoSitio from "../components/FotoSitio";
 import Reveal from "../components/Reveal";
 
 // Pasos de la mirada de Mente en Balance (de la pieza "Mirada")
@@ -86,10 +86,9 @@ export default function Sobre() {
       {/* 3. La persona */}
       <section className="section db-persona" aria-labelledby="db-persona-titulo">
         <div className="db-persona__media">
-          <img
+          <FotoSitio
+            clave="sobre-retrato"
             className="db-persona__foto"
-            src={img.mariaIgnacia.src}
-            alt={img.mariaIgnacia.alt}
             width={714}
             height={984}
             loading="lazy"
@@ -186,10 +185,9 @@ export default function Sobre() {
             </p>
           </div>
         </div>
-        <img
+        <FotoSitio
+          clave="sobre-yoga"
           className="db-yoga__foto"
-          src={img.claseGuiada.src}
-          alt={img.claseGuiada.alt}
           width={960}
           height={1280}
           loading="lazy"

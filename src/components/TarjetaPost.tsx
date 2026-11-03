@@ -1,9 +1,11 @@
 import { Link } from "react-router-dom";
 import type { Post } from "../types";
-import { img } from "../images";
+import FotoSitio from "./FotoSitio";
+import type { ClaveFoto } from "../lib/fotos";
 
-// Foto de ambiente para publicaciones sin imagen propia.
-const respaldo = [img.consulta, img.retiro1, img.yogaRestaurativa, img.yogaParque, img.claseGrupo, img.balasana];
+// Fotos de ambiente para publicaciones sin imagen propia (se cambian
+// desde el panel, pestaña Fotos).
+const respaldo: ClaveFoto[] = ["diario-1", "diario-2", "diario-3", "diario-4", "diario-5", "diario-6"];
 
 /**
  * Tarjeta de una publicación del Diario.
@@ -26,15 +28,27 @@ export default function TarjetaPost({
 
   const contenido = (
     <>
-      <img
-        className="post__thumb"
-        src={post.imagen || respaldo[indice % respaldo.length].src}
-        alt={alt}
-        width={960}
-        height={720}
-        loading="lazy"
-        decoding="async"
-      />
+      {post.imagen ? (
+        <img
+          className="post__thumb"
+          src={post.imagen}
+          alt={alt}
+          width={960}
+          height={720}
+          loading="lazy"
+          decoding="async"
+        />
+      ) : (
+        <FotoSitio
+          clave={respaldo[indice % respaldo.length]}
+          decorativa
+          className="post__thumb"
+          width={960}
+          height={720}
+          loading="lazy"
+          decoding="async"
+        />
+      )}
       <span className="post__cat">{post.cat}</span>
       <Titulo className="post__title">{post.titulo}</Titulo>
       <p className="post__excerpt">{post.bajada}</p>

@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { img } from "../images";
+import FotoSitio from "../components/FotoSitio";
 
 // Caminos útiles para seguir (idea de la 404 de Airbnb: nunca un callejón sin salida).
 const caminos = [
@@ -86,10 +86,10 @@ export default function NoEncontrada({ contexto = "general" }: Props) {
 
       <div className="nf__media" aria-hidden="true">
         <div className="nf__halo" />
-        <img
+        <FotoSitio
+          clave="error-404"
+          decorativa
           className="nf__foto"
-          src={img.balasana.src}
-          alt=""
           width={738}
           height={1600}
           loading="lazy"

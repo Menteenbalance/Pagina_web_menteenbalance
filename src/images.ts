@@ -2,8 +2,9 @@
 //  IMÁGENES
 //  Rutas de las fotos (viven en public/img, se sirven desde "/img").
 //  Cada una tiene su texto alternativo (alt) para accesibilidad y SEO.
-//  Para cambiar una foto: reemplaza el archivo en public/img con el
-//  mismo nombre, o apunta aquí a uno nuevo.
+//  Son las fotos ORIGINALES: Mari las reemplaza desde el panel
+//  (/admin → Fotos), sin tocar código. El catálogo de lugares está en
+//  src/lib/fotos.ts.
 // ─────────────────────────────────────────────────────────────
 
 export interface Imagen {
