@@ -6,6 +6,7 @@
 // ─────────────────────────────────────────────────────────────
 
 import type {
+  ResenasEncuadrado,
   Ajustes,
   Contenido,
   NavItem,
@@ -299,6 +300,49 @@ export const formacion: { anio: string; titulo: string; lugar: string; detalle?:
  */
 export const reservaUrl =
   "https://encuadrado.com/p/maria-ignacia-canessa/";
+
+/** Evaluaciones del perfil de Encuadrado (sección de reseñas del Inicio). */
+export const encuadradoEvaluaciones = "https://encuadrado.com/p/maria-ignacia-canessa#evaluaciones";
+
+/**
+ * Copia de respaldo de las reseñas de Encuadrado (3 de noviembre de 2026).
+ * El sitio las lee solas desde Encuadrado (api/resenas.ts); esta copia se
+ * muestra mientras cargan o si Encuadrado no responde.
+ */
+export const resenasRespaldo: ResenasEncuadrado = {
+  promedio: 5,
+  total: 23,
+  actualizado: "2026-11-03T12:00:00.000Z",
+  resenas: [
+    {
+      nombre: "Usuario anónimo",
+      nota: 5,
+      fecha: "Julio 2026",
+      texto:
+        "En sus sesiones, Mari logra generar un espacio de confianza en el que puedes expresar todo lo que necesitas con absoluta tranquilidad, sabiendo que élla está ahí guiandote con empatía y respeto. Lo anterior, junto con su profesionalismo, fueron los pilares que me permitieron no sólo superar problemas que solían abrumarme constantemente, sino que también adquirir herramientas para gestionar de mejor manera situaciones complejas. Hoy, al ver el camino recorrido, puedo afirmar sin duda que Mari fue fundamental para alcanzar el bienestar que antes no era capaz de vivir, por lo que agradezco de enormemente su gran apoyo y calidez.",
+    },
+    { nombre: "Francisca R.", nota: 5, fecha: "Mayo 2026", texto: "Excelente atención, recomendada totalmente" },
+    {
+      nombre: "Usuario anónimo",
+      nota: 5,
+      fecha: "Mayo 2026",
+      texto: "Muy buena atención me ha ayudado mucho en mi proceso de transtorno ansioso, totalmente recomendada",
+    },
+    {
+      nombre: "Usuario anónimo",
+      nota: 5,
+      fecha: "Abril 2026",
+      texto: "Ella es maravillosa. La empatía y consejos dan tranquilidad. Tiene disposición y siempre es amable.",
+    },
+    {
+      nombre: "Constanza J.",
+      nota: 5,
+      fecha: "Marzo 2026",
+      texto:
+        "La atención que entrega Mari es impecable. Es demasiado atenta, y amable, hace que la terapia sea como un abrazito al corazón y al alma. Empecé mi terapia con ella en enero, y en estos meses he podido ver cambios brutales en mi gracias a ella. He estado con varios psicólogos a lo largo de mi vida, pero nunca había tenido la oportunidad de contar con alguien tan bueno y con quien conectara tanto. La recomiendo 100% a ojos cerrados. La mejor psicóloga por lejos!! 🙌🏻☺",
+    },
+  ],
+};
 
 /** Datos de contacto, reutilizados en la página Contacto y el footer. */
 export const contacto = {

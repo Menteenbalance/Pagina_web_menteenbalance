@@ -128,6 +128,27 @@ export interface Ajustes {
 }
 
 /** Todo el contenido que se puede editar desde el panel /admin. */
+/** Una evaluación publicada en el perfil de Encuadrado. */
+export interface Resena {
+  /** Como lo muestra Encuadrado: "Francisca R." o "Usuario anónimo" */
+  nombre: string;
+  /** Nota de 1 a 5 */
+  nota: number;
+  /** Mes y año como lo muestra Encuadrado, ej: "Julio 2026" */
+  fecha: string;
+  texto: string;
+}
+
+export interface ResenasEncuadrado {
+  /** Promedio general, ej: 5 */
+  promedio: number | null;
+  /** Cantidad total de evaluaciones en Encuadrado */
+  total: number | null;
+  resenas: Resena[];
+  /** Cuándo se leyeron por última vez desde Encuadrado (ISO) */
+  actualizado: string;
+}
+
 /** Versión anterior de una sección del panel (historial para deshacer). */
 export interface VersionHistorial {
   /** Momento en que fue reemplazada (ISO 8601) */
