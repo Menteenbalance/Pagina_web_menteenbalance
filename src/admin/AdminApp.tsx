@@ -14,6 +14,7 @@ import EditorServicios from "./EditorServicios";
 import EditorAgenda from "./EditorAgenda";
 import EditorDiario from "./EditorDiario";
 import EditorInstagram from "./EditorInstagram";
+import EditorFotos from "./EditorFotos";
 import Historial, { type SeccionHistorial } from "./Historial";
 import "./admin.css";
 
@@ -26,6 +27,7 @@ const pestañas = [
   { ruta: "agenda", texto: "Agenda" },
   { ruta: "diario", texto: "Diario" },
   { ruta: "instagram", texto: "Instagram" },
+  { ruta: "fotos", texto: "Fotos" },
 ];
 
 /** Secciones guardadas que se pueden deshacer desde cada pestaña. */
@@ -40,6 +42,7 @@ const historialPorPestaña: Record<string, SeccionHistorial[]> = {
   ],
   diario: [{ seccion: "posts", nombre: "Diario" }],
   instagram: [{ seccion: "ajustes", nombre: "Instagram" }],
+  fotos: [{ seccion: "fotos", nombre: "Fotos" }],
 };
 
 export default function AdminApp() {
@@ -52,6 +55,11 @@ export default function AdminApp() {
   const [restauraciones, setRestauraciones] = useState(0);
   const { pathname } = useLocation();
   const pestañaActual = pathname.split("/")[2] ?? "";
+
+  // En el celular, la pestaña activa queda siempre a la vista
+  useEffect(() => {
+    document.querySelector(".a-tab.is-active")?.scrollIntoView({ block: "nearest", inline: "nearest" });
+  }, [pestañaActual, fase]);
 
   useEffect(() => {
     document.title = "Panel | Mente en Balance";
@@ -213,6 +221,7 @@ export default function AdminApp() {
             path="instagram"
             element={<EditorInstagram ajustes={contenido.ajustes} guardar={guardar} />}
           />
+          <Route path="fotos" element={<EditorFotos fotos={contenido.fotos ?? {}} guardar={guardar} />} />
           <Route path="*" element={<Navigate to="servicios" replace />} />
         </Routes>
       </main>

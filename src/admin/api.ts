@@ -2,7 +2,7 @@
 
 import type { Contenido, VersionHistorial } from "../types";
 
-export type Seccion = "servicios" | "aranceles" | "agenda" | "recurrentes" | "posts" | "ajustes";
+export type Seccion = "servicios" | "aranceles" | "agenda" | "recurrentes" | "posts" | "ajustes" | "fotos";
 
 export class ErrorApi extends Error {
   constructor(public status: number, message: string) {
@@ -59,8 +59,8 @@ export const api = {
       body: JSON.stringify({ seccion, fecha }),
     }),
 
-  subirImagen: (archivo: Blob) =>
-    pedir<{ url: string }>("/api/admin/upload", {
+  subirImagen: (archivo: Blob, carpeta: "diario" | "fotos" = "diario") =>
+    pedir<{ url: string }>(`/api/admin/upload?carpeta=${carpeta}`, {
       method: "POST",
       headers: { "Content-Type": archivo.type },
       body: archivo,

@@ -91,6 +91,7 @@ La administradora entra en **`/admin`** con su correo y contraseña. Desde ahí 
 | **Agenda** | Crear, editar, duplicar y eliminar actividades, con su tipo (Yoga / Meditación / Talleres, los mismos filtros del sitio). Las pasadas se ocultan solas. **Clases que se repiten**: se crean una vez (días de la semana, hora, desde/hasta) y el sitio muestra solas las fechas de las próximas 4 semanas; se puede cancelar una fecha puntual. |
 | **Diario** | Publicaciones tipo blog: título, categoría, bajada, foto, texto con formato simple, borrador, publicado o **programado** (fecha y hora de Chile: aparece sola a esa hora). Cada una tiene su página `/diario/<titulo>`. |
 | **Instagram** | Mostrar u ocultar el módulo "Síguenos en Instagram" del Inicio y editar su frase. |
+| **Fotos** | Todas las fotos del sitio (portada, Detrás de Mente en Balance, mosaico de Instagram, fotos de ambiente del Diario y la 404): cambiar, describir, elegir el punto de enfoque o volver a la original. |
 
 Los cambios se ven en el sitio en menos de un minuto.
 
@@ -165,3 +166,9 @@ Después del Diario, el Inicio muestra las evaluaciones del perfil de Encuadrado
 - **Si Encuadrado falla o cambia su página:** se sigue mostrando la última copia buena; si nunca hubo una, la copia de respaldo `resenasRespaldo` de `src/data.ts`. El bloque nunca queda vacío por un error externo.
 - **Qué se muestra:** promedio, total de evaluaciones y hasta 6 comentarios, con el nombre tal como lo muestra Encuadrado ("Usuario anónimo", "Francisca R.") y un enlace a todas las evaluaciones.
 - Encuadrado muestra en su página solo las evaluaciones más recientes (5); las demás quedan en el enlace "Ver todas en Encuadrado".
+
+## Fotos del sitio (pestaña Fotos)
+
+- **Catálogo:** `src/lib/fotos.ts` lista cada lugar con foto (página, nombre, proporción y foto original de `src/images.ts`). Para hacer editable una foto nueva, agrega su clave en `src/lib/clavesFotos.ts`, su entrada en el catálogo y usa `<FotoSitio clave="…" />`.
+- **Guardado:** sección `fotos` del contenido (`{ clave: { src, alt, posicion } }`), con historial. Las fotos se suben comprimidas a Vercel Blob en `fotos/`.
+- **En el sitio:** aparecen en menos de un minuto. Una pestaña ya abierta se actualiza sola al volver a ella. El navegador recuerda las fotos elegidas, así que no se ve la original por un instante antes de la nueva.

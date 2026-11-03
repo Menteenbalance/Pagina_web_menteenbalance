@@ -4,6 +4,7 @@
 import { formatearFecha } from "../lib/formato";
 import type { Seccion } from "./api";
 import { huella } from "../lib/comparar";
+import { LUGAR_POR_CLAVE, type ClaveFoto } from "../lib/fotos";
 
 type Elemento = Record<string, unknown>;
 
@@ -41,6 +42,22 @@ export interface Diferencias {
 
 export function compararVersiones(seccion: Seccion, version: unknown, actual: unknown): Diferencias {
   const igual = huella(version) === huella(actual);
+  if (seccion === "fotos") {
+    // Objeto { lugar: foto }: "vuelve" = foto propia que se recupera; "sale" = vuelve la original
+    const antes = (version ?? {}) as Record<string, unknown>;
+    const ahora = (actual ?? {}) as Record<string, unknown>;
+    const n = (k: string) => LUGAR_POR_CLAVE[k as ClaveFoto]?.nombre ?? k;
+    const vuelven: string[] = [];
+    const salen: string[] = [];
+    const cambian: string[] = [];
+    for (const k of new Set([...Object.keys(antes), ...Object.keys(ahora)])) {
+      if (huella(antes[k]) === huella(ahora[k])) continue;
+      if (!ahora[k]) vuelven.push(n(k));
+      else if (!antes[k]) salen.push(`${n(k)} (vuelve la original)`);
+      else cambian.push(n(k));
+    }
+    return { vuelven, salen, cambian, igual };
+  }
   if (!Array.isArray(version) || !Array.isArray(actual)) {
     return { vuelven: [], salen: [], cambian: igual ? [] : ["Ajustes de la sección"], igual };
   }
@@ -62,6 +79,10 @@ export function compararVersiones(seccion: Seccion, version: unknown, actual: un
 
 /** "3 actividades" · "1 publicación" */
 export function cantidad(seccion: Seccion, datos: unknown): string {
+  if (seccion === "fotos") {
+    const n = Object.keys((datos ?? {}) as object).length;
+    return n === 0 ? "todas las fotos originales" : `${n} ${n === 1 ? "foto cambiada" : "fotos cambiadas"}`;
+  }
   if (!Array.isArray(datos)) return "Ajustes";
   const n = datos.length;
   const [uno, varios] = {
@@ -71,6 +92,7 @@ export function cantidad(seccion: Seccion, datos: unknown): string {
     recurrentes: ["clase que se repite", "clases que se repiten"],
     posts: ["publicación", "publicaciones"],
     ajustes: ["ajuste", "ajustes"],
+    fotos: ["foto", "fotos"],
   }[seccion];
   return `${n} ${n === 1 ? uno : varios}`;
 }
