@@ -59,9 +59,15 @@ public/
   conserva solo como referencia; el sitio real vive en `src/`.
 ```
 
-## Formulario de contacto
+## Formulario de contacto (WhatsApp)
 
-El formulario de `/contacto` envía un correo a través de una función de Vercel (`api/contact.ts`) usando [Resend](https://resend.com).
+El formulario de `/contacto` pide nombre, interés, modalidad (opcional) y mensaje, y **abre WhatsApp con el mensaje ya escrito** para el número de Mari (`https://wa.me/56943549436?text=…`, armado en `src/pages/Contacto.tsx`). La persona solo toca **Enviar** en WhatsApp: en el celular se abre la app y en el computador WhatsApp Web o de escritorio. No pasa por ningún servidor ni se guarda en el sitio, así que no requiere configuración.
+
+El número y el mensaje de saludo se cambian en `contacto` de `src/data.ts`.
+
+### Envío por correo (desactivado)
+
+El envío por correo con Resend (`api/contact.ts`) sigue en el código, pero el formulario ya no lo usa. Sirve de base si más adelante se quiere guardar una copia de los mensajes en el panel o volver al correo.
 
 **Protecciones incluidas**
 

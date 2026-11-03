@@ -1,6 +1,6 @@
 import { useRef, useState, type FormEvent } from "react";
+import { ChatCircleText } from "@phosphor-icons/react/dist/csr/ChatCircleText";
 import { contacto, enlaceWhatsApp } from "../data";
-import { obtenerVisitanteId } from "../lib/visitante";
 
 const INTERESES = [
   "Psicoterapia individual",
@@ -9,95 +9,66 @@ const INTERESES = [
   "Bienestar para organizaciones",
   "Otro",
 ];
+const MODALIDADES = ["Presencial", "Online", "Aún no lo sé"];
+/** Largo máximo del mensaje (WhatsApp lo recibe completo en el enlace) */
+const MAX_MENSAJE = 700;
 
-type Campo = "nombre" | "email" | "interes" | "mensaje";
-type Estado = "idle" | "enviando" | "enviado" | "error";
+type Campo = "nombre" | "mensaje";
 
-/** "en 7 minutos" / "en 2 horas" a partir de segundos. */
-function tiempoRestante(seg: number): string {
-  if (seg < 90) return "en un minuto";
-  const min = Math.ceil(seg / 60);
-  if (min < 90) return `en ${min} minutos`;
-  return `en ${Math.ceil(min / 60)} horas`;
+/** Texto con que se abre la conversación en WhatsApp. */
+export function armarMensaje(d: { nombre: string; interes: string; modalidad: string; mensaje: string }): string {
+  const lineas = [
+    `Hola Mari, soy ${d.nombre}. Te escribo desde la página de Mente en Balance.`,
+    "",
+    `Me interesa: ${d.interes}`,
+    ...(d.modalidad ? [`Modalidad: ${d.modalidad}`] : []),
+    "",
+    d.mensaje,
+  ];
+  return lineas.join("\n");
 }
 
-// Página "Contacto": formulario + datos + suscripción al newsletter.
+// Página "Contacto": el formulario arma el mensaje y abre WhatsApp con él
+// listo para enviar (wa.me). No pasa por ningún servidor ni se guarda.
 export default function Contacto() {
-  const [estado, setEstado] = useState<Estado>("idle");
   const [errores, setErrores] = useState<Partial<Record<Campo, string>>>({});
-  const [mensajeError, setMensajeError] = useState("");
-  const inicio = useRef(Date.now());
+  const [enlace, setEnlace] = useState<string | null>(null);
+  const [largo, setLargo] = useState(0);
+  // Lo último que se escribió, para volver al formulario sin perderlo
+  const [previo, setPrevio] = useState({ nombre: "", interes: INTERESES[0], modalidad: "", mensaje: "" });
   const formRef = useRef<HTMLFormElement>(null);
-  const exitoRef = useRef<HTMLDivElement>(null);
+  const listoRef = useRef<HTMLDivElement>(null);
 
-  function enfocarPrimerError(campos: Partial<Record<Campo, string>>) {
-    const primero = (["nombre", "email", "interes", "mensaje"] as Campo[]).find(
-      (c) => campos[c]
-    );
-    if (primero) {
-      formRef.current
-        ?.querySelector<HTMLElement>(`[name="${primero}"]`)
-        ?.focus();
-    }
-  }
-
-  async function enviar(e: FormEvent<HTMLFormElement>) {
+  function enviar(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    if (estado === "enviando") return;
     const datos = new FormData(e.currentTarget);
-
-    setEstado("enviando");
-    setErrores({});
-    setMensajeError("");
-
-    try {
-      const res = await fetch("/api/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          nombre: datos.get("nombre"),
-          email: datos.get("email"),
-          interes: datos.get("interes"),
-          mensaje: datos.get("mensaje"),
-          empresa: datos.get("empresa"),
-          inicio: inicio.current,
-          visitante: obtenerVisitanteId(),
-        }),
-      });
-      const data = await res.json().catch(() => ({}));
-
-      if (res.ok) {
-        setEstado("enviado");
-        requestAnimationFrame(() => exitoRef.current?.focus());
-        return;
-      }
-      if (res.status === 422 && data.errores) {
-        setErrores(data.errores);
-        setEstado("idle");
-        enfocarPrimerError(data.errores);
-        return;
-      }
-      if (res.status === 429) {
-        setMensajeError(
-          `Ya recibí varios mensajes desde este dispositivo. Puedes volver a escribir ${tiempoRestante(
-            Number(data.reintentarEnSeg) || 600
-          )} o hablarme por WhatsApp.`
-        );
-      } else {
-        setMensajeError(
-          "No se pudo enviar tu mensaje. Inténtalo de nuevo en unos minutos o escríbeme por WhatsApp."
-        );
-      }
-      setEstado("error");
-    } catch {
-      setMensajeError(
-        "Parece que no hay conexión. Revisa tu internet e inténtalo otra vez."
-      );
-      setEstado("error");
+    const nombre = String(datos.get("nombre") ?? "").trim();
+    const mensaje = String(datos.get("mensaje") ?? "").trim();
+    const nuevos: Partial<Record<Campo, string>> = {};
+    if (nombre.length < 2) nuevos.nombre = "Escribe tu nombre para que Mari sepa quién le escribe.";
+    if (mensaje.length < 5) nuevos.mensaje = "Cuéntale brevemente qué buscas.";
+    setErrores(nuevos);
+    if (nuevos.nombre || nuevos.mensaje) {
+      formRef.current
+        ?.querySelector<HTMLElement>(`[name="${nuevos.nombre ? "nombre" : "mensaje"}"]`)
+        ?.focus();
+      return;
     }
-  }
 
-  const enviando = estado === "enviando";
+    const valores = {
+      nombre,
+      interes: String(datos.get("interes") ?? INTERESES[0]),
+      modalidad: String(datos.get("modalidad") ?? ""),
+      mensaje,
+    };
+    setPrevio(valores);
+    const url = enlaceWhatsApp(armarMensaje(valores));
+    setEnlace(url);
+    // Se abre en el gesto de la persona (no lo bloquea el navegador). Si
+    // igual no se abre, queda el botón de la pantalla siguiente.
+    window.open(url, "_blank", "noopener,noreferrer");
+    requestAnimationFrame(() => listoRef.current?.focus());
+  }
 
   return (
     <div className="page">
@@ -109,27 +80,41 @@ export default function Contacto() {
       </h1>
 
       <div className="contacto-grid">
-        {/* Columna izquierda: formulario o mensaje de éxito */}
+        {/* Columna izquierda: formulario o confirmación */}
         <div aria-live="polite">
-          {estado === "enviado" ? (
-            <div className="sent" ref={exitoRef} tabIndex={-1}>
-              <h2 className="sent__title">Gracias, te escribiré pronto</h2>
+          {enlace ? (
+            <div className="sent" ref={listoRef} tabIndex={-1}>
+              <h2 className="sent__title">Tu mensaje está listo en WhatsApp</h2>
               <p className="sent__text">
-                Respondo dentro de 48 horas hábiles. Mientras tanto, respira:
-                un día a la vez.
+                Se abrió WhatsApp con tu mensaje escrito. Solo falta que toques <strong>Enviar</strong> ahí.
+                Mari responde dentro de 48 horas hábiles.
               </p>
+              <div className="sent__acciones">
+                <a href={enlace} target="_blank" rel="noopener noreferrer" className="btn btn--teal btn--icono">
+                  <ChatCircleText size={18} weight="regular" aria-hidden="true" />
+                  Abrir WhatsApp de nuevo
+                </a>
+                <button type="button" className="text-link sent__volver" onClick={() => setEnlace(null)}>
+                  Cambiar el mensaje
+                </button>
+              </div>
             </div>
           ) : (
             <form className="form" onSubmit={enviar} ref={formRef} noValidate>
+              <p className="form__intro">
+                Completa estos datos y se abrirá WhatsApp con tu mensaje listo para enviar a Mari. Lo que escribas no
+                se guarda en este sitio.
+              </p>
               <label className="field">
-                <span className="field__label">Nombre</span>
+                <span className="field__label">Tu nombre</span>
                 <input
                   className="input"
                   type="text"
                   name="nombre"
                   autoComplete="name"
                   required
-                  maxLength={100}
+                  maxLength={80}
+                  defaultValue={previo.nombre}
                   placeholder="Ej: Camila Rojas…"
                   aria-invalid={Boolean(errores.nombre)}
                   aria-describedby={errores.nombre ? "error-nombre" : undefined}
@@ -141,46 +126,24 @@ export default function Contacto() {
                 )}
               </label>
               <label className="field">
-                <span className="field__label">Correo</span>
-                <input
-                  className="input"
-                  type="email"
-                  name="email"
-                  autoComplete="email"
-                  inputMode="email"
-                  spellCheck={false}
-                  required
-                  maxLength={254}
-                  placeholder="tucorreo@mail.com…"
-                  aria-invalid={Boolean(errores.email)}
-                  aria-describedby={errores.email ? "error-email" : undefined}
-                />
-                {errores.email && (
-                  <span className="field__error" id="error-email">
-                    {errores.email}
-                  </span>
-                )}
-              </label>
-              <label className="field">
                 <span className="field__label">Me interesa</span>
-                <select
-                  className="select"
-                  name="interes"
-                  required
-                  defaultValue={INTERESES[0]}
-                  aria-invalid={Boolean(errores.interes)}
-                  aria-describedby={errores.interes ? "error-interes" : undefined}
-                >
+                <select className="select" name="interes" defaultValue={previo.interes}>
                   {INTERESES.map((op) => (
                     <option key={op}>{op}</option>
                   ))}
                 </select>
-                {errores.interes && (
-                  <span className="field__error" id="error-interes">
-                    {errores.interes}
-                  </span>
-                )}
               </label>
+              <fieldset className="field field--opciones">
+                <legend className="field__label">Modalidad (opcional)</legend>
+                <div className="opciones">
+                  {MODALIDADES.map((m) => (
+                    <label key={m} className="opcion">
+                      <input type="radio" name="modalidad" value={m} defaultChecked={previo.modalidad === m} />
+                      <span>{m}</span>
+                    </label>
+                  ))}
+                </div>
+              </fieldset>
               <label className="field">
                 <span className="field__label">Mensaje</span>
                 <textarea
@@ -188,12 +151,17 @@ export default function Contacto() {
                   name="mensaje"
                   rows={4}
                   required
-                  maxLength={3000}
+                  maxLength={MAX_MENSAJE}
+                  defaultValue={previo.mensaje}
                   autoComplete="off"
-                  placeholder="Cuéntanos brevemente qué buscas…"
+                  placeholder="Cuéntale brevemente qué buscas o qué día te acomoda…"
+                  onChange={(e) => setLargo(e.target.value.length)}
                   aria-invalid={Boolean(errores.mensaje)}
-                  aria-describedby={errores.mensaje ? "error-mensaje" : undefined}
+                  aria-describedby={`ayuda-mensaje${errores.mensaje ? " error-mensaje" : ""}`}
                 />
+                <span className="field__hint" id="ayuda-mensaje">
+                  {largo}/{MAX_MENSAJE}
+                </span>
                 {errores.mensaje && (
                   <span className="field__error" id="error-mensaje">
                     {errores.mensaje}
@@ -201,28 +169,14 @@ export default function Contacto() {
                 )}
               </label>
 
-              {/* Campo trampa para bots: oculto para las personas */}
-              <div className="form__trap" aria-hidden="true">
-                <label>
-                  Empresa
-                  <input type="text" name="empresa" tabIndex={-1} autoComplete="off" />
-                </label>
-              </div>
-
-              {estado === "error" && (
-                <p className="form__alert" role="alert">
-                  {mensajeError}
-                </p>
-              )}
-
-              <button
-                type="submit"
-                className="btn btn--plum form__submit"
-                disabled={enviando}
-                aria-busy={enviando}
-              >
-                {enviando ? "Enviando…" : "Enviar"}
+              <button type="submit" className="btn btn--teal btn--icono form__submit">
+                <ChatCircleText size={18} weight="regular" aria-hidden="true" />
+                Continuar en WhatsApp
               </button>
+              <p className="form__nota">
+                ¿Prefieres escribir tú? <a href={enlaceWhatsApp()} target="_blank" rel="noopener noreferrer">Abre el chat directo</a>{" "}
+                ({contacto.whatsapp.replace(/^WhatsApp\s*/, "")}).
+              </p>
             </form>
           )}
         </div>
