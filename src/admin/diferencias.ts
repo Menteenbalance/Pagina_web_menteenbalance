@@ -17,6 +17,8 @@ function nombre(seccion: Seccion, e: Elemento): string {
       return String(e.categoria ?? "Grupo de aranceles");
     case "agenda":
       return `${e.titulo ?? "Actividad"} (${typeof e.fecha === "string" ? formatearFecha(e.fecha).corta : "sin fecha"})`;
+    case "comunidad":
+      return String(e.titulo || String(e.texto ?? "").slice(0, 40) || "Mensaje");
     default:
       return String(e.titulo ?? "Elemento");
   }
@@ -93,6 +95,7 @@ export function cantidad(seccion: Seccion, datos: unknown): string {
     posts: ["publicación", "publicaciones"],
     ajustes: ["ajuste", "ajustes"],
     fotos: ["foto", "fotos"],
+    comunidad: ["mensaje", "mensajes"],
   }[seccion];
   return `${n} ${n === 1 ? uno : varios}`;
 }

@@ -15,6 +15,7 @@ import EditorAgenda from "./EditorAgenda";
 import EditorDiario from "./EditorDiario";
 import EditorInstagram from "./EditorInstagram";
 import EditorFotos from "./EditorFotos";
+import EditorComunidad from "./EditorComunidad";
 import Historial, { type SeccionHistorial } from "./Historial";
 import "./admin.css";
 
@@ -28,6 +29,7 @@ const pestañas = [
   { ruta: "diario", texto: "Diario" },
   { ruta: "instagram", texto: "Instagram" },
   { ruta: "fotos", texto: "Fotos" },
+  { ruta: "comunidad", texto: "Comunidad" },
 ];
 
 /** Secciones guardadas que se pueden deshacer desde cada pestaña. */
@@ -43,6 +45,7 @@ const historialPorPestaña: Record<string, SeccionHistorial[]> = {
   diario: [{ seccion: "posts", nombre: "Diario" }],
   instagram: [{ seccion: "ajustes", nombre: "Instagram" }],
   fotos: [{ seccion: "fotos", nombre: "Fotos" }],
+  comunidad: [{ seccion: "comunidad", nombre: "Mensajes de la comunidad" }],
 };
 
 export default function AdminApp() {
@@ -95,7 +98,13 @@ export default function AdminApp() {
     try {
       const res = await api.guardar(seccion, datos);
       setContenido((c) => (c ? { ...c, [seccion]: res.datos } : c));
-      setAviso({ tipo: "ok", texto: "Cambios guardados. Se verán en el sitio en menos de un minuto." });
+      setAviso({
+        tipo: "ok",
+        texto:
+          seccion === "comunidad"
+            ? "Mensaje guardado."
+            : "Cambios guardados. Se verán en el sitio en menos de un minuto.",
+      });
       return true;
     } catch (err) {
       if (err instanceof ErrorApi && err.status === 401) {
@@ -222,6 +231,7 @@ export default function AdminApp() {
             element={<EditorInstagram ajustes={contenido.ajustes} guardar={guardar} />}
           />
           <Route path="fotos" element={<EditorFotos fotos={contenido.fotos ?? {}} guardar={guardar} />} />
+          <Route path="comunidad/*" element={<EditorComunidad mensajes={contenido.comunidad ?? []} guardar={guardar} />} />
           <Route path="*" element={<Navigate to="servicios" replace />} />
         </Routes>
       </main>

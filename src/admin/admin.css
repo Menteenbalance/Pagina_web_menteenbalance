@@ -1193,3 +1193,228 @@
     max-width: 320px;
   }
 }
+
+/* ── Comunidad (mensajes de WhatsApp) ──────────────────────────── */
+.a-estado--alerta {
+  background: rgba(163, 38, 60, 0.12);
+  color: var(--a-peligro);
+}
+.a-msjs {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 10px;
+}
+.a-msj {
+  background: var(--a-surface);
+  border: 1px solid var(--a-borde);
+  border-radius: 16px;
+  padding: 14px 16px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 14px;
+  align-items: center;
+}
+.a-msj.is-pendiente {
+  border-color: rgba(163, 38, 60, 0.45);
+  box-shadow: 0 0 0 3px rgba(163, 38, 60, 0.08);
+}
+.a-msj__cuerpo {
+  min-width: 0;
+}
+.a-msj__cuando {
+  font-size: 13px;
+  color: var(--muted);
+}
+.a-msj__extracto {
+  margin: 2px 0 0;
+  font-size: 13px;
+  color: var(--muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.a-enviar {
+  border-color: rgba(6, 122, 122, 0.35);
+}
+.a-enviar__pasos {
+  margin: 0 0 4px;
+  padding-left: 20px;
+  font-size: 14px;
+  line-height: 1.8;
+}
+.a-comunidad {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 320px;
+  gap: 20px;
+  align-items: start;
+}
+.a-comunidad__editor {
+  display: grid;
+  gap: 18px;
+}
+.a-comunidad__previa {
+  position: sticky;
+  top: 120px;
+  display: grid;
+  gap: 8px;
+}
+.a-wa-barra {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+.a-wa-boton {
+  min-width: 40px;
+  height: 40px;
+  padding: 0 10px;
+  border-radius: 10px;
+  border: 1px solid var(--a-borde-fuerte);
+  background: var(--a-surface);
+  color: var(--ink);
+  font: inherit;
+  font-size: 15px;
+  cursor: pointer;
+}
+.a-wa-boton:hover {
+  border-color: var(--teal-text);
+}
+.a-wa-boton:focus-visible {
+  outline: 2px solid var(--teal);
+  outline-offset: 2px;
+}
+.a-wa-boton--n {
+  font-weight: 700;
+}
+.a-wa-boton--c {
+  font-style: italic;
+}
+.a-wa-boton--t {
+  text-decoration: line-through;
+}
+.a-wa-boton[aria-expanded="true"] {
+  background: rgba(6, 153, 153, 0.12);
+}
+.a-emojis {
+  border: 1px solid var(--a-borde);
+  border-radius: 14px;
+  background: var(--a-surface);
+  padding: 12px;
+  margin-bottom: 8px;
+  display: grid;
+  gap: 10px;
+  max-height: 280px;
+  overflow-y: auto;
+}
+.a-emojis__nombre {
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.a-emojis__lista {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px;
+  margin-top: 4px;
+}
+.a-emoji {
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: 10px;
+  background: none;
+  font-size: 22px;
+  line-height: 1;
+  cursor: pointer;
+}
+.a-emoji:hover,
+.a-emoji:focus-visible {
+  background: rgba(42, 36, 48, 0.07);
+  outline: none;
+}
+.a-recordatorio {
+  display: grid;
+  gap: 8px;
+  padding-top: 16px;
+  border-top: 1px solid var(--a-borde);
+}
+/* Vista previa con aspecto de WhatsApp */
+.wa-fondo {
+  background: #efeae2;
+  border-radius: 16px;
+  padding: 18px 14px;
+  min-height: 200px;
+}
+.wa-burbuja {
+  position: relative;
+  background: #d9fdd3;
+  color: #111b21;
+  border-radius: 10px 0 10px 10px;
+  padding: 8px 10px 20px;
+  margin-left: 18px;
+  font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-size: 14.5px;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+  box-shadow: 0 1px 0.5px rgba(11, 20, 26, 0.13);
+}
+.wa-burbuja::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: -8px;
+  border-top: 10px solid #d9fdd3;
+  border-right: 8px solid transparent;
+}
+.wa-hora {
+  position: absolute;
+  right: 8px;
+  bottom: 4px;
+  font-size: 11px;
+  color: #667781;
+}
+.wa-vacio {
+  color: #667781;
+}
+.wa-mono,
+.wa-burbuja code {
+  font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+  font-size: 13px;
+}
+.wa-burbuja code:not(.wa-mono) {
+  background: rgba(11, 20, 26, 0.06);
+  border-radius: 4px;
+  padding: 0 3px;
+}
+.wa-lista {
+  display: flex;
+  gap: 6px;
+}
+.wa-cita {
+  border-left: 3px solid rgba(11, 20, 26, 0.25);
+  padding-left: 8px;
+  color: #3b4a54;
+}
+.wa-enlace {
+  color: #027eb5;
+  text-decoration: underline;
+}
+@media (max-width: 900px) {
+  .a-comunidad {
+    grid-template-columns: 1fr;
+  }
+  .a-comunidad__previa {
+    position: static;
+  }
+}
+@media (max-width: 720px) {
+  .a-msj {
+    grid-template-columns: 1fr;
+  }
+  .a-msj .a-evento__acciones {
+    justify-content: flex-start;
+  }
+}

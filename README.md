@@ -98,6 +98,7 @@ La administradora entra en **`/admin`** con su correo y contraseña. Desde ahí 
 | **Diario** | Publicaciones tipo blog: título, categoría, bajada, foto, texto con formato simple, borrador, publicado o **programado** (fecha y hora de Chile: aparece sola a esa hora). Cada una tiene su página `/diario/<titulo>`. |
 | **Instagram** | Mostrar u ocultar el módulo "Síguenos en Instagram" del Inicio y editar su frase. |
 | **Fotos** | Todas las fotos del sitio (portada, Detrás de Mente en Balance, mosaico de Instagram, fotos de ambiente del Diario y la 404): cambiar, describir, elegir el punto de enfoque o volver a la original. |
+| **Comunidad** | Mensajes para la comunidad de WhatsApp: escribir con el formato de WhatsApp y emojis, vista previa, programar fecha y hora, recordatorio en el calendario y envío en dos toques. |
 
 Los cambios se ven en el sitio en menos de un minuto.
 
@@ -178,3 +179,10 @@ Después del Diario, el Inicio muestra las evaluaciones del perfil de Encuadrado
 - **Catálogo:** `src/lib/fotos.ts` lista cada lugar con foto (página, nombre, proporción y foto original de `src/images.ts`). Para hacer editable una foto nueva, agrega su clave en `src/lib/clavesFotos.ts`, su entrada en el catálogo y usa `<FotoSitio clave="…" />`.
 - **Guardado:** sección `fotos` del contenido (`{ clave: { src, alt, posicion } }`), con historial. Las fotos se suben comprimidas a Vercel Blob en `fotos/`.
 - **En el sitio:** aparecen en menos de un minuto. Una pestaña ya abierta se actualiza sola al volver a ella. El navegador recuerda las fotos elegidas, así que no se ve la original por un instante antes de la nueva.
+
+## Mensajes de la comunidad (pestaña Comunidad)
+
+- **Qué hace:** Mari escribe el mensaje (negrita, cursiva, tachado, listas, citas y emojis, con vista previa tipo WhatsApp), lo programa y agrega un recordatorio a su calendario (Google Calendar o archivo `.ics` para iPhone/Outlook). A la hora, el aviso trae el enlace al mensaje en el panel; **Abrir WhatsApp** abre la app con el texto listo para elegir la comunidad y enviarlo. Luego lo marca como enviado.
+- **Por qué no se envía solo:** WhatsApp no ofrece una forma oficial de publicar en una comunidad existente (la API de grupos solo sirve para grupos creados por la API, de hasta 8 personas) y prohíbe los envíos automáticos desde cuentas normales: un bot podría bloquear el número de Mari. Por eso el envío lo hace siempre ella.
+- **Privacidad:** los mensajes se guardan en la sección `comunidad` (con historial) y `/api/content` nunca los entrega al sitio público.
+- Cuando WhatsApp active su función de mensajes programados, se puede usar **Copiar texto** y programarlo dentro de la app.
