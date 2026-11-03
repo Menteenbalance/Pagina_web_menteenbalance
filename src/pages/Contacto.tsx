@@ -15,17 +15,35 @@ const MAX_MENSAJE = 700;
 
 type Campo = "nombre" | "mensaje";
 
-/** Texto con que se abre la conversación en WhatsApp. */
+/** Cómo se dice cada interés dentro de una frase. */
+const INTERES_EN_FRASE: Record<string, string> = {
+  "Psicoterapia individual": "me interesa la psicoterapia individual",
+  "Vinyasa Yoga y Meditación": "me interesan las clases de Vinyasa Yoga y Meditación",
+  "Encuentros, talleres y experiencias": "me interesan los encuentros, talleres y experiencias",
+  "Bienestar para organizaciones": "me interesa el programa de bienestar para organizaciones",
+  Otro: "quería hacerte una consulta",
+};
+
+/** Cómo se suma la modalidad a esa misma frase. */
+const MODALIDAD_EN_FRASE: Record<string, string> = {
+  Presencial: ", idealmente de forma presencial.",
+  Online: ", idealmente online.",
+  "Aún no lo sé": ". Todavía no sé si me acomoda más presencial u online.",
+};
+
+/**
+ * Texto con que se abre la conversación en WhatsApp: un saludo que ya
+ * cuenta el interés y la modalidad, y después el mensaje de la persona.
+ *   "Hola Mari, soy Camila. Te escribo desde la página de Mente en Balance
+ *    porque me interesan las clases de Vinyasa Yoga y Meditación, idealmente online.
+ *
+ *    (mensaje)"
+ */
 export function armarMensaje(d: { nombre: string; interes: string; modalidad: string; mensaje: string }): string {
-  const lineas = [
-    `Hola Mari, soy ${d.nombre}. Te escribo desde la página de Mente en Balance.`,
-    "",
-    `Me interesa: ${d.interes}`,
-    ...(d.modalidad ? [`Modalidad: ${d.modalidad}`] : []),
-    "",
-    d.mensaje,
-  ];
-  return lineas.join("\n");
+  const interes = INTERES_EN_FRASE[d.interes] ?? `me interesa ${d.interes.toLowerCase()}`;
+  const modalidad = MODALIDAD_EN_FRASE[d.modalidad] ?? ".";
+  const saludo = `Hola Mari, soy ${d.nombre}. Te escribo desde la página de Mente en Balance porque ${interes}${modalidad}`;
+  return [saludo, d.mensaje].join("\n\n");
 }
 
 // Página "Contacto": el formulario arma el mensaje y abre WhatsApp con él
