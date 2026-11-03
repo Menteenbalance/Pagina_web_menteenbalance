@@ -5,6 +5,7 @@ import { formatearFecha } from "../lib/formato";
 import type { Seccion } from "./api";
 import { huella } from "../lib/comparar";
 import { LUGAR_POR_CLAVE, type ClaveFoto } from "../lib/fotos";
+import { TEXTO_POR_CLAVE, type ClaveTexto } from "../lib/textos";
 
 type Elemento = Record<string, unknown>;
 
@@ -44,6 +45,19 @@ export interface Diferencias {
 
 export function compararVersiones(seccion: Seccion, version: unknown, actual: unknown): Diferencias {
   const igual = huella(version) === huella(actual);
+  if (seccion === "textos") {
+    // Objeto { texto: valor }: lo que no está, es el texto original
+    const antes = (version ?? {}) as Record<string, string>;
+    const ahora = (actual ?? {}) as Record<string, string>;
+    const n = (k: string) => {
+      const l = TEXTO_POR_CLAVE[k as ClaveTexto];
+      return l ? `${l.bloque} · ${l.nombre}` : k;
+    };
+    const cambian = [...new Set([...Object.keys(antes), ...Object.keys(ahora)])]
+      .filter((k) => (antes[k] ?? "") !== (ahora[k] ?? ""))
+      .map(n);
+    return { vuelven: [], salen: [], cambian, igual };
+  }
   if (seccion === "fotos") {
     // Objeto { lugar: foto }: "vuelve" = foto propia que se recupera; "sale" = vuelve la original
     const antes = (version ?? {}) as Record<string, unknown>;
@@ -81,6 +95,10 @@ export function compararVersiones(seccion: Seccion, version: unknown, actual: un
 
 /** "3 actividades" · "1 publicación" */
 export function cantidad(seccion: Seccion, datos: unknown): string {
+  if (seccion === "textos") {
+    const n = Object.keys((datos ?? {}) as object).length;
+    return n === 0 ? "todos los textos originales" : `${n} ${n === 1 ? "texto cambiado" : "textos cambiados"}`;
+  }
   if (seccion === "fotos") {
     const n = Object.keys((datos ?? {}) as object).length;
     return n === 0 ? "todas las fotos originales" : `${n} ${n === 1 ? "foto cambiada" : "fotos cambiadas"}`;
@@ -96,6 +114,8 @@ export function cantidad(seccion: Seccion, datos: unknown): string {
     ajustes: ["ajuste", "ajustes"],
     fotos: ["foto", "fotos"],
     comunidad: ["mensaje", "mensajes"],
+    textos: ["texto", "textos"],
+    formacion: ["estudio", "estudios"],
   }[seccion];
   return `${n} ${n === 1 ? uno : varios}`;
 }

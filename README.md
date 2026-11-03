@@ -97,6 +97,7 @@ La administradora entra en **`/admin`** con su correo y contraseña. Desde ahí 
 | **Agenda** | Crear, editar, duplicar y eliminar actividades, con su tipo (Yoga / Meditación / Talleres, los mismos filtros del sitio). Las pasadas se ocultan solas. **Clases que se repiten**: se crean una vez (días de la semana, hora, desde/hasta) y el sitio muestra solas las fechas de las próximas 4 semanas; se puede cancelar una fecha puntual. |
 | **Diario** | Publicaciones tipo blog: título, categoría, bajada, foto, texto con formato simple, borrador, publicado o **programado** (fecha y hora de Chile: aparece sola a esa hora). Cada una tiene su página `/diario/<titulo>`. |
 | **Instagram** | Mostrar u ocultar el módulo "Síguenos en Instagram" del Inicio y editar su frase. |
+| **Textos** | Los textos largos del Inicio, de Detrás de Mente en Balance y de Servicios (títulos, párrafos, pasos, listas y frases), cada uno con "Volver al original", y la lista **Mi formación** (agregar, editar, ordenar y quitar estudios). |
 | **Fotos** | Todas las fotos del sitio (portada, Detrás de Mente en Balance, mosaico de Instagram, fotos de ambiente del Diario y la 404): cambiar, describir, elegir el punto de enfoque o volver a la original. |
 | **Comunidad** | Mensajes para la comunidad de WhatsApp: escribir con el formato de WhatsApp y emojis, vista previa, programar fecha y hora, recordatorio en el calendario y envío en dos toques. |
 
@@ -186,3 +187,10 @@ Después del Diario, el Inicio muestra las evaluaciones del perfil de Encuadrado
 - **Por qué no se envía solo:** WhatsApp no ofrece una forma oficial de publicar en una comunidad existente (la API de grupos solo sirve para grupos creados por la API, de hasta 8 personas) y prohíbe los envíos automáticos desde cuentas normales: un bot podría bloquear el número de Mari. Por eso el envío lo hace siempre ella.
 - **Privacidad:** los mensajes se guardan en la sección `comunidad` (con historial) y `/api/content` nunca los entrega al sitio público.
 - Cuando WhatsApp active su función de mensajes programados, se puede usar **Copiar texto** y programarlo dentro de la app.
+
+## Textos del sitio y formación (pestaña Textos)
+
+- **Catálogo:** `src/lib/textos.ts` lista cada texto editable con su página, bloque, tipo (línea, título en dos líneas, párrafos o lista), largo máximo y texto original. En las páginas se usan `<Linea>`, `<Titulo>`, `<Parrafos>` y `useLista` de `src/components/Textos.tsx`.
+- **Guardado:** sección `textos` (`{ clave: texto }`, solo los que difieren del original) y sección `formacion` (lista ordenada), ambas con historial.
+- Los párrafos admiten el mismo formato simple del Diario (**negrita**, *cursiva*, enlaces).
+- Para hacer editable un texto nuevo: agrégalo al catálogo y reemplaza el texto fijo de la página por el componente con su clave.

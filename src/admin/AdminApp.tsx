@@ -16,6 +16,7 @@ import EditorDiario from "./EditorDiario";
 import EditorInstagram from "./EditorInstagram";
 import EditorFotos from "./EditorFotos";
 import EditorComunidad from "./EditorComunidad";
+import EditorTextos from "./EditorTextos";
 import Historial, { type SeccionHistorial } from "./Historial";
 import "./admin.css";
 
@@ -27,6 +28,7 @@ const pestañas = [
   { ruta: "servicios", texto: "Servicios" },
   { ruta: "agenda", texto: "Agenda" },
   { ruta: "diario", texto: "Diario" },
+  { ruta: "textos", texto: "Textos" },
   { ruta: "instagram", texto: "Instagram" },
   { ruta: "fotos", texto: "Fotos" },
   { ruta: "comunidad", texto: "Comunidad" },
@@ -45,6 +47,10 @@ const historialPorPestaña: Record<string, SeccionHistorial[]> = {
   diario: [{ seccion: "posts", nombre: "Diario" }],
   instagram: [{ seccion: "ajustes", nombre: "Instagram" }],
   fotos: [{ seccion: "fotos", nombre: "Fotos" }],
+  textos: [
+    { seccion: "textos", nombre: "Textos" },
+    { seccion: "formacion", nombre: "Mi formación" },
+  ],
   comunidad: [{ seccion: "comunidad", nombre: "Mensajes de la comunidad" }],
 };
 
@@ -231,6 +237,10 @@ export default function AdminApp() {
             element={<EditorInstagram ajustes={contenido.ajustes} guardar={guardar} />}
           />
           <Route path="fotos" element={<EditorFotos fotos={contenido.fotos ?? {}} guardar={guardar} />} />
+          <Route
+            path="textos"
+            element={<EditorTextos textos={contenido.textos ?? {}} formacion={contenido.formacion ?? []} guardar={guardar} />}
+          />
           <Route path="comunidad/*" element={<EditorComunidad mensajes={contenido.comunidad ?? []} guardar={guardar} />} />
           <Route path="*" element={<Navigate to="servicios" replace />} />
         </Routes>
