@@ -22,6 +22,8 @@ export async function GET(): Promise<Response> {
         // Las clases que se repiten llegan al sitio como fechas concretas
         agenda: [...c.agenda, ...expandirRecurrentes(c.recurrentes, hoyEnSantiago())],
         recurrentes: [],
+        // Los mensajes de la comunidad son solo del panel: nunca salen al sitio
+        comunidad: [],
         // Borradores y publicaciones programadas para más tarde no se envían
         posts: c.posts.filter((p) => seVeEnElSitio(p, ahora)),
       },

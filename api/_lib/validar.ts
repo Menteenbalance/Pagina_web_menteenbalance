@@ -10,6 +10,7 @@ import type {
   DiaSemana,
   Evento,
   FotoEditada,
+  MensajeComunidad,
   GrupoTarifas,
   Post,
   Servicio,
@@ -18,7 +19,7 @@ import type {
 import { ErrorHttp } from "./http.js";
 import { esClaveFoto } from "../../src/lib/clavesFotos.js";
 
-export const SECCIONES = ["servicios", "aranceles", "agenda", "recurrentes", "posts", "ajustes", "fotos"] as const;
+export const SECCIONES = ["servicios", "aranceles", "agenda", "recurrentes", "posts", "ajustes", "fotos", "comunidad"] as const;
 export type Seccion = (typeof SECCIONES)[number];
 
 const TIPOS: TipoEvento[] = ["Yoga", "Meditación", "Talleres"];
@@ -206,6 +207,19 @@ const validadores: Record<Seccion, (datos: unknown) => unknown> = {
     }
     return posts;
   },
+
+  comunidad: (datos): MensajeComunidad[] =>
+    lista(datos, 200, "Mensajes de la comunidad").map((x) => {
+      const m = obj(x);
+      const enviado = typeof m.enviadoEl === "string" && !Number.isNaN(Date.parse(m.enviadoEl)) ? m.enviadoEl : undefined;
+      return {
+        id: id(m.id),
+        titulo: txt(m.titulo, "Nombre del mensaje", { max: 80 }),
+        texto: txt(m.texto, "Texto del mensaje", { min: 1, max: 4000 }),
+        programadoEl: fechaHora(m.programadoEl),
+        enviadoEl: enviado,
+      };
+    }),
 
   fotos: (datos): Record<string, FotoEditada> => {
     const f = obj(datos);

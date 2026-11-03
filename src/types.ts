@@ -119,6 +119,19 @@ export interface GrupoTarifas {
   items: Tarifa[];
 }
 
+/** Mensaje preparado para la comunidad de WhatsApp (pestaña Comunidad). Nunca se publica en el sitio. */
+export interface MensajeComunidad {
+  id: string;
+  /** Nombre interno para reconocerlo en la lista, ej: "Recordatorio clase del lunes" */
+  titulo: string;
+  /** Texto con el formato de WhatsApp (*negrita*, _cursiva_, ~tachado~, emojis…) */
+  texto: string;
+  /** Cuándo enviarlo: fecha y hora de Santiago (AAAA-MM-DDTHH:mm). Vacío = borrador */
+  programadoEl?: string;
+  /** Cuándo Mari lo marcó como enviado (ISO). Vacío = aún no se envía */
+  enviadoEl?: string;
+}
+
 /** Foto que Mari subió para reemplazar una del sitio (pestaña Fotos). */
 export interface FotoEditada {
   src: string;
@@ -179,6 +192,8 @@ export interface Contenido {
   recurrentes: ActividadRecurrente[];
   posts: Post[];
   ajustes: Ajustes;
+  /** Mensajes preparados para la comunidad de WhatsApp (solo panel) */
+  comunidad: MensajeComunidad[];
   /** Fotos del sitio cambiadas desde el panel (clave del lugar → foto) */
   fotos: Partial<Record<ClaveFoto, FotoEditada>>;
 }

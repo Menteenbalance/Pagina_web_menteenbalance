@@ -384,6 +384,7 @@ export const contenidoInicial: Contenido = {
   agenda,
   recurrentes: [],
   fotos: {},
+  comunidad: [],
   posts,
   ajustes,
 };
