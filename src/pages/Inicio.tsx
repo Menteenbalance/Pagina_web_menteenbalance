@@ -8,6 +8,7 @@ import FotoSitio from "../components/FotoSitio";
 import { Linea, Parrafos, Titulo } from "../components/Textos";
 import { formatearFecha, formatearPrecio, slug } from "../lib/formato";
 import { postsRecientes, proximasActividades, useContenido } from "../lib/contenido";
+import IconoServicio from "../components/IconoServicio";
 
 // fetchpriority en minúsculas: React 18 aún no reconoce la versión camelCase.
 const prioridadAlta = { fetchpriority: "high" } as Record<string, string>;
@@ -128,11 +129,7 @@ export default function Inicio() {
             {servicios.map((s, i) => (
               <Reveal key={s.title} delay={200 + i * 90}>
                 <Link to={`/servicios#${slug(s.title)}`} className="card">
-                  <span
-                    className="dot card__dot"
-                    style={{ background: s.dot }}
-                    aria-hidden="true"
-                  />
+                  <IconoServicio color={s.dot} className="icono-servicio card__dot" />
                   <h3 className="card__title">{s.title}</h3>
                   <p className="card__body">{s.body}</p>
                   <span className="card__meta">

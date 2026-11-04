@@ -679,8 +679,13 @@ img.post__thumb {
   transform: translateY(-3px);
 }
 .card__dot {
-  width: 34px;
-  height: 34px;
+  width: 46px;
+  height: 46px;
+}
+/* Ícono del servicio (figura del logo en su color) */
+.icono-servicio {
+  display: block;
+  flex: none;
 }
 .card__title {
   font-family: var(--serif);
@@ -1249,11 +1254,11 @@ img.post__thumb {
   display: flex;
   align-items: center;
   gap: 14px;
-  flex: 0 0 200px;
+  flex: 0 0 220px;
 }
 .servicio-row__dot {
-  width: 14px;
-  height: 14px;
+  width: 34px;
+  height: 34px;
 }
 .servicio-row__title {
   font-family: var(--serif);

@@ -2,13 +2,14 @@ import { useState } from "react";
 import type { GrupoTarifas, Servicio, Tarifa } from "../types";
 import { formatearPrecio } from "../lib/formato";
 import type { Guardar } from "./AdminApp";
+import IconoServicio from "../components/IconoServicio";
 import { BarraGuardar, BotonEliminar, Campo, mover, useBorrador } from "./ui";
 
 const COLORES = [
-  { valor: "var(--plum)", nombre: "Ciruela" },
+  { valor: "var(--plum)", nombre: "Rosa" },
   { valor: "var(--teal)", nombre: "Turquesa" },
-  { valor: "var(--amber)", nombre: "Ámbar" },
-  { valor: "var(--lime)", nombre: "Lima" },
+  { valor: "var(--amber)", nombre: "Durazno" },
+  { valor: "var(--lime)", nombre: "Amarillo" },
 ];
 
 export default function EditorServicios({
@@ -55,7 +56,7 @@ export default function EditorServicios({
         {s.borrador.map((sv, i) => (
           <li key={sv.id} className="a-item">
             <div className="a-item__head">
-              <span className="a-punto" style={{ background: sv.dot }} aria-hidden="true" />
+              <IconoServicio color={sv.dot} className="a-icono-servicio" />
               <h2 className="a-item__titulo">{sv.title || "Servicio sin nombre"}</h2>
               <div className="a-item__orden">
                 <button type="button" className="a-btn a-btn--icono" onClick={() => s.setBorrador(mover(s.borrador, i, -1))} disabled={i === 0} aria-label={`Subir ${sv.title}`}>↑</button>
@@ -73,11 +74,11 @@ export default function EditorServicios({
             </div>
 
             <fieldset className="a-colores">
-              <legend className="a-campo__label">Color</legend>
+              <legend className="a-campo__label">Ícono</legend>
               {COLORES.map((c) => (
                 <label key={c.valor} className="a-color">
                   <input type="radio" name={`color-${sv.id}`} checked={sv.dot === c.valor} onChange={() => editarServicio(i, { dot: c.valor })} />
-                  <span className="a-punto" style={{ background: c.valor }} aria-hidden="true" />
+                  <IconoServicio color={c.valor} className="a-icono-servicio a-icono-servicio--grande" />
                   {c.nombre}
                 </label>
               ))}

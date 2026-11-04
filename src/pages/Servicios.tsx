@@ -2,6 +2,7 @@ import { reservaUrl } from "../data";
 import { formatearPrecio, slug } from "../lib/formato";
 import { useContenido } from "../lib/contenido";
 import { Linea } from "../components/Textos";
+import IconoServicio from "../components/IconoServicio";
 
 // Página "Servicios": lista extendida de cada servicio + aranceles.
 export default function Servicios() {
@@ -25,11 +26,7 @@ export default function Servicios() {
             aria-labelledby={`${slug(s.title)}-titulo`}
           >
             <div className="servicio-row__head">
-              <span
-                className="dot servicio-row__dot"
-                style={{ background: s.dot }}
-                aria-hidden="true"
-              />
+              <IconoServicio color={s.dot} className="icono-servicio servicio-row__dot" />
               <h2 className="servicio-row__title" id={`${slug(s.title)}-titulo`}>
                 {s.title}
               </h2>
