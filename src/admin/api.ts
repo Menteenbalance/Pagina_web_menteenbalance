@@ -23,7 +23,14 @@ async function pedir<T>(url: string, init: RequestInit = {}): Promise<T> {
   }
   const data = await res.json().catch(() => ({}));
   if (!res.ok) {
-    throw new ErrorApi(res.status, data.error ?? "No se pudo completar la acción.");
+    // Errores que responde Vercel antes de llegar a la función (sin JSON)
+    const porEstado: Record<number, string> = {
+      413: "La foto pesa demasiado para subirla. Prueba con otra o recórtala.",
+      502: "El servidor no respondió bien. Inténtalo de nuevo en un momento.",
+      503: "El servicio no está disponible ahora. Inténtalo de nuevo en un momento.",
+      504: "Tardó demasiado en responder. Revisa tu conexión e inténtalo otra vez.",
+    };
+    throw new ErrorApi(res.status, data.error ?? porEstado[res.status] ?? `No se pudo completar la acción (error ${res.status}).`);
   }
   return data as T;
 }

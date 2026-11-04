@@ -8,6 +8,7 @@ import { useCallback, useEffect, useState } from "react";
 import { Link, NavLink, Navigate, Route, Routes, useLocation } from "react-router-dom";
 import type { Contenido } from "../types";
 import { api, ErrorApi, type Seccion } from "./api";
+import { marcarCambio } from "../lib/frescura";
 import { Avisos, type Aviso } from "./ui";
 import Login from "./Login";
 import EditorServicios from "./EditorServicios";
@@ -103,6 +104,7 @@ export default function AdminApp() {
   const guardar: Guardar = async (seccion, datos) => {
     try {
       const res = await api.guardar(seccion, datos);
+      marcarCambio();
       setContenido((c) => (c ? { ...c, [seccion]: res.datos } : c));
       setAviso({
         tipo: "ok",
@@ -125,6 +127,7 @@ export default function AdminApp() {
   async function restaurar(seccion: Seccion, fecha: string): Promise<boolean> {
     try {
       const res = await api.restaurar(seccion, fecha);
+      marcarCambio();
       setContenido((c) => (c ? { ...c, [seccion]: res.datos } : c));
       setRestauraciones((n) => n + 1);
       setAviso({ tipo: "ok", texto: "Versión restaurada. Si fue un error, puedes deshacerlo desde el mismo historial." });

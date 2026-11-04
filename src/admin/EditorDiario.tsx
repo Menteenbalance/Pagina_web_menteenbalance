@@ -256,7 +256,7 @@ function Formulario({ posts, guardar }: { posts: Post[]; guardar: Guardar }) {
               <span className="a-subir__ayuda">JPG, PNG o WebP. Se optimiza automáticamente.</span>
             </button>
           )}
-          <input ref={inputArchivo} type="file" accept="image/jpeg,image/png,image/webp" hidden onChange={(e) => elegirImagen(e.target.files?.[0])} />
+          <input ref={inputArchivo} type="file" accept="image/jpeg,image/png,image/webp,image/heic,image/heif" hidden onChange={(e) => elegirImagen(e.target.files?.[0])} />
           {subiendo && post.imagen && <p className="a-campo__ayuda">Subiendo foto…</p>}
           {errorImagen && <p className="a-campo__error" role="alert">{errorImagen}</p>}
         </div>

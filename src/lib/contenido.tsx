@@ -12,6 +12,7 @@ import type { Contenido } from "../types";
 import { hoyEnSantiago } from "./recurrentes";
 import { fotoDe, type ClaveFoto, type FotoVisible } from "./fotos";
 import { textoDe, type ClaveTexto } from "./textos";
+import { urlContenido } from "./frescura";
 import { seVeEnElSitio } from "./tiempo";
 
 interface Estado extends Contenido {
@@ -60,7 +61,7 @@ export function ContenidoProvider({ children }: { children: ReactNode }) {
 
     const cargar = () => {
       ultima = Date.now();
-      fetch("/api/content")
+      fetch(urlContenido())
         .then((r) => (r.ok ? r.json() : Promise.reject(r.status)))
         .then((c: Contenido) => {
           if (!vivo) return;
