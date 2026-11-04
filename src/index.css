@@ -2567,11 +2567,80 @@ img.hero__photo {
   }
 }
 
+/* --- Lianas de la portada (Inicio, hasta Servicios) --- */
+.inicio-arriba {
+  position: relative;
+}
+.lianas {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  overflow: hidden;
+  /* Se desvanecen antes del bloque de Servicios */
+  -webkit-mask-image: linear-gradient(to bottom, #000 0, #000 72%, transparent 98%);
+  mask-image: linear-gradient(to bottom, #000 0, #000 72%, transparent 98%);
+}
+.lianas__svg {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  /* Solo ocupa el espacio libre a los costados del contenido */
+  width: clamp(70px, calc((100vw - var(--maxw)) / 2 + 8px), 190px);
+}
+.lianas__svg--izquierda {
+  left: 0;
+}
+.lianas__svg--derecha {
+  right: 0;
+  transform: scaleX(-1);
+}
+.lianas__tallo {
+  fill: none;
+  stroke: #5e958a;
+  stroke-width: 2.2;
+  stroke-linecap: round;
+  opacity: 0.75;
+}
+.lianas__zarcillo {
+  fill: none;
+  stroke: #5e958a;
+  stroke-width: 1.3;
+  stroke-linecap: round;
+  opacity: 0.6;
+}
+.lianas__nervio {
+  stroke: rgba(42, 36, 48, 0.12);
+  stroke-width: 0.8;
+}
+.lianas__hebra {
+  opacity: 0.9;
+  transform-box: view-box;
+  animation: liana-mecer 11s ease-in-out infinite alternate;
+}
+@keyframes liana-mecer {
+  from {
+    transform: rotate(-1.1deg);
+  }
+  to {
+    transform: rotate(1.1deg);
+  }
+}
+/* Sin espacio libre a los lados (pantallas medianas y celular): no se muestran */
+@media (max-width: 1319px) {
+  .lianas {
+    display: none;
+  }
+}
+
 /* 6. ─── MOVIMIENTO REDUCIDO ──────────────────────────────────
    Va al final para imponerse sobre las animaciones definidas antes. */
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
+  }
+  .lianas__hebra {
+    animation: none;
   }
   .wa-flotante,
   .wa-flotante.is-visible {

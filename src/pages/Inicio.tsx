@@ -5,6 +5,7 @@ import InstagramModulo from "../components/InstagramModulo";
 import Resenas from "../components/Resenas";
 import { reservaUrl } from "../data";
 import FotoSitio from "../components/FotoSitio";
+import Lianas from "../components/Lianas";
 import { Linea, Parrafos, Titulo } from "../components/Textos";
 import { formatearFecha, formatearPrecio, slug } from "../lib/formato";
 import { postsRecientes, proximasActividades, useContenido } from "../lib/contenido";
@@ -27,6 +28,9 @@ export default function Inicio() {
 
   return (
     <>
+      {/* Desde la portada hasta antes de Servicios: lianas a los costados */}
+      <div className="inicio-arriba">
+      <Lianas />
       {/* Hero */}
       <section className="hero">
         <div className="hero__copy">
@@ -112,6 +116,8 @@ export default function Inicio() {
           </div>
         </section>
       </Reveal>
+
+      </div>
 
       {/* Servicios */}
       <section className="band band--plum">
