@@ -4,6 +4,8 @@
 // - Producción: Vercel Blob. Los stores nuevos se autentican con OIDC
 //   (BLOB_STORE_ID + token temporal que Vercel entrega solo); los antiguos,
 //   con BLOB_READ_WRITE_TOKEN. El SDK elige el método automáticamente.
+//   FOTOS_BLOB_STORE_ID (opcional, editable en Vercel) fuerza qué store usar,
+//   por si BLOB_STORE_ID quedó apuntando a otro store y Vercel no deja cambiarlo.
 // - Desarrollo sin Blob: public/uploads/ (ignorado por git).
 
 import { promises as fs } from "node:fs";
@@ -34,12 +36,14 @@ export async function POST(request: Request): Promise<Response> {
     const carpeta = new URL(request.url).searchParams.get("carpeta") === "fotos" ? "fotos" : "diario";
     const nombre = `${carpeta}/${Date.now()}-${crypto.randomUUID().slice(0, 8)}.${ext}`;
 
-    if (process.env.BLOB_STORE_ID || process.env.BLOB_READ_WRITE_TOKEN) {
+    const storeElegido = process.env.FOTOS_BLOB_STORE_ID?.trim() || undefined;
+    if (storeElegido || process.env.BLOB_STORE_ID || process.env.BLOB_READ_WRITE_TOKEN) {
       try {
         const blob = await put(nombre, Buffer.from(datos), {
           access: "public",
           contentType: tipo,
           addRandomSuffix: false,
+          ...(storeElegido && { storeId: storeElegido }),
         });
         return json(200, { url: blob.url });
       } catch (err) {
