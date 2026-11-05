@@ -32,8 +32,6 @@ export default function Privacidad() {
           <a href="#privacidad">Privacidad</a>
           <span aria-hidden="true">·</span>
           <a href="#aviso-legal">Aviso legal</a>
-          <span aria-hidden="true">·</span>
-          <a href="#urgencias">Urgencias</a>
         </nav>
       </header>
 
@@ -52,8 +50,8 @@ export default function Privacidad() {
         <ul>
           <li>
             <strong>Formulario de contacto.</strong> Lo que escribes no se envía ni se guarda en este sitio: tu
-            navegador arma el mensaje y abre WhatsApp. Solo si tú lo envías, Mari recibe tu nombre, tu número y tu
-            mensaje, que usa únicamente para responderte y coordinar una atención.
+            navegador arma el mensaje y abre WhatsApp. Solo si tú lo envías, se recibe tu nombre, tu número y tu
+            mensaje, que se usa únicamente para responderte y coordinar una atención.
           </li>
           <li>
             <strong>Estadísticas de visitas.</strong> Usamos Vercel Web Analytics para saber cuántas personas visitan
@@ -65,7 +63,7 @@ export default function Privacidad() {
             comunidad pueden ver tu número. Puedes salir cuando quieras.
           </li>
           <li>
-            <strong>Reseñas.</strong> Las reseñas que ves en el Inicio son públicas y provienen del perfil de Mari en
+            <strong>Reseñas.</strong> Las reseñas que ves en el inicio son públicas y provienen de mi perfil en
             Encuadrado, tal como las publicaron sus autores.
           </li>
         </ul>
@@ -79,8 +77,7 @@ export default function Privacidad() {
         <p>
           El sitio no usa cookies de publicidad ni de seguimiento, por eso no verás un aviso de cookies. Tu navegador
           guarda la lista de fotos actuales del sitio para que cargue más rápido; no contiene datos personales y se
-          borra al limpiar los datos de navegación. El panel de administración, que solo usa Mari, emplea una cookie
-          técnica para mantener la sesión iniciada.
+          borra al limpiar los datos de navegación.
         </p>
 
         <h3>Servicios externos</h3>
@@ -94,8 +91,7 @@ export default function Privacidad() {
         <p>
           Puedes pedir acceso a tus datos, su rectificación, su eliminación, oponerte a su tratamiento o solicitar su
           portabilidad, conforme a la Ley 19.628 y a la Ley 21.719 desde su entrada en vigencia. Escribe a <Correo />{" "}
-          o por WhatsApp y te responderé dentro de los plazos legales. Si no quedas conforme, puedes recurrir a la
-          autoridad de protección de datos personales.
+          o por WhatsApp y te responderé dentro de los plazos legales. 
         </p>
 
         <h2 id="aviso-legal" tabIndex={-1}>
@@ -107,10 +103,6 @@ export default function Privacidad() {
             herramientas de bienestar. No reemplazan una evaluación ni un tratamiento psicológico o médico.
           </li>
           <li>
-            <strong>Valores y horarios.</strong> Los aranceles y la agenda son referenciales y pueden cambiar. Se
-            confirman al momento de reservar.
-          </li>
-          <li>
             <strong>Propiedad intelectual.</strong> Los textos, fotografías, logo e ilustraciones pertenecen a Mente
             en Balance. Puedes compartirlos citando la fuente con un enlace; para otros usos, escríbeme.
           </li>
@@ -120,25 +112,7 @@ export default function Privacidad() {
           </li>
         </ul>
 
-        <h2 id="urgencias" tabIndex={-1}>
-          Si necesitas ayuda urgente
-        </h2>
-        <p>
-          Este sitio, el correo y WhatsApp no son canales de atención de urgencias. Si tú o alguien cercano está en
-          riesgo:
-        </p>
-        <ul>
-          {URGENCIAS.map((u) => (
-            <li key={u.numero}>
-              <a href={`tel:${u.tel}`}>
-                <strong>{u.numero}</strong>
-              </a>{" "}
-              {u.detalle}
-            </li>
-          ))}
-          <li>O acude al servicio de urgencia más cercano.</li>
-        </ul>
-
+       
         <p className="legal__volver">
           <Link to="/contacto" className="text-link">
             ¿Dudas? Escríbeme
