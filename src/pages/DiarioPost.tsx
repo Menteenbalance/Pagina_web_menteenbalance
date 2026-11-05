@@ -57,7 +57,7 @@ export default function DiarioPost() {
 
       <p className="articulo__aviso">
         Este texto es informativo y no reemplaza una atención psicológica.{" "}
-        <Link to="/privacidad#urgencias">Si necesitas ayuda urgente</Link>.
+        <Link to="/privacidad#aviso-legal">Aviso legal</Link>.
       </p>
 
       {otros.length > 0 && (

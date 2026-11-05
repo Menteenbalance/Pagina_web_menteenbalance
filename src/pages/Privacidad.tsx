@@ -7,7 +7,6 @@
 
 import { Link } from "react-router-dom";
 import { contacto } from "../data";
-import { URGENCIAS } from "../lib/urgencias";
 
 const ACTUALIZADA = { iso: "2026-11-05", texto: "5 de noviembre de 2026" };
 
