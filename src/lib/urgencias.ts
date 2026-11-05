@@ -1,5 +1,5 @@
-// Líneas de ayuda en Chile (gratuitas). Se usan en el pie, en Contacto y en
-// la página de privacidad. Revisar de vez en cuando que sigan vigentes.
+// Líneas de ayuda en Chile (gratuitas), usadas en la página de privacidad.
+// Revisar de vez en cuando que sigan vigentes.
 
 export const URGENCIAS = [
   { numero: "*4141", tel: "*4141", detalle: "Línea de prevención del suicidio, 24 horas, desde celulares." },

@@ -2904,28 +2904,17 @@ img.hero__photo {
   display: flex;
   gap: 20px;
 }
-.footer__legal a,
-.footer__urgencia a {
+.footer__legal a {
   color: rgba(251, 248, 242, 0.62);
   text-decoration: underline;
   text-decoration-color: rgba(251, 248, 242, 0.25);
   text-underline-offset: 3px;
 }
-.footer__legal a:hover,
-.footer__urgencia a:hover {
+.footer__legal a:hover {
   color: var(--amber);
 }
-.footer__urgencia {
-  flex-basis: 100%;
-  margin: 4px 0 0;
-  text-transform: none;
-  letter-spacing: 0.02em;
-  font-size: 12px;
-  line-height: 1.6;
-}
 @media (max-width: 640px) {
-  .footer__legal a,
-  .footer__urgencia a {
+  .footer__legal a {
     display: inline-block;
     padding: 6px 0;
   }
