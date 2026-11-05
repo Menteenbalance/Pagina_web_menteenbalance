@@ -8,6 +8,7 @@ import Servicios from "./pages/Servicios";
 import Agenda from "./pages/Agenda";
 import Diario from "./pages/Diario";
 import Contacto from "./pages/Contacto";
+import Privacidad from "./pages/Privacidad";
 import NoEncontrada from "./pages/NoEncontrada";
 import DiarioPost from "./pages/DiarioPost";
 import LimiteDeError from "./components/LimiteDeError";
@@ -28,6 +29,7 @@ const titulos: Record<string, string> = {
   "/agenda": `Agenda de clases y talleres | ${MARCA}`,
   "/diario": `Diario | ${MARCA}`,
   "/contacto": `Contacto | ${MARCA}`,
+  "/privacidad": `Privacidad y aviso legal | ${MARCA}`,
 };
 
 /**
@@ -134,6 +136,7 @@ function SitioPublico() {
           <Route path="/diario" element={<Diario />} />
           <Route path="/diario/:slug" element={<DiarioPost />} />
           <Route path="/contacto" element={<Contacto />} />
+          <Route path="/privacidad" element={<Privacidad />} />
           <Route path="*" element={<NoEncontrada />} />
         </Routes>
         </LimiteDeError>
