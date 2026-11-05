@@ -1,4 +1,17 @@
 {
+  "redirects": [
+    {
+      "source": "/(.*)",
+      "has": [
+        {
+          "type": "host",
+          "value": "^pagina-web-menteenbalance(?:-git-main|-[a-z0-9]+)?(?:-vicenteantonios-projects)?\\.vercel\\.app$"
+        }
+      ],
+      "destination": "https://menteenbalance.cl/$1",
+      "permanent": true
+    }
+  ],
   "headers": [
     {
       "source": "/(.*)",
@@ -44,6 +57,21 @@
     },
     {
       "source": "/api/(.*)",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        }
+      ]
+    },
+    {
+      "source": "/(.*)",
+      "missing": [
+        {
+          "type": "host",
+          "value": "menteenbalance.cl"
+        }
+      ],
       "headers": [
         {
           "key": "X-Robots-Tag",
