@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { nav, contacto } from "../data";
 import BrotesPie from "./BrotesPie";
+import { URGENCIAS } from "../lib/urgencias";
 
 // Pie de página con marca, navegación y datos de contacto.
 export default function Footer() {
@@ -62,7 +63,19 @@ export default function Footer() {
       </div>
 
       <div className="footer__meta">
-        <span translate="no">Mente en Balance | María Ignacia Canessa</span>
+        <span translate="no">
+          © {new Date().getFullYear()} Mente en Balance | María Ignacia Canessa
+        </span>
+        <nav className="footer__legal" aria-label="Información legal">
+          <Link to="/privacidad">Privacidad</Link>
+          <Link to="/privacidad#aviso-legal">Aviso legal</Link>
+        </nav>
+        <p className="footer__urgencia">
+          ¿Necesitas ayuda urgente? Llama al{" "}
+          <a href={`tel:${URGENCIAS[0].tel}`}>{URGENCIAS[0].numero}</a> o al{" "}
+          <a href={`tel:${URGENCIAS[1].tel}`}>{URGENCIAS[1].numero}</a>.{" "}
+          <Link to="/privacidad#urgencias">Más líneas de ayuda</Link>
+        </p>
       </div>
     </footer>
   );

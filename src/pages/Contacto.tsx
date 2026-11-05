@@ -1,5 +1,6 @@
 import { useRef, useState, type FormEvent } from "react";
 import { ChatCircleText } from "@phosphor-icons/react/dist/csr/ChatCircleText";
+import { Link } from "react-router-dom";
 import { contacto, enlaceWhatsApp } from "../data";
 
 const INTERESES = [
@@ -194,6 +195,10 @@ export default function Contacto() {
               <p className="form__nota">
                 ¿Prefieres escribir tú? <a href={enlaceWhatsApp()} target="_blank" rel="noopener noreferrer">Abre el chat directo</a>{" "}
                 ({contacto.whatsapp.replace(/^WhatsApp\s*/, "")}).
+              </p>
+              <p className="form__legal">
+                Este canal no atiende urgencias: si estás en riesgo, llama al <a href="tel:*4141">*4141</a> o al{" "}
+                <a href="tel:131">131</a>. Más detalles en <Link to="/privacidad">Privacidad</Link>.
               </p>
             </form>
           )}
