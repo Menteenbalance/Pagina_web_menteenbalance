@@ -2,6 +2,7 @@ import { Link, useSearchParams } from "react-router-dom";
 import { filtros, reservaUrl, type Filtro } from "../data";
 import { proximasActividades, useContenido } from "../lib/contenido";
 import { formatearFecha, formatearPrecio, slug } from "../lib/formato";
+import Brote from "../components/Brote";
 
 // Página "Agenda": tarjetas de clases con filtros por tipo.
 // El filtro queda en la URL (ej: /agenda?tipo=yoga) para poder compartirlo.
@@ -49,6 +50,7 @@ export default function Agenda() {
 
       {eventos.length === 0 ? (
         <div className="empty">
+          <Brote />
           <h2 className="empty__title">
             {filtro === "Todo"
               ? "Estoy preparando las próximas fechas"

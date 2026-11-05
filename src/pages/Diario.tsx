@@ -1,5 +1,6 @@
 import TarjetaPost from "../components/TarjetaPost";
 import { postsRecientes, useContenido } from "../lib/contenido";
+import Brote from "../components/Brote";
 
 // Página "Diario": todas las publicaciones, de la más nueva a la más antigua.
 export default function Diario() {
@@ -17,6 +18,7 @@ export default function Diario() {
 
       {lista.length === 0 && listo ? (
         <div className="empty">
+          <Brote />
           <h2 className="empty__title">Pronto publicaremos nuevas lecturas</h2>
           <p className="empty__text">
             Mientras tanto, puedes seguirnos en Instagram para prácticas y recordatorios.

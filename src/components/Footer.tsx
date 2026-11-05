@@ -1,10 +1,12 @@
 import { Link } from "react-router-dom";
 import { nav, contacto } from "../data";
+import BrotesPie from "./BrotesPie";
 
 // Pie de página con marca, navegación y datos de contacto.
 export default function Footer() {
   return (
     <footer className="footer">
+      <BrotesPie />
       <div className="footer__inner">
         <div>
           <div className="footer__brand">

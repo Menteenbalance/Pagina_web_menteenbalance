@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import FotoSitio from "../components/FotoSitio";
+import Brote from "../components/Brote";
 
 // Caminos útiles para seguir (idea de la 404 de Airbnb: nunca un callejón sin salida).
 const caminos = [
@@ -43,6 +44,7 @@ export default function NoEncontrada({ contexto = "general" }: Props) {
   return (
     <div className="nf">
       <div className="nf__copy">
+        <Brote className="brote--nf" />
         <p className="nf__codigo">Error 404</p>
         <h1 className="nf__titulo">
           {esDiario ? "Esta publicación no está disponible" : "Esta página no existe"}

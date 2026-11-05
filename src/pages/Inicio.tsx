@@ -6,6 +6,7 @@ import Resenas from "../components/Resenas";
 import { reservaUrl } from "../data";
 import FotoSitio from "../components/FotoSitio";
 import Lianas from "../components/Lianas";
+import Brote from "../components/Brote";
 import { Linea, Parrafos, Titulo } from "../components/Textos";
 import { formatearFecha, formatearPrecio, slug } from "../lib/formato";
 import { postsRecientes, proximasActividades, useContenido } from "../lib/contenido";
@@ -161,6 +162,7 @@ export default function Inicio() {
         </Reveal>
         {agendaCorta.length === 0 && (
           <p className="agenda-vacia">
+            <Brote className="brote--linea" />
             Estoy preparando las próximas fechas.{" "}
             <Link to="/contacto">Escríbeme</Link> y te aviso cuando abra cupos.
           </p>
@@ -211,6 +213,8 @@ export default function Inicio() {
       {/* Cita destacada */}
       <Reveal>
         <section className="quote">
+          {/* Luz que respira: 4 s inhalar, 6 s exhalar */}
+          <div className="quote__respira" aria-hidden="true" />
           <div className="quote__inner">
             <p className="quote__text">
               <Linea clave="inicio-cita" />

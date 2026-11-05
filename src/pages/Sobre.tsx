@@ -47,6 +47,24 @@ export default function Sobre() {
             {PASOS.map((n, i) => (
               <Reveal key={n} delay={i * 110}>
                 <li className="db-paso">
+                  {/* Tallo que crece de un paso al siguiente; en cada paso se abre una hoja */}
+                  <span className="db-paso__tallo" aria-hidden="true">
+                    <svg viewBox="0 0 100 16" preserveAspectRatio="none" focusable="false">
+                      <path d="M0 8 C20 3 34 13 52 8 S84 4 100 8" pathLength="1" vectorEffect="non-scaling-stroke" />
+                    </svg>
+                    <svg className="db-paso__hoja" viewBox="0 0 30 30" focusable="false">
+                      <path d="M15 22 C10 18 4 18 1 11 C8 9 13 13 15 22 Z" fill="#83c6bf" />
+                      <path d="M15 22 C17 14 22 9 29 9 C27 16 21 19 15 22 Z" fill="#c8d97f" />
+                    </svg>
+                    {n === 4 && (
+                      <svg className="db-paso__flor" viewBox="0 0 20 20" focusable="false">
+                        {[0, 72, 144, 216, 288].map((a) => (
+                          <ellipse key={a} cx="10" cy="5" rx="3" ry="4.6" fill="#c696b0" transform={`rotate(${a} 10 10)`} />
+                        ))}
+                        <circle cx="10" cy="10" r="2.4" fill="#f8ce9a" />
+                      </svg>
+                    )}
+                  </span>
                   <span className="db-paso__verbo">
                     <Linea clave={`sobre-paso-${n}-verbo`} />
                   </span>
