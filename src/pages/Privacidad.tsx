@@ -82,7 +82,7 @@ export default function Privacidad() {
         <h3>Servicios externos</h3>
         <p>
           El sitio está alojado en Vercel (Estados Unidos), que registra datos técnicos de cada visita, como la
-          dirección IP, por seguridad y por un tiempo limitado. Las tipografías se cargan desde Google Fonts. Los
+          dirección IP, por seguridad y por un tiempo limitado. Las tipografías se sirven desde el mismo sitio. Los
           enlaces a WhatsApp, Instagram y Encuadrado te llevan a servicios con sus propias políticas de privacidad.
         </p>
 

@@ -9,9 +9,11 @@
     <link rel="icon" href="/favicon.ico" sizes="32x32" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Prata&family=Montserrat:wght@400;500&family=IBM+Plex+Mono&display=swap" rel="stylesheet" />
+    <style>
+      @font-face { font-family: "Prata"; font-style: normal; font-weight: 400; font-display: swap; src: url("/fonts/prata-400.woff2") format("woff2"); }
+      @font-face { font-family: "Montserrat"; font-style: normal; font-weight: 100 900; font-display: swap; src: url("/fonts/montserrat-variable.woff2") format("woff2"); }
+      @font-face { font-family: "IBM Plex Mono"; font-style: normal; font-weight: 400; font-display: swap; src: url("/fonts/ibm-plex-mono-400.woff2") format("woff2"); }
+    </style>
     <!--
       Respaldo estático: Vercel lo muestra solo si una dirección no llega a
       la aplicación (la vista 404 normal vive en src/pages/NoEncontrada.tsx).
