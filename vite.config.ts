@@ -7,10 +7,10 @@ import { resolverUrlDelSitio } from "./api/_lib/config";
 /**
  * En desarrollo (`npm run dev`) sirve las funciones de /api con el mismo
  * código que usa Vercel en producción:
- *   /api/contact        → api/contact.ts
+ *   /api/content        → api/content.ts
  *   /api/admin/session  → api/admin/session.ts   (etc.)
- * Sin Upstash ni Resend configurados, todo funciona en modo local:
- * el contenido se guarda en .data/ y los correos se muestran en consola.
+ * Sin Upstash ni Blob configurados, todo funciona en modo local:
+ * el contenido se guarda en .data/ y las fotos en public/uploads/.
  */
 function apiLocal(): Plugin {
   return {
