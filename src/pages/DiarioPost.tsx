@@ -4,6 +4,7 @@ import { useContenido } from "../lib/contenido";
 import { formatearFecha } from "../lib/formato";
 import { TextoConFormato, minutosDeLectura } from "../lib/texto";
 import NoEncontrada from "./NoEncontrada";
+import { SITE_URL, url } from "../config";
 
 // Página de una publicación del Diario: /diario/:slug
 export default function DiarioPost() {
@@ -12,7 +13,29 @@ export default function DiarioPost() {
   const post = posts.find((p) => p.slug === slug);
 
   useEffect(() => {
-    if (post) document.title = `${post.titulo} | Diario | Mente en Balance`;
+    if (!post) return;
+    document.title = `${post.titulo} | Diario | Mente en Balance`;
+
+    // Datos estructurados del artículo para Google (se quitan al salir)
+    const imagen = post.imagen ? (/^https?:/.test(post.imagen) ? post.imagen : url(post.imagen)) : undefined;
+    const fecha = (post.publicarEl ?? post.fecha).slice(0, 10);
+    const ld = document.createElement("script");
+    ld.type = "application/ld+json";
+    ld.textContent = JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "BlogPosting",
+      headline: post.titulo.slice(0, 110),
+      description: post.bajada,
+      ...(imagen && { image: [imagen] }),
+      datePublished: fecha,
+      inLanguage: "es-CL",
+      articleSection: post.cat,
+      mainEntityOfPage: url(`/diario/${post.slug}`),
+      author: { "@id": `${SITE_URL}/#mari`, "@type": "Person", name: "María Ignacia Canessa" },
+      publisher: { "@id": `${SITE_URL}/#negocio` },
+    });
+    document.head.appendChild(ld);
+    return () => ld.remove();
   }, [post]);
 
   if (!post) {

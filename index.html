@@ -39,6 +39,70 @@
     <meta name="twitter:image" content="%VITE_SITE_URL%/og/portada.jpg" />
     <link rel="canonical" href="%VITE_SITE_URL%/" />
     <meta name="theme-color" content="#fbf8f2" />
+    <!-- Datos estructurados para Google (ficha del negocio y de Mari).
+         Las publicaciones del Diario agregan el suyo (src/pages/DiarioPost.tsx). -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebSite",
+            "@id": "%VITE_SITE_URL%/#sitio",
+            "url": "%VITE_SITE_URL%/",
+            "name": "Mente en Balance",
+            "inLanguage": "es-CL",
+            "publisher": { "@id": "%VITE_SITE_URL%/#negocio" }
+          },
+          {
+            "@type": "ProfessionalService",
+            "@id": "%VITE_SITE_URL%/#negocio",
+            "name": "Mente en Balance",
+            "description": "Psicología, yoga y mindfulness en Santiago con María Ignacia Canessa, psicóloga clínica y profesora de yoga. Sesiones presenciales y online.",
+            "url": "%VITE_SITE_URL%/",
+            "logo": "%VITE_SITE_URL%/icon-512.png",
+            "image": "%VITE_SITE_URL%/og/portada.jpg",
+            "telephone": "+56943549436",
+            "email": "ignaciacanessa@menteenbalance.com",
+            "address": {
+              "@type": "PostalAddress",
+              "streetAddress": "Mariano Sánchez Fontecilla 584 (Casa Lunay)",
+              "addressLocality": "Las Condes",
+              "addressRegion": "Región Metropolitana",
+              "addressCountry": "CL"
+            },
+            "areaServed": [
+              { "@type": "City", "name": "Santiago" },
+              { "@type": "Country", "name": "Chile" }
+            ],
+            "founder": { "@id": "%VITE_SITE_URL%/#mari" },
+            "sameAs": [
+              "https://www.instagram.com/menteenbalance.cl/",
+              "https://encuadrado.com/p/maria-ignacia-canessa"
+            ],
+            "hasOfferCatalog": {
+              "@type": "OfferCatalog",
+              "name": "Servicios",
+              "url": "%VITE_SITE_URL%/servicios",
+              "itemListElement": [
+                { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Psicoterapia individual" } },
+                { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Vinyasa Yoga y Meditación" } },
+                { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Encuentros, talleres y experiencias" } },
+                { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Bienestar para organizaciones" } }
+              ]
+            }
+          },
+          {
+            "@type": "Person",
+            "@id": "%VITE_SITE_URL%/#mari",
+            "name": "María Ignacia Canessa",
+            "jobTitle": "Psicóloga clínica y profesora de yoga",
+            "url": "%VITE_SITE_URL%/detras-de-mente-en-balance",
+            "worksFor": { "@id": "%VITE_SITE_URL%/#negocio" },
+            "sameAs": ["https://encuadrado.com/p/maria-ignacia-canessa"]
+          }
+        ]
+      }
+    </script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
