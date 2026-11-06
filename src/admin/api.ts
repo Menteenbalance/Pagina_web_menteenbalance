@@ -47,20 +47,6 @@ export const api = {
 
   salir: () => pedir<{ ok: true }>("/api/admin/session", { method: "DELETE" }),
 
-  recuperar: (email: string) =>
-    pedir<{ ok: true }>("/api/admin/recuperar", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email }),
-    }),
-
-  nuevaClave: (token: string, clave: string) =>
-    pedir<{ ok: true }>("/api/admin/recuperar", {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ token, clave }),
-    }),
-
   contenido: () => pedir<Contenido>("/api/admin/content"),
 
   guardar: <T>(seccion: Seccion, datos: T) =>

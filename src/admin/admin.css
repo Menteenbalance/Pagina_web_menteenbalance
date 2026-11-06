@@ -1536,18 +1536,3 @@
 .a-respaldos__confirmar p {
   margin: 0 0 8px;
 }
-
-/* Recuperar contraseña */
-.a-login__enlace {
-  display: block;
-  margin: 4px auto 0;
-  padding: 10px 6px;
-  background: none;
-  border: 0;
-  font: inherit;
-  font-size: 14px;
-  color: var(--a-turquesa, #067a7a);
-  text-decoration: underline;
-  text-underline-offset: 3px;
-  cursor: pointer;
-}

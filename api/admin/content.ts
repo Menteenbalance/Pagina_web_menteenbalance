@@ -12,7 +12,7 @@ const SIN_CACHE = { "Cache-Control": "no-store" };
 
 export async function GET(request: Request): Promise<Response> {
   try {
-    await exigirAdmin(request);
+    exigirAdmin(request);
     return json(200, await leerContenido(), SIN_CACHE);
   } catch (err) {
     return responderError(err);
@@ -21,7 +21,7 @@ export async function GET(request: Request): Promise<Response> {
 
 export async function PUT(request: Request): Promise<Response> {
   try {
-    const email = await exigirAdmin(request);
+    const email = exigirAdmin(request);
     const body = (await request.json().catch(() => null)) as {
       seccion?: unknown;
       datos?: unknown;

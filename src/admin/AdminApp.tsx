@@ -20,7 +20,6 @@ import EditorComunidad from "./EditorComunidad";
 import EditorTextos from "./EditorTextos";
 import Historial, { type SeccionHistorial } from "./Historial";
 import Respaldos from "./Respaldos";
-import NuevaClave from "./NuevaClave";
 import "./admin.css";
 
 type Fase = "cargando" | "login" | "dentro";
@@ -153,15 +152,6 @@ export default function AdminApp() {
   }
 
   const cerrarAviso = useCallback(() => setAviso(null), []);
-
-  // Enlace del correo de recuperación: se muestra sin pedir sesión
-  if (pathname === "/admin/nueva-clave") {
-    return (
-      <div className="admin admin--centro">
-        <NuevaClave />
-      </div>
-    );
-  }
 
   if (fase === "cargando") {
     return (

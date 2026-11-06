@@ -23,7 +23,7 @@ const MAX_BYTES = 4 * 1024 * 1024; // límite de Vercel: 4,5 MB por petición
 
 export async function POST(request: Request): Promise<Response> {
   try {
-    await exigirAdmin(request);
+    exigirAdmin(request);
 
     const tipo = (request.headers.get("content-type") ?? "").split(";")[0].trim();
     const ext = TIPOS[tipo];
