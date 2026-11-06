@@ -424,20 +424,37 @@ main {
   }
 }
 @media (max-width: 480px) {
+  /* Logo, Reservar y menú caben en una sola línea desde 360 px (iPhone: 390 px) */
   .header__inner {
     padding: 10px 16px;
-    gap: 8px;
+    gap: 6px;
   }
   .brand {
-    gap: 10px;
+    gap: 8px;
+    min-width: 0;
   }
   .header__cta {
-    padding: 11px 16px;
+    padding: 11px 14px;
+    flex-shrink: 0;
+  }
+  .menu-toggle {
+    flex-shrink: 0;
   }
 }
 @media (max-width: 380px) {
   .brand__tag {
     display: none;
+  }
+  .brand__logo {
+    width: 28px;
+    height: 28px;
+  }
+  .brand__title {
+    font-size: 15px;
+  }
+  .header__inner {
+    padding-left: 12px;
+    padding-right: 12px;
   }
 }
 
@@ -502,7 +519,7 @@ main {
   font-size: 11px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: rgba(251, 248, 242, 0.4);
+  color: rgba(251, 248, 242, 0.62); /* 6:1 sobre la tinta */
 }
 
 /* 5. ─── ESTILOS POR PÁGINA ────────────────────────────────── */
@@ -2977,4 +2994,42 @@ img.hero__photo {
 }
 .legal__volver {
   margin-top: 48px !important;
+}
+
+/* ─── Detalles de la auditoría (E3 y E4) ─── */
+/* Enlaces dentro de un párrafo: subrayados, no solo por color */
+.agenda-vacia a {
+  color: var(--teal-text);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+/* Selector nativo legible también con el modo oscuro de Windows */
+.select {
+  background-color: var(--cream);
+  color: var(--ink);
+  color-scheme: light;
+}
+.select option {
+  background-color: #fff;
+  color: var(--ink);
+}
+/* Toques en celular: sin retraso de doble toque ni destello gris */
+a,
+button,
+summary,
+label,
+input[type="radio"],
+input[type="checkbox"],
+.select {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+/* …y una respuesta visible al tocar, en lugar del destello */
+.btn:active {
+  transform: scale(0.98);
+}
+.text-link:active,
+.footer__link:active,
+.nav__link:active {
+  opacity: 0.7;
 }
