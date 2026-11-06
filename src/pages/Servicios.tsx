@@ -1,8 +1,30 @@
-import { reservaUrl } from "../data";
+import { contacto, reservaUrl } from "../data";
 import { formatearPrecio, slug } from "../lib/formato";
 import { useContenido } from "../lib/contenido";
 import { Linea } from "../components/Textos";
 import IconoServicio from "../components/IconoServicio";
+
+/** Servicio que se consulta por correo en vez de reservar en Encuadrado
+ *  (por su id original o, si Mari lo volvió a crear, por su nombre). */
+const porCorreo = (s: { id: string; title: string }) =>
+  s.id === "bienestar-para-organizaciones" || /organizaciones/i.test(s.title);
+
+/** Correo listo para escribir a Mari sobre el programa para organizaciones. */
+function correoOrganizaciones(titulo: string): string {
+  const asunto = `Consulta: ${titulo}`;
+  const cuerpo = [
+    "Hola Mari,",
+    "",
+    `Te escribo desde la página de Mente en Balance porque me interesa el programa de ${titulo.toLowerCase()}.`,
+    "",
+    "Organización:",
+    "Cantidad aproximada de personas:",
+    "Qué nos gustaría trabajar:",
+    "",
+    "Saludos,",
+  ].join("\n");
+  return `mailto:${contacto.email}?subject=${encodeURIComponent(asunto)}&body=${encodeURIComponent(cuerpo)}`;
+}
 
 // Página "Servicios": lista extendida de cada servicio + aranceles.
 export default function Servicios() {
@@ -34,15 +56,25 @@ export default function Servicios() {
             <p className="servicio-row__desc">{s.largo}</p>
             <div className="servicio-row__aside">
               <span className="servicio-row__meta">{s.meta}</span>
-              <a
-                href={reservaUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn btn--outline btn--outline-plum btn--sm"
-                aria-label={`Consultar por ${s.title} (se abre en una pestaña nueva)`}
-              >
-                Consultar
-              </a>
+              {porCorreo(s) ? (
+                <a
+                  href={correoOrganizaciones(s.title)}
+                  className="btn btn--outline btn--outline-plum btn--sm"
+                  aria-label={`Consultar por ${s.title} por correo a ${contacto.email}`}
+                >
+                  Consultar
+                </a>
+              ) : (
+                <a
+                  href={reservaUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn btn--outline btn--outline-plum btn--sm"
+                  aria-label={`Consultar por ${s.title} (se abre en una pestaña nueva)`}
+                >
+                  Consultar
+                </a>
+              )}
             </div>
           </section>
         ))}
