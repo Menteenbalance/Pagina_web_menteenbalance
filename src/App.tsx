@@ -14,23 +14,16 @@ import DiarioPost from "./pages/DiarioPost";
 import LimiteDeError from "./components/LimiteDeError";
 import BotonWhatsApp from "./components/BotonWhatsApp";
 import { url } from "./config";
+import { MARCA, PAGINAS } from "./lib/paginas";
 import { ContenidoProvider } from "./lib/contenido";
 
 // El panel de administración se descarga solo al entrar a /admin
 const AdminApp = lazy(() => import("./admin/AdminApp"));
 
-const MARCA = "Mente en Balance";
-
-// Título de la pestaña del navegador según la página.
-const titulos: Record<string, string> = {
-  "/": `${MARCA} | Psicología & Yoga en Santiago`,
-  "/detras-de-mente-en-balance": `Detrás de Mente en Balance | ${MARCA}`,
-  "/servicios": `Servicios y aranceles | ${MARCA}`,
-  "/agenda": `Agenda de clases y talleres | ${MARCA}`,
-  "/diario": `Diario | ${MARCA}`,
-  "/contacto": `Contacto | ${MARCA}`,
-  "/privacidad": `Privacidad y aviso legal | ${MARCA}`,
-};
+// Título de la pestaña del navegador según la página (src/lib/paginas.ts)
+const titulos: Record<string, string> = Object.fromEntries(
+  Object.entries(PAGINAS).map(([ruta, p]) => [ruta, p.titulo])
+);
 
 /**
  * Dirección "oficial" de la página para Google (evita duplicados por
