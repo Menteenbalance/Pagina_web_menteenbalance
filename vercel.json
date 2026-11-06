@@ -86,6 +86,17 @@
       "destination": "/api/sitemap"
     },
     {
+      "source": "/((?!api/|admin).*)",
+      "has": [
+        {
+          "type": "header",
+          "key": "user-agent",
+          "value": ".*(WhatsApp|facebookexternalhit|Facebot|meta-externalagent|Twitterbot|LinkedInBot|Slackbot|TelegramBot|Discordbot|Pinterest|SkypeUriPreview|redditbot|Embedly|Iframely|vkShare|Googlebot|Google-InspectionTool|Storebot-Google|bingbot|Applebot|DuckDuckBot|YandexBot).*"
+        }
+      ],
+      "destination": "/api/pagina?ruta=/$1"
+    },
+    {
       "source": "/api/:ruta*",
       "destination": "/api/no-encontrada"
     },
