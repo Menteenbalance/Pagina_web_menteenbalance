@@ -10,7 +10,7 @@
 
 /* 1. ─── VARIABLES DE MARCA ─────────────────────────────────── */
 :root {
-  --cream: #fbf8f2; /* fondo principal */
+  --cream: #eaf4fa; /* fondo principal (prueba: celeste claro; antes #fbf8f2) */
   --ink: #2a2430; /* texto oscuro */
   --muted: #5b5360; /* texto secundario */
   --faint: #736a62; /* texto tenue / placeholders (5:1 sobre crema) */
@@ -261,7 +261,7 @@ main {
   position: sticky;
   top: 0;
   z-index: 50;
-  background: rgba(251, 248, 242, 0.88);
+  background: rgba(234, 244, 250, 0.88);
   backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--line-soft);
 }
