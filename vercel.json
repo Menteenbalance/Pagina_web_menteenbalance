@@ -82,6 +82,10 @@
   ],
   "rewrites": [
     {
+      "source": "/sitemap.xml",
+      "destination": "/api/sitemap"
+    },
+    {
       "source": "/api/:ruta*",
       "destination": "/api/no-encontrada"
     },

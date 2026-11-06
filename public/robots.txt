@@ -1,0 +1,7 @@
+# Mente en Balance: todo el sitio es público salvo el panel y la API.
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /api/
+
+Sitemap: https://menteenbalance.cl/sitemap.xml

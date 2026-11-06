@@ -27,6 +27,12 @@ function apiLocal(): Plugin {
         createReadStream(archivo).pipe(res);
       });
 
+      // Igual que el rewrite de vercel.json: /sitemap.xml lo genera api/sitemap.ts
+      server.middlewares.use((req, _res, next) => {
+        if ((req.url ?? "").split("?")[0] === "/sitemap.xml") req.url = "/api/sitemap";
+        next();
+      });
+
       server.middlewares.use("/api", async (req, res) => {
         const ruta = (req.url ?? "/").split("?")[0].replace(/\/+$/, "");
         const archivo = path.join(server.config.root, "api", `${ruta}.ts`);
