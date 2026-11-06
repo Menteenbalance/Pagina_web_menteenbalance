@@ -65,28 +65,6 @@ El formulario de `/contacto` pide nombre, interés, modalidad (opcional) y mensa
 
 El número y el mensaje de saludo se cambian en `contacto` de `src/data.ts`.
 
-### Envío por correo (desactivado)
-
-El envío por correo con Resend (`api/contact.ts`) sigue en el código, pero el formulario ya no lo usa. Sirve de base si más adelante se quiere guardar una copia de los mensajes en el panel o volver al correo.
-
-**Protecciones incluidas**
-
-- **Rate limit por visitante**, guardado en Upstash Redis:
-  - Por navegador (ID anónimo en `localStorage`): 3 envíos cada 10 min y 8 por día.
-  - Por IP (guardada anonimizada con SHA-256): 5 cada 10 min y 15 por día.
-  - Tope global: 150 mensajes por día.
-- **Anti-bots:** un campo trampa invisible y un tiempo mínimo de 3 s para llenar el formulario. Los bots reciben un "ok" falso y no se envía nada.
-- **Validación** en el servidor, con errores que aparecen junto a cada campo.
-
-**Configuración (una sola vez)**
-
-1. En Resend, crea una cuenta, verifica el dominio `menteenbalance.com` (registros DNS) y copia la API key.
-2. En Vercel, entra a **Storage → Upstash Redis** y conéctalo al proyecto. Esto crea `KV_REST_API_URL` y `KV_REST_API_TOKEN` automáticamente.
-3. En Vercel, entra a **Settings → Environment Variables** y agrega `RESEND_API_KEY`, `CONTACT_TO_EMAIL`, `CONTACT_FROM_EMAIL` y `RATE_LIMIT_SALT`. Ver `.env.example`.
-4. Vuelve a desplegar el sitio.
-
-**En desarrollo:** con `npm run dev` el formulario funciona localmente. Sin `RESEND_API_KEY` en `.env.local`, el correo no se envía y se muestra en la consola.
-
 ## Panel de administración (/admin)
 
 La administradora entra en **`/admin`** con su correo y contraseña. Desde ahí edita, sin tocar código:
@@ -106,6 +84,8 @@ Los cambios se ven en el sitio en menos de un minuto.
 **Publicaciones programadas:** no usan tareas programadas. `/api/content` filtra al momento de leer (`src/lib/tiempo.ts`, hora de Santiago), así que la publicación aparece en el sitio en cuanto llega su hora (hasta ~30 s por la caché).
 
 **Historial y deshacer:** cada pestaña tiene un botón **Historial**. Cada vez que se guarda, la versión anterior queda ahí (las últimas 15 por sección, con fecha y quién hizo el cambio). Cada versión explica qué pasaría al restaurarla ("Vuelve…", "Se quita…", "Cambia…") y se recupera con dos clics. Restaurar también queda en el historial, así que se puede deshacer. En Redis se guarda en `meb:historial:<sección>`; en local, en `.data/historial/`.
+
+**Respaldos** (botón arriba a la derecha, `/admin/respaldos`): cada lunes de madrugada (07:17 UTC: 04:17 en Chile en horario de verano, 03:17 en invierno; `vercel.json → crons`) `api/cron/respaldo.ts` guarda en Vercel Blob (`respaldos/`, dirección con sufijo aleatorio) un JSON con todas las secciones editadas; se conservan las últimas 12. Desde el panel se puede descargar una copia en el momento, descargar las automáticas y **restaurar** desde un archivo: se validan todas las secciones antes de cambiar nada y cada una queda en su Historial, así que se puede deshacer. Requiere la variable `CRON_SECRET` en Vercel (sin ella el respaldo automático no corre; la descarga manual sí funciona). En local se guardan en `.data/respaldos/` (prueba: `curl -H "Authorization: Bearer <CRON_SECRET>" localhost:5175/api/cron/respaldo`).
 
 **Cómo funciona**
 

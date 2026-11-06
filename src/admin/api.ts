@@ -73,3 +73,19 @@ export const api = {
       body: archivo,
     }),
 };
+
+export interface RespaldoGuardado {
+  fecha: string;
+  url: string;
+  bytes: number;
+}
+
+export const apiRespaldo = {
+  lista: () => pedir<{ respaldos: RespaldoGuardado[] }>("/api/admin/respaldo?lista=1"),
+  restaurar: (respaldo: unknown) =>
+    pedir<{ ok: true; restauradas: Seccion[] }>("/api/admin/respaldo", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ respaldo }),
+    }),
+};

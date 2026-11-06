@@ -19,6 +19,7 @@ import EditorFotos from "./EditorFotos";
 import EditorComunidad from "./EditorComunidad";
 import EditorTextos from "./EditorTextos";
 import Historial, { type SeccionHistorial } from "./Historial";
+import Respaldos from "./Respaldos";
 import "./admin.css";
 
 type Fase = "cargando" | "login" | "dentro";
@@ -192,6 +193,9 @@ export default function AdminApp() {
             <a href="/" target="_blank" rel="noopener noreferrer" className="a-btn a-btn--ghost">
               Ver sitio
             </a>
+            <Link to="/admin/respaldos" className="a-btn a-btn--ghost">
+              Respaldos
+            </Link>
             <button type="button" className="a-btn a-btn--ghost" onClick={salir}>
               Cerrar sesión
             </button>
@@ -245,6 +249,7 @@ export default function AdminApp() {
             element={<EditorTextos textos={contenido.textos ?? {}} formacion={contenido.formacion ?? []} guardar={guardar} />}
           />
           <Route path="comunidad/*" element={<EditorComunidad mensajes={contenido.comunidad ?? []} guardar={guardar} />} />
+          <Route path="respaldos" element={<Respaldos />} />
           <Route path="*" element={<Navigate to="servicios" replace />} />
         </Routes>
       </main>

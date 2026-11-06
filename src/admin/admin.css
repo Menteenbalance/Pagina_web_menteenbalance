@@ -1501,3 +1501,38 @@
     margin-bottom: 6px;
   }
 }
+
+/* Respaldos */
+.a-respaldos {
+  list-style: none;
+  margin: 8px 0 0;
+  padding: 0;
+}
+.a-respaldos__item {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 16px;
+  padding: 10px 0;
+  border-top: 1px solid var(--a-borde, rgba(42, 36, 48, 0.1));
+}
+.a-respaldos__fecha {
+  flex: 1 1 260px;
+}
+.a-respaldos__fecha::first-letter {
+  text-transform: uppercase;
+}
+.a-respaldos__peso {
+  color: var(--a-tenue, #736a62);
+  font-size: 14px;
+}
+.a-respaldos__confirmar {
+  margin-top: 14px;
+  padding: 14px 16px;
+  border-radius: 12px;
+  background: #fff7f2;
+  border: 1px solid rgba(133, 43, 91, 0.25);
+}
+.a-respaldos__confirmar p {
+  margin: 0 0 8px;
+}
