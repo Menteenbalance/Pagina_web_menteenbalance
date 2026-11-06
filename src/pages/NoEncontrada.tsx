@@ -92,6 +92,7 @@ export default function NoEncontrada({ contexto = "general" }: Props) {
           clave="error-404"
           decorativa
           className="nf__foto"
+          sizes="(max-width: 600px) 86vw, 400px"
           width={738}
           height={1600}
           loading="lazy"

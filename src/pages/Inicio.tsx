@@ -62,6 +62,7 @@ export default function Inicio() {
           <FotoSitio
             clave="inicio-portada"
             className="hero__photo"
+            sizes="(max-width: 600px) 86vw, 496px"
             width={1000}
             height={1333}
             decoding="async"
@@ -92,6 +93,7 @@ export default function Inicio() {
             <FotoSitio
               clave="inicio-sobre"
               className="portrait__img"
+              sizes="(max-width: 600px) 86vw, (max-width: 900px) 712px, 530px"
               width={1000}
               height={1333}
               loading="lazy"

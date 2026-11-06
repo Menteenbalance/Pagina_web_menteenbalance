@@ -2,6 +2,10 @@ import { Link } from "react-router-dom";
 import type { Post } from "../types";
 import FotoSitio from "./FotoSitio";
 import type { ClaveFoto } from "../lib/fotos";
+import { srcsetDe } from "../lib/srcset";
+
+/** Ancho con que se muestra la tarjeta (para elegir la versión de la foto) */
+const TAMANO = "(max-width: 600px) 86vw, 360px";
 
 // Fotos de ambiente para publicaciones sin imagen propia (se cambian
 // desde el panel, pestaña Fotos).
@@ -16,11 +20,17 @@ export default function TarjetaPost({
   post,
   indice,
   titulo: Titulo = "h3",
+  prioritaria = false,
 }: {
   post: Post;
   indice: number;
   titulo?: "h2" | "h3";
+  /** true = se ve al abrir la página: se carga de inmediato (no diferida) */
+  prioritaria?: boolean;
 }) {
+  const carga = prioritaria
+    ? ({ loading: "eager", fetchPriority: "high" } as const)
+    : ({ loading: "lazy" } as const);
   // Si la tarjeta es un enlace, el título ya lo nombra: la foto es decorativa
   // (así el lector de pantalla no repite). En tarjetas informativas sí se
   // describe la foto propia; las de ambiente son siempre decorativas.
@@ -32,10 +42,12 @@ export default function TarjetaPost({
         <img
           className="post__thumb"
           src={post.imagen}
+          srcSet={srcsetDe(post.imagen)}
+          sizes={TAMANO}
           alt={alt}
           width={960}
           height={720}
-          loading="lazy"
+          {...carga}
           decoding="async"
         />
       ) : (
@@ -43,9 +55,10 @@ export default function TarjetaPost({
           clave={respaldo[indice % respaldo.length]}
           decorativa
           className="post__thumb"
+          sizes={TAMANO}
           width={960}
           height={720}
-          loading="lazy"
+          {...carga}
           decoding="async"
         />
       )}

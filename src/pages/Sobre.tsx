@@ -87,6 +87,7 @@ export default function Sobre() {
           <FotoSitio
             clave="sobre-retrato"
             className="db-persona__foto"
+            sizes="(max-width: 600px) 86vw, 438px"
             width={714}
             height={984}
             loading="lazy"
@@ -150,6 +151,7 @@ export default function Sobre() {
         <FotoSitio
           clave="sobre-yoga"
           className="db-yoga__foto"
+          sizes="(max-width: 600px) 86vw, (max-width: 900px) 712px, 438px"
           width={960}
           height={1280}
           loading="lazy"

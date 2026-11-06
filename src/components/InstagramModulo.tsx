@@ -55,7 +55,7 @@ export default function InstagramModulo() {
             target="_blank"
             rel="noopener noreferrer"
             className="btn btn--plum ig__cta"
-            aria-label={`Seguir ${label} en Instagram (se abre en una pestaña nueva)`}
+            aria-label={`Seguir en Instagram a ${label} (se abre en una pestaña nueva)`}
           >
             <InstagramLogo size={18} weight="regular" aria-hidden="true" />
             Seguir en Instagram
@@ -78,6 +78,7 @@ export default function InstagramModulo() {
               clave={f.clave}
               decorativa
               className={`ig__foto ${f.clase}`}
+              sizes="(max-width: 600px) 45vw, 360px"
               width={f.ancho}
               height={f.alto}
               loading="lazy"

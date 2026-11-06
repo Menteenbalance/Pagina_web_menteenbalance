@@ -1,6 +1,7 @@
 import type { ImgHTMLAttributes } from "react";
 import { useFoto } from "../lib/contenido";
 import type { ClaveFoto } from "../lib/fotos";
+import { srcsetDe } from "../lib/srcset";
 
 /**
  * Foto de un lugar editable del sitio (pestaña Fotos del panel).
@@ -22,6 +23,7 @@ export default function FotoSitio({
     <img
       {...resto}
       src={foto.src || undefined}
+      srcSet={srcsetDe(foto.src)}
       alt={decorativa ? "" : foto.alt}
       style={foto.posicion ? { ...style, objectPosition: foto.posicion } : style}
       data-cargando={foto.cargando || undefined}

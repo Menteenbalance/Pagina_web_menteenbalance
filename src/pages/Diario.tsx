@@ -27,7 +27,7 @@ export default function Diario() {
       ) : (
         <div className="posts posts--wide">
           {lista.map((p, i) => (
-            <TarjetaPost key={p.id} post={p} indice={i} titulo="h2" />
+            <TarjetaPost key={p.id} post={p} indice={i} titulo="h2" prioritaria={i === 0} />
           ))}
         </div>
       )}
