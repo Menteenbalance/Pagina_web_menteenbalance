@@ -10,11 +10,12 @@ import {
   credencialesValidas,
   leerSesion,
 } from "../_lib/auth.js";
+import { avisarInicioDeSesion } from "../_lib/avisos.js";
 import { json, obtenerIp, responderError } from "../_lib/http.js";
 import { hash, revisarLimites } from "../_lib/rateLimit.js";
 
 export async function GET(request: Request): Promise<Response> {
-  const email = leerSesion(request);
+  const email = await leerSesion(request);
   return email ? json(200, { email }) : json(401, { error: "Sin sesión." });
 }
 
@@ -48,13 +49,15 @@ export async function POST(request: Request): Promise<Response> {
     const email = typeof body.email === "string" ? body.email : "";
     const password = typeof body.password === "string" ? body.password : "";
 
-    if (!credencialesValidas(email, password)) {
+    if (!(await credencialesValidas(email, password))) {
       return json(401, { error: "Correo o contraseña incorrectos." });
     }
+    // Aviso por correo si es un dispositivo nuevo (no bloquea el ingreso si falla)
+    await avisarInicioDeSesion(request);
     return json(
       200,
       { email: email.trim().toLowerCase() },
-      { "Set-Cookie": cookieDeSesion(request, email.trim().toLowerCase()) }
+      { "Set-Cookie": await cookieDeSesion(request, email.trim().toLowerCase()) }
     );
   } catch (err) {
     return responderError(err);

@@ -12,7 +12,7 @@ const SIN_CACHE = { "Cache-Control": "no-store" };
 
 export async function GET(request: Request): Promise<Response> {
   try {
-    exigirAdmin(request);
+    await exigirAdmin(request);
     const seccion = new URL(request.url).searchParams.get("seccion");
     if (!esSeccion(seccion)) throw new ErrorHttp(400, "Sección desconocida.");
     return json(200, { versiones: await historialDe(seccion) }, SIN_CACHE);
@@ -23,7 +23,7 @@ export async function GET(request: Request): Promise<Response> {
 
 export async function POST(request: Request): Promise<Response> {
   try {
-    const email = exigirAdmin(request);
+    const email = await exigirAdmin(request);
     const body = (await request.json().catch(() => null)) as { seccion?: unknown; fecha?: unknown } | null;
     if (!body || !esSeccion(body.seccion)) throw new ErrorHttp(400, "Sección desconocida.");
     const version = (await historialDe(body.seccion)).find((v) => v.fecha === body.fecha);

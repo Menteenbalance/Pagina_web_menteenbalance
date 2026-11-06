@@ -8,12 +8,21 @@
 //
 //  Variables:
 //    ADMIN_EMAIL      correo con el que entra la administradora
-//    ADMIN_PASSWORD   contraseña (larga; solo vive en Vercel)
+//    ADMIN_PASSWORD   contraseña inicial (larga; solo vive en Vercel)
 //    SESSION_SECRET   texto aleatorio largo para firmar la cookie
+//
+//  Si Mari cambia su contraseña con "¿Olvidaste tu contraseña?", la
+//  nueva se guarda cifrada (scrypt) en Redis y reemplaza a ADMIN_PASSWORD.
+//  Cada cambio sube la "versión" de las sesiones: todas las sesiones
+//  abiertas se cierran.
 // ─────────────────────────────────────────────────────────────
 
-import { createHash, createHmac, timingSafeEqual } from "node:crypto";
+import { createHash, createHmac, randomBytes, scryptSync, timingSafeEqual } from "node:crypto";
 import { enVercel, ErrorHttp } from "./http.js";
+import { kvGet, kvSet } from "./kv.js";
+
+const CLAVE_GUARDADA = "meb:auth:clave";
+const VERSION_SESION = "meb:auth:version";
 
 const COOKIE = "meb_admin";
 const DURACION_SEG = 7 * 24 * 60 * 60; // 7 días
@@ -44,12 +53,45 @@ function iguales(a: string, b: string): boolean {
   return timingSafeEqual(ha, hb);
 }
 
-export function credencialesValidas(email: string, password: string): boolean {
+/** Correo de la administradora (en minúsculas). */
+export const correoAdmin = ADMIN_EMAIL.trim().toLowerCase();
+
+export function esCorreoAdmin(email: string): boolean {
+  return Boolean(correoAdmin) && iguales(email.trim().toLowerCase(), correoAdmin);
+}
+
+function cifrar(clave: string): string {
+  const sal = randomBytes(16);
+  const h = scryptSync(clave, sal, 32, { N: 16384, r: 8, p: 1 });
+  return `scrypt:${sal.toString("base64url")}:${h.toString("base64url")}`;
+}
+
+function coincide(clave: string, guardada: string): boolean {
+  const [tipo, sal, h] = guardada.split(":");
+  if (tipo !== "scrypt" || !sal || !h) return false;
+  const calculado = scryptSync(clave, Buffer.from(sal, "base64url"), 32, { N: 16384, r: 8, p: 1 });
+  const esperado = Buffer.from(h, "base64url");
+  return esperado.length === calculado.length && timingSafeEqual(esperado, calculado);
+}
+
+export async function credencialesValidas(email: string, password: string): Promise<boolean> {
   if (!authConfigurada) return false;
   // Se evalúan ambas siempre, para no revelar cuál falló
-  const okEmail = iguales(email.trim().toLowerCase(), ADMIN_EMAIL.trim().toLowerCase());
-  const okPass = iguales(password, ADMIN_PASSWORD);
+  const okEmail = esCorreoAdmin(email);
+  const guardada = await kvGet(CLAVE_GUARDADA);
+  const okPass = guardada ? coincide(password, guardada) : iguales(password, ADMIN_PASSWORD);
   return okEmail && okPass;
+}
+
+/** Versión actual de las sesiones ("0" si la contraseña nunca se cambió). */
+async function versionActual(): Promise<string> {
+  return (await kvGet(VERSION_SESION)) ?? "0";
+}
+
+/** Guarda una contraseña nueva y cierra todas las sesiones abiertas. */
+export async function cambiarClave(nueva: string): Promise<void> {
+  await kvSet(CLAVE_GUARDADA, cifrar(nueva));
+  await kvSet(VERSION_SESION, Date.now().toString(36));
 }
 
 function esSeguro(request: Request): boolean {
@@ -59,9 +101,9 @@ function esSeguro(request: Request): boolean {
 }
 
 /** Cookie Set-Cookie para iniciar sesión. */
-export function cookieDeSesion(request: Request, email: string): string {
+export async function cookieDeSesion(request: Request, email: string): Promise<string> {
   const payload = b64url(
-    JSON.stringify({ e: email, exp: Math.floor(Date.now() / 1000) + DURACION_SEG })
+    JSON.stringify({ e: email, v: await versionActual(), exp: Math.floor(Date.now() / 1000) + DURACION_SEG })
   );
   const token = `${payload}.${firmar(payload)}`;
   return [
@@ -91,7 +133,7 @@ export function cookieDeCierre(request: Request): string {
 }
 
 /** Devuelve el correo de la sesión, o null si no hay sesión válida. */
-export function leerSesion(request: Request): string | null {
+export async function leerSesion(request: Request): Promise<string | null> {
   if (!authConfigurada) return null;
   const cookies = request.headers.get("cookie") ?? "";
   const token = cookies
@@ -107,9 +149,12 @@ export function leerSesion(request: Request): string | null {
   try {
     const datos = JSON.parse(Buffer.from(payload, "base64url").toString()) as {
       e: string;
+      v?: string;
       exp: number;
     };
     if (datos.exp < Date.now() / 1000) return null;
+    // Sesiones abiertas antes del último cambio de contraseña ya no valen
+    if ((datos.v ?? "0") !== (await versionActual())) return null;
     return datos.e;
   } catch {
     return null;
@@ -121,8 +166,8 @@ export function leerSesion(request: Request): string | null {
  * el encabezado X-MEB-Admin: un sitio externo no puede enviarlo sin
  * que el navegador lo bloquee (protección CSRF adicional a SameSite).
  */
-export function exigirAdmin(request: Request): string {
-  const email = leerSesion(request);
+export async function exigirAdmin(request: Request): Promise<string> {
+  const email = await leerSesion(request);
   if (!email) throw new ErrorHttp(401, "Tu sesión expiró. Vuelve a iniciar sesión.");
   if (request.method !== "GET" && request.headers.get("x-meb-admin") !== "1") {
     throw new ErrorHttp(403, "Solicitud no permitida.");
