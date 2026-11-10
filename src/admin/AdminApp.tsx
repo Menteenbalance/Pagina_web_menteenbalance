@@ -15,6 +15,8 @@ import EditorServicios from "./EditorServicios";
 import EditorAgenda from "./EditorAgenda";
 import EditorDiario from "./EditorDiario";
 import EditorInstagram from "./EditorInstagram";
+import EditorEnlaces from "./EditorEnlaces";
+import { contenidoInicial } from "../data";
 import EditorFotos from "./EditorFotos";
 import EditorComunidad from "./EditorComunidad";
 import EditorTextos from "./EditorTextos";
@@ -34,6 +36,7 @@ const pestañas = [
   { ruta: "instagram", texto: "Instagram" },
   { ruta: "fotos", texto: "Fotos" },
   { ruta: "comunidad", texto: "Comunidad" },
+  { ruta: "enlaces", texto: "Enlaces" },
 ];
 
 /** Secciones guardadas que se pueden deshacer desde cada pestaña. */
@@ -54,6 +57,7 @@ const historialPorPestaña: Record<string, SeccionHistorial[]> = {
     { seccion: "formacion", nombre: "Mi formación" },
   ],
   comunidad: [{ seccion: "comunidad", nombre: "Mensajes de la comunidad" }],
+  enlaces: [{ seccion: "enlaces", nombre: "Enlaces" }],
 };
 
 export default function AdminApp() {
@@ -243,6 +247,7 @@ export default function AdminApp() {
             path="instagram"
             element={<EditorInstagram ajustes={contenido.ajustes} guardar={guardar} />}
           />
+          <Route path="enlaces" element={<EditorEnlaces enlaces={contenido.enlaces ?? contenidoInicial.enlaces} guardar={guardar} />} />
           <Route path="fotos" element={<EditorFotos fotos={contenido.fotos ?? {}} guardar={guardar} />} />
           <Route
             path="textos"

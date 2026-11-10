@@ -20,6 +20,7 @@ const NOMBRES: Record<Seccion, string> = {
   comunidad: "Comunidad",
   textos: "Textos",
   formacion: "Mi formación",
+  enlaces: "Enlaces",
 };
 
 interface Archivo {

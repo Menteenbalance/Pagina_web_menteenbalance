@@ -74,6 +74,14 @@ export function compararVersiones(seccion: Seccion, version: unknown, actual: un
     }
     return { vuelven, salen, cambian, igual };
   }
+  if (seccion === "enlaces") {
+    const v = (version ?? {}) as Record<string, string>;
+    const a = (actual ?? {}) as Record<string, string>;
+    const cambian: string[] = [];
+    if (v.reservaUrl !== a.reservaUrl) cambian.push(`Enlace para reservar (vuelve a ${v.reservaUrl ?? "el original"})`);
+    if (v.reservaPlataforma !== a.reservaPlataforma) cambian.push(`Nombre de la plataforma (vuelve a "${v.reservaPlataforma ?? ""}")`);
+    return { vuelven: [], salen: [], cambian, igual };
+  }
   if (!Array.isArray(version) || !Array.isArray(actual)) {
     return { vuelven: [], salen: [], cambian: igual ? [] : ["Ajustes de la sección"], igual };
   }
@@ -103,6 +111,7 @@ export function cantidad(seccion: Seccion, datos: unknown): string {
     const n = Object.keys((datos ?? {}) as object).length;
     return n === 0 ? "todas las fotos originales" : `${n} ${n === 1 ? "foto cambiada" : "fotos cambiadas"}`;
   }
+  if (seccion === "enlaces") return `Reservas en ${(datos as { reservaPlataforma?: string })?.reservaPlataforma ?? "?"}`;
   if (!Array.isArray(datos)) return "Ajustes";
   const n = datos.length;
   const [uno, varios] = {

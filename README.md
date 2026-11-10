@@ -78,6 +78,7 @@ La administradora entra en **`/admin`** con su correo y contraseña. Desde ahí 
 | **Textos** | Los textos largos del Inicio, de Detrás de Mente en Balance y de Servicios (títulos, párrafos, pasos, listas y frases), cada uno con "Volver al original", y la lista **Mi formación** (agregar, editar, ordenar y quitar estudios). |
 | **Fotos** | Todas las fotos del sitio (portada, Detrás de Mente en Balance, mosaico de Instagram, fotos de ambiente del Diario y la 404): cambiar, describir, elegir el punto de enfoque o volver a la original. |
 | **Comunidad** | Mensajes para la comunidad de WhatsApp: escribir con el formato de WhatsApp y emojis, vista previa, programar fecha y hora, recordatorio en el calendario y envío en dos toques. |
+| **Enlaces** | Enlace y nombre de la plataforma de reservas (hoy Encuadrado). Lo usan todos los botones "Reservar", "Inscribirme" y "Consultar" (salvo organizaciones, por correo) y el bloque "Reservar en …" bajo las próximas clases. Sección `enlaces`: mientras no se guarde, se usa `enlaces` de `src/data.ts`. |
 
 Los cambios se ven en el sitio en menos de un minuto.
 
