@@ -1,6 +1,7 @@
 import { Link, useSearchParams } from "react-router-dom";
-import { filtros, reservaUrl, type Filtro } from "../data";
-import { proximasActividades, useContenido } from "../lib/contenido";
+import { filtros, type Filtro } from "../data";
+import { proximasActividades, useContenido, useReserva } from "../lib/contenido";
+import ReservaGeneral from "../components/ReservaGeneral";
 import { formatearFecha, formatearPrecio, slug } from "../lib/formato";
 import Brote from "../components/Brote";
 
@@ -8,6 +9,7 @@ import Brote from "../components/Brote";
 // El filtro queda en la URL (ej: /agenda?tipo=yoga) para poder compartirlo.
 export default function Agenda() {
   const [params, setParams] = useSearchParams();
+  const reserva = useReserva();
   const agenda = proximasActividades(useContenido().agenda);
   const filtro: Filtro =
     filtros.find((f) => slug(f) === params.get("tipo")) ?? "Todo";
@@ -100,7 +102,7 @@ export default function Agenda() {
                     {formatearPrecio(e.precio)}
                   </span>
                   <a
-                    href={reservaUrl}
+                    href={reserva.url}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="btn btn--teal btn--sm"
@@ -114,6 +116,8 @@ export default function Agenda() {
           })}
         </div>
       )}
+
+      <ReservaGeneral />
     </div>
   );
 }

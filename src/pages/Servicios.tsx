@@ -1,6 +1,6 @@
-import { contacto, reservaUrl } from "../data";
+import { contacto } from "../data";
 import { formatearPrecio, slug } from "../lib/formato";
-import { useContenido } from "../lib/contenido";
+import { useContenido, useReserva } from "../lib/contenido";
 import { Linea } from "../components/Textos";
 import IconoServicio from "../components/IconoServicio";
 
@@ -29,6 +29,7 @@ function correoOrganizaciones(titulo: string): string {
 // Página "Servicios": lista extendida de cada servicio + aranceles.
 export default function Servicios() {
   const { servicios, aranceles } = useContenido();
+  const reserva = useReserva();
   return (
     <div className="page">
       <p className="eyebrow eyebrow--teal" style={{ marginBottom: 24 }}>
@@ -66,7 +67,7 @@ export default function Servicios() {
                 </a>
               ) : (
                 <a
-                  href={reservaUrl}
+                  href={reserva.url}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="btn btn--outline btn--outline-plum btn--sm"
@@ -116,7 +117,7 @@ export default function Servicios() {
                 ))}
               </ul>
               <a
-                href={reservaUrl}
+                href={reserva.url}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn btn--teal btn--sm precio-group__cta"

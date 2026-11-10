@@ -109,6 +109,16 @@ export function useContenido(): Estado {
 }
 
 /**
+ * Enlace para reservar (pestaña Enlaces del panel). Si llega contenido
+ * sin este dato (versión anterior en caché), usa el original.
+ */
+export function useReserva(): { url: string; plataforma: string } {
+  const { enlaces } = useContext(Ctx);
+  const e = enlaces?.reservaUrl ? enlaces : contenidoInicial.enlaces;
+  return { url: e.reservaUrl, plataforma: e.reservaPlataforma };
+}
+
+/**
  * Foto de un lugar del sitio (la que subió Mari o la original).
  * Mientras no se sabe cuál corresponde, `src` queda vacío para no
  * mostrar la original por un instante y luego cambiarla.

@@ -196,6 +196,14 @@ export interface VersionHistorial {
   datos: unknown;
 }
 
+/** Enlaces externos editables desde el panel (pestaña Enlaces). */
+export interface Enlaces {
+  /** Página donde se reservan horas y clases (hoy, el perfil de Encuadrado) */
+  reservaUrl: string;
+  /** Nombre de esa plataforma, para los botones ("Reservar en Encuadrado") */
+  reservaPlataforma: string;
+}
+
 export interface Contenido {
   servicios: Servicio[];
   aranceles: GrupoTarifas[];
@@ -212,4 +220,6 @@ export interface Contenido {
   comunidad: MensajeComunidad[];
   /** Fotos del sitio cambiadas desde el panel (clave del lugar → foto) */
   fotos: Partial<Record<ClaveFoto, FotoEditada>>;
+  /** Enlaces externos (reservas) */
+  enlaces: Enlaces;
 }

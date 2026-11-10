@@ -7,6 +7,7 @@
 import type {
   ActividadRecurrente,
   Ajustes,
+  Enlaces,
   DiaSemana,
   Evento,
   FotoEditada,
@@ -21,7 +22,7 @@ import { ErrorHttp } from "./http.js";
 import { esClaveFoto } from "../../src/lib/clavesFotos.js";
 import { TEXTO_POR_CLAVE, esClaveTexto } from "../../src/lib/textos.js";
 
-export const SECCIONES = ["servicios", "aranceles", "agenda", "recurrentes", "posts", "ajustes", "fotos", "comunidad", "textos", "formacion"] as const;
+export const SECCIONES = ["servicios", "aranceles", "agenda", "recurrentes", "posts", "ajustes", "fotos", "comunidad", "textos", "formacion", "enlaces"] as const;
 export type Seccion = (typeof SECCIONES)[number];
 
 const TIPOS: TipoEvento[] = ["Yoga", "Meditación", "Talleres"];
@@ -266,6 +267,23 @@ const validadores: Record<Seccion, (datos: unknown) => unknown> = {
       };
     }
     return limpio;
+  },
+
+  enlaces: (datos): Enlaces => {
+    const e = obj(datos);
+    const url = txt(e.reservaUrl, "Enlace para reservar", { min: 1, max: 300 });
+    let ok = false;
+    try {
+      const u = new URL(url);
+      ok = u.protocol === "https:" && u.hostname.includes(".") && !/[\s"'<>]/.test(url);
+    } catch {
+      ok = false;
+    }
+    if (!ok) falla("El enlace para reservar debe ser una dirección completa que empiece con https://");
+    return {
+      reservaUrl: url,
+      reservaPlataforma: txt(e.reservaPlataforma, "Nombre de la plataforma", { min: 1, max: 40 }),
+    };
   },
 
   ajustes: (datos): Ajustes => {

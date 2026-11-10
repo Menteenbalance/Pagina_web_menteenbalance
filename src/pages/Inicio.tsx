@@ -3,13 +3,13 @@ import Reveal from "../components/Reveal";
 import TarjetaPost from "../components/TarjetaPost";
 import InstagramModulo from "../components/InstagramModulo";
 import Resenas from "../components/Resenas";
-import { reservaUrl } from "../data";
 import FotoSitio from "../components/FotoSitio";
 import Lianas from "../components/Lianas";
 import Brote from "../components/Brote";
 import { Linea, Parrafos, Titulo } from "../components/Textos";
 import { formatearFecha, formatearPrecio, slug } from "../lib/formato";
-import { postsRecientes, proximasActividades, useContenido } from "../lib/contenido";
+import { postsRecientes, proximasActividades, useContenido, useReserva } from "../lib/contenido";
+import ReservaGeneral from "../components/ReservaGeneral";
 import IconoServicio from "../components/IconoServicio";
 
 // fetchpriority en minúsculas: React 18 aún no reconoce la versión camelCase.
@@ -19,6 +19,7 @@ const prioridadAlta = { fetchpriority: "high" } as Record<string, string>;
 // agenda corta, cita destacada y últimos artículos del diario.
 export default function Inicio() {
   const { servicios, agenda, posts } = useContenido();
+  const reserva = useReserva();
   // Una clase que se repite aparece solo con su fecha más próxima,
   // para que la portada muestre actividades distintas.
   const series = new Set<string>();
@@ -44,7 +45,7 @@ export default function Inicio() {
           </p>
           <div className="hero__actions">
             <a
-              href={reservaUrl}
+              href={reserva.url}
               target="_blank"
               rel="noopener noreferrer"
               className="btn btn--plum"
@@ -196,7 +197,7 @@ export default function Inicio() {
                   {formatearPrecio(e.precio)}
                 </span>
                 <a
-                  href={reservaUrl}
+                  href={reserva.url}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="btn btn--outline btn--sm"
@@ -210,6 +211,9 @@ export default function Inicio() {
             );
           })}
         </div>
+        <Reveal>
+          <ReservaGeneral />
+        </Reveal>
       </section>
 
       {/* Cita destacada */}

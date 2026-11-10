@@ -3033,3 +3033,41 @@ input[type="checkbox"],
 .nav__link:active {
   opacity: 0.7;
 }
+
+/* Bloque "Reservar en Encuadrado" bajo las próximas clases (Inicio y Agenda) */
+.reserva-general {
+  margin-top: 40px;
+  padding: 22px 26px;
+  border-radius: 22px;
+  background: rgba(6, 153, 153, 0.06);
+  border: 1px solid rgba(6, 153, 153, 0.14);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px 28px;
+}
+.reserva-general__texto {
+  margin: 0;
+  flex: 1 1 340px;
+  font-size: 15px;
+  line-height: 1.65;
+  color: var(--muted);
+  max-width: 62ch;
+}
+.reserva-general__texto strong {
+  color: var(--ink);
+  font-weight: 500;
+}
+.reserva-general__btn {
+  flex-shrink: 0;
+}
+@media (max-width: 600px) {
+  .reserva-general {
+    padding: 20px;
+  }
+  .reserva-general__btn {
+    width: 100%;
+    justify-content: center;
+  }
+}

@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
-import { nav, reservaUrl } from "../data";
+import { nav } from "../data";
+import { useReserva } from "../lib/contenido";
 
 // Barra superior fija con logo, navegación y botón "Reservar".
 // En pantallas chicas los links se agrupan en un menú desplegable,
 // y "Reservar" queda siempre visible.
 export default function Header() {
   const [abierto, setAbierto] = useState(false);
+  const reserva = useReserva();
   const { pathname } = useLocation();
 
   // Cierra el menú al cambiar de página
@@ -62,7 +64,7 @@ export default function Header() {
         </nav>
 
         <a
-          href={reservaUrl}
+          href={reserva.url}
           target="_blank"
           rel="noopener noreferrer"
           className="btn btn--teal btn--sm header__cta"

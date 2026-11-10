@@ -10,6 +10,7 @@ import type {
   ResenasEncuadrado,
   Ajustes,
   Contenido,
+  Enlaces,
   NavItem,
   Servicio,
   Evento,
@@ -301,11 +302,17 @@ export const formacion: Formacion[] = [
 ];
 
 /**
- * Enlace externo de reservas (Encuadrado).
- * Cámbialo aquí si en el futuro se actualiza la página de agenda.
+ * Enlace de reservas ORIGINAL (Encuadrado). Mari lo cambia desde el panel
+ * (pestaña Enlaces); en el sitio se usa con useReserva() de src/lib/contenido.tsx.
  */
 export const reservaUrl =
   "https://encuadrado.com/p/maria-ignacia-canessa/";
+
+/** Enlaces iniciales: se usan mientras Mari no los cambie en el panel. */
+export const enlaces: Enlaces = {
+  reservaUrl,
+  reservaPlataforma: "Encuadrado",
+};
 
 /** Evaluaciones del perfil de Encuadrado (sección de reseñas del Inicio). */
 export const encuadradoEvaluaciones = "https://encuadrado.com/p/maria-ignacia-canessa#evaluaciones";
@@ -395,6 +402,7 @@ export const contenidoInicial: Contenido = {
   comunidad: [],
   posts,
   ajustes,
+  enlaces,
 };
 
 /** Enlace que abre una conversación de WhatsApp con el mensaje prellenado. */
